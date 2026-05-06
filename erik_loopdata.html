@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Erik Kallenberg — Loopdata</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --surface2: #181818;
+    --border: rgba(255,255,255,0.055);
+    --border2: rgba(255,255,255,0.11);
+    --text: #f0f0f0;
+    --muted: #555;
+    --muted2: #888;
+    --accent: #ff4500;
+    --accent2: #ff7a00;
+    --z1: #22c55e;
+    --z2: #3b82f6;
+    --z3: #eab308;
+    --z4: #f97316;
+    --z5: #ef4444;
+    --zmax: #a855f7;
+    --nav-h: 57px;
+    --nav-h-px: 57px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif; min-height:100vh; overflow-x:hidden; }
+
+  /* NAV */
+  header {
+    height: 48px;
+    background: #0a0a0a;
+    border-bottom: 1px solid var(--border2);
+    position: sticky; top:0; z-index:200;
+    display: flex; align-items:center; padding: 0 2rem;
+    gap: 2rem;
+  }
+  .logo {
+    font-family:'Bebas Neue',sans-serif; font-size:1.45rem; letter-spacing:0.1em;
+    display:flex; align-items:center; gap:8px; flex-shrink:0;
+  }
+  .logo-pulse {
+    width:8px; height:8px; border-radius:50%; background:var(--accent);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+  nav { display:flex; gap:2px; }
+  .tab-btn {
+    font-family:'DM Sans',sans-serif; font-size:0.75rem; font-weight:500;
+    letter-spacing:0.1em; text-transform:uppercase;
+    background:none; border:none; color:var(--muted2); padding:0.4rem 1rem;
+    cursor:pointer; border-bottom:2px solid transparent; transition:all 0.18s;
+    white-space:nowrap;
+  }
+  .tab-btn:hover { color:var(--text); }
+  .tab-btn.active { color:var(--accent); border-bottom-color:var(--accent); }
+
+  /* PAGES */
+  .page { display:none; max-width:1440px; margin:0 auto; padding:1.8rem 2rem 4rem; }
+  .page.active { display:block; }
+
+  /* STATS ROW */
+  .hero-stats {
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:0.85rem; margin-bottom:1.8rem;
+  }
+  .stat-card {
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:10px; padding:1.1rem 1.3rem; transition:border-color 0.2s;
+  }
+  .stat-card:hover { border-color:var(--border2); }
+  .stat-label { font-size:0.65rem; font-weight:500; letter-spacing:0.13em; text-transform:uppercase; color:var(--muted2); margin-bottom:0.3rem; }
+  .stat-value { font-family:'Bebas Neue',sans-serif; font-size:2rem; letter-spacing:0.04em; line-height:1; }
+  .stat-sub { font-size:0.72rem; color:var(--muted2); margin-top:3px; }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-family:'Bebas Neue',sans-serif; font-size:1.2rem; letter-spacing:0.1em;
+    color:var(--muted2); margin-bottom:1rem; display:flex; align-items:center; gap:0.7rem;
+  }
+  .section-title::after { content:''; flex:1; height:1px; background:var(--border); }
+
+  /* ZONES DISPLAY */
+  .zones-row {
+    display:flex; gap:0.6rem; margin-bottom:1.8rem; flex-wrap:wrap;
+  }
+  .zone-pill {
+    display:flex; align-items:center; gap:8px;
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:8px; padding:0.5rem 1rem; font-size:0.78rem;
+    transition: border-color 0.2s;
+  }
+  .zone-pill:hover { border-color: var(--border2); }
+  .zone-dot { width:9px; height:9px; border-radius:50%; flex-shrink:0; }
+  .zone-name { font-weight:500; }
+  .zone-range { color:var(--muted2); font-size:0.72rem; margin-left:2px; }
+
+  /* FILTERS */
+  .filters {
+    display:flex; gap:0.5rem; margin-bottom:1rem; flex-wrap:wrap; align-items:center;
+  }
+  .filter-input {
+    background:var(--surface); border:1px solid var(--border2);
+    color:var(--text); border-radius:8px; padding:0.42rem 0.85rem;
+    font-family:'DM Sans',sans-serif; font-size:0.83rem; outline:none;
+    transition:border-color 0.18s;
+  }
+  .filter-input:focus { border-color:var(--accent); }
+  .filter-btn {
+    background:var(--surface); border:1px solid var(--border2);
+    color:var(--muted2); border-radius:8px; padding:0.42rem 0.85rem;
+    font-size:0.72rem; font-weight:500; letter-spacing:0.08em; text-transform:uppercase;
+    cursor:pointer; transition:all 0.18s;
+  }
+  .filter-btn:hover { color:var(--text); border-color:var(--border2); }
+
+  /* TABLE */
+  .table-wrap {
+    border-radius:12px; border:1px solid var(--border);
+    overflow-x: auto;
+  }
+  table { width:100%; border-collapse:collapse; font-size:0.83rem; }
+  thead { position:static; z-index:10; }
+  th {
+    position: sticky;
+    top: 0;
+    background:#141414; padding:0.65rem 0.9rem;
+    text-align:left; font-size:0.66rem; font-weight:500;
+    letter-spacing:0.11em; text-transform:uppercase; color:var(--muted2);
+    border-bottom:1px solid var(--border2); border-top:1px solid var(--border2); white-space:nowrap;
+    cursor:pointer; user-select:none;
+  }
+  th:hover { color:var(--text); }
+  th.sorted { color:var(--accent); }
+  td {
+    padding:0.6rem 0.9rem; border-bottom:1px solid var(--border);
+    font-family:'DM Mono',monospace; font-size:0.8rem; white-space:nowrap;
+  }
+  tr:last-child td { border-bottom:none; }
+  tr:hover td { background:rgba(255,255,255,0.018); }
+  .td-name { font-family:'DM Sans',sans-serif; color:var(--text); max-width:150px; overflow:hidden; text-overflow:ellipsis; }
+  .td-datum { color:var(--muted2); font-size:0.76rem; }
+  .td-num { text-align:right; }
+  .td-plan { color:var(--muted2); font-family:'DM Sans',sans-serif; font-size:0.75rem; max-width:200px; overflow:hidden; text-overflow:ellipsis; }
+
+  /* HR BADGE */
+  .hr-badge {
+    display:inline-block; padding:2px 8px; border-radius:20px; font-size:0.74rem; font-weight:500;
+  }
+  .hr-z1 { background:rgba(34,197,94,0.1); color:var(--z1); }
+  .hr-z2 { background:rgba(59,130,246,0.1); color:var(--z2); }
+  .hr-z3 { background:rgba(234,179,8,0.1); color:var(--z3); }
+  .hr-z4 { background:rgba(249,115,22,0.1); color:var(--z4); }
+  .hr-z5 { background:rgba(239,68,68,0.1); color:var(--z5); }
+  .hr-zmax { background:rgba(168,85,247,0.1); color:var(--zmax); }
+  .hr-none { background:rgba(255,255,255,0.04); color:var(--muted2); }
+
+  /* CHART */
+  .chart-card {
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:12px; padding:1.5rem; margin-bottom:1rem;
+  }
+  .chart-title { font-family:'Bebas Neue',sans-serif; font-size:1.1rem; letter-spacing:0.07em; margin-bottom:0.2rem; }
+  .chart-legend { display:flex; gap:1.2rem; margin-bottom:1rem; flex-wrap:wrap; }
+  .legend-item { display:flex; align-items:center; gap:5px; font-size:0.74rem; color:var(--muted2); }
+  .legend-dot { width:8px; height:8px; border-radius:50%; }
+  .legend-dashed { width:18px; height:0; border-top:2px dashed; }
+  .legend-solid { width:18px; height:2px; display:inline-block; }
+  .chart-note {
+    font-size:0.76rem; color:var(--muted2); line-height:1.5;
+    border-top:1px solid var(--border); margin-top:1rem; padding-top:0.8rem;
+    font-style:italic;
+  }
+
+  /* PR PAGE */
+  .pr-hero {
+    background: linear-gradient(135deg, #140800 0%, #0a0a0a 60%);
+    border:1px solid var(--border2); border-radius:16px;
+    padding:2rem 2.5rem; margin-bottom:2rem;
+    position:relative; overflow:hidden;
+  }
+  .pr-hero::before {
+    content:'PR'; position:absolute; right:1.5rem; top:50%; transform:translateY(-50%);
+    font-family:'Bebas Neue',sans-serif; font-size:10rem; letter-spacing:0.05em;
+    color:rgba(255,69,0,0.06); line-height:1;
+  }
+  .pr-hero-title { font-family:'Bebas Neue',sans-serif; font-size:1rem; letter-spacing:0.15em; color:var(--accent); margin-bottom:0.3rem; }
+  .pr-hero-name { font-family:'Bebas Neue',sans-serif; font-size:2.5rem; letter-spacing:0.06em; }
+  .pr-grid {
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:1rem; margin-bottom:2rem;
+  }
+  .pr-card {
+    background:var(--surface); border:1px solid var(--border); border-radius:12px;
+    padding:1.4rem 1.6rem; position:relative; overflow:hidden;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .pr-card:hover { border-color:var(--accent); transform:translateY(-2px); }
+  .pr-card::after {
+    content:''; position:absolute; bottom:0; left:0; right:0; height:2px;
+    background:linear-gradient(90deg, var(--accent), var(--accent2));
+    transform:scaleX(0); transform-origin:left; transition:transform 0.3s;
+  }
+  .pr-card:hover::after { transform:scaleX(1); }
+  .pr-dist {
+    font-family:'Bebas Neue',sans-serif; font-size:1.8rem; letter-spacing:0.05em;
+    color:var(--accent); margin-bottom:0.2rem;
+  }
+  .pr-time {
+    font-family:'Bebas Neue',sans-serif; font-size:3rem; letter-spacing:0.03em; line-height:1;
+    margin-bottom:0.3rem;
+  }
+  .pr-tempo { font-size:0.78rem; color:var(--muted2); }
+  .pr-sub { font-size:0.72rem; color:var(--muted2); margin-top:0.4rem; }
+
+  /* RACE CARDS */
+  .race-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:1rem; }
+  .race-card {
+    background:var(--surface); border:1px solid var(--border); border-radius:12px;
+    padding:1.4rem; position:relative; overflow:hidden;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .race-card:hover { border-color:var(--border2); transform:translateY(-2px); }
+  .race-card::before {
+    content:''; position:absolute; top:0; left:0; right:0; height:3px;
+    background:linear-gradient(90deg, var(--accent), var(--accent2));
+  }
+  .race-event { font-family:'Bebas Neue',sans-serif; font-size:1.25rem; letter-spacing:0.05em; margin-bottom:0.15rem; }
+  .race-datum { font-size:0.72rem; color:var(--muted2); margin-bottom:1rem; }
+  .race-stats { display:grid; grid-template-columns:1fr 1fr; gap:0.5rem 1rem; }
+  .rs-label { font-size:0.63rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted2); }
+  .rs-val { font-family:'Bebas Neue',sans-serif; font-size:1.4rem; letter-spacing:0.03em; }
+  .rs-val.time { color:var(--accent); }
+  .race-divider { border:none; border-top:1px solid var(--border); margin:1rem 0; }
+  .race-warmup { font-size:0.73rem; color:var(--muted2); }
+  .race-warmup strong { color:var(--muted2); }
+
+  /* SCHEMA */
+  .week-block {
+    margin-bottom: 1.5rem;
+  }
+  .week-header {
+    font-family:'Bebas Neue',sans-serif; font-size:1rem; letter-spacing:0.1em;
+    color:var(--muted2); padding:0.5rem 0; margin-bottom:0.5rem;
+    display:flex; align-items:center; gap:0.7rem;
+  }
+  .week-header::after { content:''; flex:1; height:1px; background:var(--border); }
+  .week-header .week-km { font-size:0.8rem; color:var(--accent); font-family:'DM Mono',monospace; }
+  .schema-grid {
+    display:grid; grid-template-columns:repeat(7,1fr); gap:0.5rem;
+  }
+  .dag-card {
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:10px; padding:0.75rem 0.8rem; min-height:100px;
+    transition: border-color 0.2s;
+    position:relative;
+  }
+  .dag-card.vandaag { border-color:var(--accent); }
+  .dag-card.verleden { opacity:0.6; }
+  .dag-card.toekomst { }
+  .dag-card.rust { background:var(--bg); }
+  .dag-name { font-size:0.62rem; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted2); margin-bottom:2px; }
+  .dag-datum { font-family:'DM Mono',monospace; font-size:0.72rem; color:var(--muted2); margin-bottom:0.5rem; }
+  .dag-plan { font-size:0.78rem; color:var(--text); line-height:1.4; }
+  .dag-plan.leeg { color:var(--muted); font-style:italic; font-size:0.72rem; }
+  .vandaag-dot {
+    position:absolute; top:8px; right:8px;
+    width:7px; height:7px; border-radius:50%; background:var(--accent);
+  }
+  .dag-actual {
+    margin-top:0.5rem; padding-top:0.5rem; border-top:1px solid var(--border);
+    font-size:0.72rem; color:var(--muted2);
+  }
+  .dag-actual .actual-km { color:var(--z1); font-family:'DM Mono',monospace; }
+  @media(max-width:900px) { .schema-grid { grid-template-columns:repeat(4,1fr); } }
+  @media(max-width:600px) { .schema-grid { grid-template-columns:repeat(2,1fr); } }
+
+
+  .strava-link {
+    color: inherit; text-decoration: none;
+    border-bottom: 1px solid rgba(252,76,2,0.3);
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .strava-link:hover { color: #fc4c02; border-bottom-color: #fc4c02; }
+  /* INVOER */
+  .invoer-input {
+    background: var(--surface2); border: 1px solid var(--border2);
+    color: var(--text); border-radius: 6px; padding: 0.3rem 0.5rem;
+    font-family: 'DM Mono', monospace; font-size: 0.8rem; outline: none;
+    transition: border-color 0.15s;
+  }
+  .invoer-input:focus { border-color: var(--accent); }
+  .invoer-core { width: 70px; text-align: center; }
+  .invoer-opmerking { width: 220px; }
+  .save-btn {
+    background: none; border: 1px solid var(--border2); color: var(--muted2);
+    border-radius: 6px; padding: 0.28rem 0.65rem; font-size: 0.72rem;
+    cursor: pointer; transition: all 0.15s; white-space: nowrap;
+  }
+  .save-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .save-btn.saved { border-color: var(--z1); color: var(--z1); }
+  .core-badge {
+    display: inline-block; background: rgba(255,69,0,0.1);
+    color: var(--accent); border-radius: 20px; padding: 2px 8px;
+    font-size: 0.75rem; font-weight: 500; font-family: 'DM Mono', monospace;
+  }
+
+  ::-webkit-scrollbar { width:4px; height:4px; }
+  ::-webkit-scrollbar-track { background:transparent; }
+  ::-webkit-scrollbar-thumb { background:var(--border2); border-radius:2px; }
+
+  @media (max-width:640px) {
+    header { padding:0 1rem; gap:1rem; }
+    .page { padding:1.2rem 1rem 3rem; }
+    .hero-stats { grid-template-columns:repeat(2,1fr); }
+    .pr-grid { grid-template-columns:repeat(2,1fr); }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><span class="logo-pulse"></span>Erik Kallenberg</div>
+  <nav>
+    <button class="tab-btn active" onclick="switchTab('alle',this)">Alle runs</button>
+    <button class="tab-btn" onclick="switchTab('duurlopen',this)">Duurlopen</button>
+    <button class="tab-btn" onclick="switchTab('wedstrijden',this)">Wedstrijden</button>
+    <button class="tab-btn" onclick="switchTab('prs',this)">PR's</button>
+    <button class="tab-btn" onclick="switchTab('schema',this)">Schema</button>
+    <button class="tab-btn" onclick="switchTab('invoer',this)">Invoer</button>
+  </nav>
+</header>
+
+<!-- ===== TAB 1: ALLE RUNS ===== -->
+<div id="tab-alle" class="page active">
+  <div class="hero-stats" id="stats-alle"></div>
+
+  <div class="section-title">Hartslagzones</div>
+  <div class="zones-row">
+    <div class="zone-pill"><div class="zone-dot" style="background:var(--z1)"></div><span class="zone-name">Z1 Herstel</span><span class="zone-range">&lt;145 bpm</span></div>
+    <div class="zone-pill"><div class="zone-dot" style="background:var(--z2)"></div><span class="zone-name">Z2 Aerobe duur</span><span class="zone-range">145–155 bpm</span></div>
+    <div class="zone-pill"><div class="zone-dot" style="background:var(--z3)"></div><span class="zone-name">Z3 Marathon</span><span class="zone-range">156–164 bpm</span></div>
+    <div class="zone-pill"><div class="zone-dot" style="background:var(--z4)"></div><span class="zone-name">Z4 Drempel</span><span class="zone-range">165–172 bpm</span></div>
+    <div class="zone-pill"><div class="zone-dot" style="background:var(--z5)"></div><span class="zone-name">Z5 VO2max</span><span class="zone-range">173–185 bpm</span></div>
+    <div class="zone-pill"><div class="zone-dot" style="background:var(--zmax)"></div><span class="zone-name">Rood Max</span><span class="zone-range">HRmax 191</span></div>
+  </div>
+
+  <div class="filters">
+    <input class="filter-input" id="search-alle" placeholder="🔍  Zoeken op naam, datum, plan..." oninput="renderAlle()" style="min-width:220px">
+    <select class="filter-input" id="filter-zone" onchange="renderAlle()">
+      <option value="">Alle zones</option>
+      <option value="Z1">Z1 Herstel</option>
+      <option value="Z2">Z2 Aerobe</option>
+      <option value="Z3">Z3 Marathon</option>
+      <option value="Z4">Z4 Drempel</option>
+      <option value="Z5">Z5 VO2max</option>
+      <option value="Rood">Rood Max</option>
+    </select>
+    <select class="filter-input" id="filter-dist" onchange="renderAlle()">
+      <option value="">Alle afstanden</option>
+      <option value="5">5 km+</option>
+      <option value="10">10 km+</option>
+      <option value="15">15 km+</option>
+      <option value="21">21 km+</option>
+    </select>
+    <span style="margin-left:auto;font-size:0.75rem;color:var(--muted2)" id="count-alle"></span>
+  </div>
+
+  <div class="table-wrap">
+    <table id="tbl-alle">
+      <thead><tr>
+        <th onclick="setSort('datum_sort')" id="sh-datum">Datum <span>↕</span></th>
+        <th>Run</th>
+        <th class="td-num" onclick="setSort('afstand')" id="sh-afstand">Afstand <span>↕</span></th>
+        <th class="td-num">Tijd</th>
+        <th class="td-num" onclick="setSort('tempo_dec')" id="sh-tempo">Tempo <span>↕</span></th>
+        <th class="td-num">Min HR</th>
+        <th class="td-num" onclick="setSort('gem_hr')" id="sh-hr">Gem HR <span>↕</span></th>
+        <th class="td-num">Max HR</th>
+        <th class="td-num" style="color:var(--accent)">Core</th>
+        <th>Zone</th>
+        <th>Opmerking</th>
+      </tr></thead>
+      <tbody id="tbody-alle"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ===== TAB 2: DUURLOPEN ===== -->
+<div id="tab-duurlopen" class="page">
+  <div class="hero-stats" id="stats-duurlopen"></div>
+
+  <div class="section-title">Hartslagzones</div>
+  <div class="zones-row">
+    <div class="zone-pill"><div class="zone-dot" style="background:var(--z1)"></div><span class="zone-name">Z1 Herstel</span><span class="zone-range">&lt;145 bpm</span></div>
+    <div class="zone-pill"><div class="zone-dot" style="background:var(--z2)"></div><span class="zone-name">Z2 Aerobe duur</span><span class="zone-range">145–155 bpm</span></div>
+    <div class="zone-pill"><div class="zone-dot" style="background:var(--z3)"></div><span class="zone-name">Z3 Marathon</span><span class="zone-range">156–164 bpm</span></div>
+    <div class="zone-pill"><div class="zone-dot" style="background:var(--z4)"></div><span class="zone-name">Z4 Drempel</span><span class="zone-range">165–172 bpm</span></div>
+    <div class="zone-pill"><div class="zone-dot" style="background:var(--z5)"></div><span class="zone-name">Z5 VO2max</span><span class="zone-range">173–185 bpm</span></div>
+  </div>
+
+  <div class="chart-card">
+    <div class="chart-title">Hartslagefficiëntie bij 5:00 min/km</div>
+    <div class="chart-legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#3b82f6"></div>HR per run bij 5:00/km</div>
+      <div class="legend-item"><div class="legend-solid" style="background:#ff4500;height:2px"></div>Trendlijn (−0.7 bpm/mnd)</div>
+      <div class="legend-item"><div class="legend-dashed" style="border-color:#22c55e"></div>Maandgemiddelde</div>
+    </div>
+    <div style="position:relative;height:280px">
+      <canvas id="hr500chart" aria-label="HR bij 5:00/km over tijd"></canvas>
+    </div>
+    <div class="chart-note">
+      Elke duurloop (>8 km) is genormaliseerd naar 5:00 min/km via een within-run slope van −9.7 bpm per min/km, berekend uit 497 km-rondes via fixed effects — zo wordt alleen de echte tempo-HR relatie binnen een run gebruikt, zonder ruis van dag-tot-dag variatie. Aanvullend is de gemiddelde hartslag gecorrigeerd voor cardiac drift (+0.29 bpm/km), zodat langere runs niet kunstmatig zwaarder wegen.
+    </div>
+  </div>
+
+  <div class="filters">
+    <input class="filter-input" id="search-duur" placeholder="🔍  Zoeken..." oninput="renderDuurlopen()" style="min-width:200px">
+    <select class="filter-input" id="filter-duur-dist" onchange="renderDuurlopen()">
+      <option value="">Alle afstanden</option>
+      <option value="8">8 km+</option>
+      <option value="12">12 km+</option>
+      <option value="18">18 km+</option>
+    </select>
+    <span style="margin-left:auto;font-size:0.75rem;color:var(--muted2)" id="count-duurlopen"></span>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr>
+        <th>Datum</th>
+        <th>Run</th>
+        <th class="td-num">Afstand</th>
+        <th class="td-num">Tijd</th>
+        <th class="td-num">Tempo</th>
+        <th class="td-num">Gem HR</th>
+        <th class="td-num">Max HR</th>
+        <th class="td-num">HR @ 5:00</th>
+        <th>Zone</th>
+        <th>Trainingsplan</th>
+      </tr></thead>
+      <tbody id="tbody-duurlopen"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ===== TAB 3: WEDSTRIJDEN ===== -->
+<div id="tab-wedstrijden" class="page">
+  <div class="hero-stats" id="stats-wedstrijden"></div>
+  <div class="section-title">Race overzicht</div>
+  <div class="race-grid" id="race-grid"></div>
+</div>
+
+<!-- ===== TAB 4: PR's ===== -->
+<div id="tab-prs" class="page">
+  <div class="pr-hero">
+    <div class="pr-hero-title">Personal Records</div>
+    <div class="pr-hero-name">Erik Kallenberg</div>
+  </div>
+  <div class="section-title">Persoonlijke records</div>
+  <div class="pr-grid" id="pr-grid"></div>
+
+  <div class="section-title" style="margin-top:1rem">Alle wedstrijdresultaten</div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr>
+        <th>Datum</th>
+        <th>Wedstrijd</th>
+        <th class="td-num">Afstand</th>
+        <th class="td-num">Tijd</th>
+        <th class="td-num">Tempo</th>
+        <th class="td-num">Gem HR</th>
+        <th class="td-num">Max HR</th>
+      </tr></thead>
+      <tbody id="tbody-prs"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ===== TAB 5: SCHEMA ===== -->
+<div id="tab-schema" class="page">
+  <div id="schema-loading" style="text-align:center;padding:3rem;color:var(--muted2)">
+    <div style="font-size:1.5rem;margin-bottom:0.5rem">⏳</div>
+    Schema laden uit Google Sheets...
+  </div>
+  <div id="schema-error" style="display:none;text-align:center;padding:3rem;color:var(--z5)">
+    ❌ Kon schema niet laden. Controleer of de Google Sheet publiek toegankelijk is.
+  </div>
+  <div id="schema-content" style="display:none">
+    <div id="schema-weeks"></div>
+  </div>
+</div>
+
+<!-- ===== TAB 6: INVOER ===== -->
+<div id="tab-invoer" class="page">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
+    <div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:0.06em;">Invoer</div>
+      <div style="font-size:0.78rem;color:var(--muted2);margin-top:2px;">Core (minuten) en opmerkingen worden lokaal opgeslagen in je browser.</div>
+    </div>
+    <div style="display:flex;gap:0.6rem;align-items:center;">
+      <input class="filter-input" id="search-invoer" placeholder="🔍 Zoeken..." oninput="renderInvoer()" style="min-width:180px">
+      <button class="filter-btn" onclick="exportInvoer()" style="border-color:var(--accent);color:var(--accent)">↓ Export CSV</button>
+      <button class="filter-btn" onclick="if(confirm('Weet je zeker dat je alle invoer wilt wissen?')){{clearInvoer()}}">Wis alles</button>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0.85rem;margin-bottom:1.8rem;" id="stats-invoer"></div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr>
+        <th>Datum</th>
+        <th>Run</th>
+        <th class="td-num">Afstand</th>
+        <th class="td-num">Tempo</th>
+        <th class="td-num">Gem HR</th>
+        <th class="td-num" style="color:var(--accent)">Core (min)</th>
+        <th>Opmerking</th>
+        <th></th>
+      </tr></thead>
+      <tbody id="tbody-invoer"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+let RAW = null;
+
+async function laadData() {
+  try {
+    const resp = await fetch('strava_data.json');
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    RAW = await resp.json();
+    buildHr500Map();
+    renderAlle();
+    renderDuurlopen();
+    renderWedstrijden();
+    renderPRs();
+    renderInvoer();
+    buildChart();
+    fixStickyHeaders();
+  } catch(e) {
+    document.body.innerHTML = `
+      <div style="display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column;gap:1rem;font-family:sans-serif;color:#f0f0f0;background:#0a0a0a;">
+        <div style="font-size:2rem;">⚠️</div>
+        <div style="font-size:1.1rem;">Kan strava_data.json niet laden</div>
+        <div style="font-size:0.85rem;color:#666;max-width:400px;text-align:center;">
+          Zorg dat <strong>strava_data.json</strong> in dezelfde map staat als deze HTML.<br>
+          Run eerst: <code style="background:#1a1a1a;padding:2px 6px;border-radius:4px;">python export_strava.py</code>
+        </div>
+        <div style="font-size:0.75rem;color:#444;">${e.message}</div>
+      </div>`;
+  }
+}
+
+
+// ===== HELPERS =====
+function zClass(z) {
+  if (!z) return 'hr-none';
+  if (z.includes('Z1')||z.includes('Herstel')) return 'hr-z1';
+  if (z.includes('Z2')||z.includes('Aerobe')) return 'hr-z2';
+  if (z.includes('Z3')||z.includes('Marathon')) return 'hr-z3';
+  if (z.includes('Z4')||z.includes('Drempel')) return 'hr-z4';
+  if (z.includes('Z5')||z.includes('VO2')) return 'hr-z5';
+  if (z.includes('Rood')||z.includes('Max')) return 'hr-zmax';
+  return 'hr-none';
+}
+function zLabel(z) {
+  if (!z||z==='Geen data') return '—';
+  if (z.includes('Z1')||z.includes('Herstel')) return 'Z1 Herstel';
+  if (z.includes('Z2')||z.includes('Aerobe')) return 'Z2 Aerobe';
+  if (z.includes('Z3')||z.includes('Marathon')) return 'Z3 Marathon';
+  if (z.includes('Z4')||z.includes('Drempel')) return 'Z4 Drempel';
+  if (z.includes('Z5')||z.includes('VO2')) return 'Z5 VO2max';
+  if (z.includes('Rood')||z.includes('Max')) return 'Rood Max';
+  return z.replace(/[🟢🟡🟠🔴🟣]/g,'').trim();
+}
+function hrColor(hr) {
+  if (!hr||hr===0) return 'var(--muted2)';
+  if (hr<145) return 'var(--z1)';
+  if (hr<156) return 'var(--z2)';
+  if (hr<165) return 'var(--z3)';
+  if (hr<173) return 'var(--z4)';
+  return 'var(--z5)';
+}
+function datumFmt(d) {
+  if (!d) return '';
+  const day = (d.split(',')[0]||d).trim();
+  const [y,m,dd] = day.split('-');
+  const mn=['','jan','feb','mrt','apr','mei','jun','jul','aug','sep','okt','nov','dec'];
+  return `${parseInt(dd)} ${mn[parseInt(m)]} '${(y||'').slice(2)}`;
+}
+
+// ===== TAB 1: ALLE RUNS =====
+let alSort = {key:'datum_sort', asc:false};
+
+function setSort(k) {
+  if (alSort.key===k) alSort.asc=!alSort.asc;
+  else {alSort.key=k; alSort.asc=(k!=='datum_sort');}
+  renderAlle();
+}
+
+function filterAlle() {
+  const q = document.getElementById('search-alle').value.toLowerCase();
+  const zone = document.getElementById('filter-zone').value;
+  const dist = parseFloat(document.getElementById('filter-dist').value)||0;
+  return RAW.alle.filter(r => {
+    if (q && !r.naam.toLowerCase().includes(q) && !r.datum.toLowerCase().includes(q) && !r.trainingsplan.toLowerCase().includes(q)) return false;
+    if (zone && !r.zone.includes(zone)) return false;
+    if (dist && r.afstand < dist) return false;
+    return true;
+  });
+}
+
+function renderAlle() {
+  const data = filterAlle().sort((a,b) => {
+    const av=a[alSort.key], bv=b[alSort.key];
+    if (typeof av==='string') return alSort.asc ? av.localeCompare(bv) : bv.localeCompare(av);
+    return alSort.asc ? av-bv : bv-av;
+  });
+
+  document.getElementById('count-alle').textContent = data.length + ' runs';
+  document.getElementById('tbody-alle').innerHTML = data.map(r => {
+    const key = getRunKey(r);
+    const invoer = loadInvoerData()[key] || {};
+    const coreBadge = invoer.core ? `<span class="core-badge">${invoer.core} min</span>` : '<span style="color:var(--muted)">—</span>';
+    return `
+    <tr>
+      <td class="td-datum">${datumFmt(r.datum)}</td>
+      <td class="td-name">${r.strava_url ? `<a href="${r.strava_url}" target="_blank" class="strava-link">${r.naam}</a>` : r.naam}</td>
+      <td class="td-num">${r.afstand>0 ? r.afstand.toFixed(1)+' km' : '—'}</td>
+      <td class="td-num">${r.tijd||'—'}</td>
+      <td class="td-num">${r.tempo||'—'}</td>
+      <td class="td-num" style="color:var(--muted2)">${r.min_hr||'—'}</td>
+      <td class="td-num" style="color:${hrColor(r.gem_hr)};font-weight:500">${r.gem_hr||'—'}</td>
+      <td class="td-num" style="color:var(--muted2)">${r.max_hr||'—'}</td>
+      <td class="td-num">${coreBadge}</td>
+      <td><span class="hr-badge ${zClass(r.zone)}">${zLabel(r.zone)}</span></td>
+      <td class="td-plan">${invoer.opmerking || r.trainingsplan || ''}</td>
+    </tr>`}).join('') || '<tr><td colspan="11" style="text-align:center;padding:2.5rem;color:var(--muted2)">Geen runs gevonden</td></tr>';
+
+  // Stats
+  const tot = RAW.alle.filter(r=>r.afstand>0).reduce((s,r)=>s+r.afstand,0);
+  const hrv = RAW.alle.filter(r=>r.gem_hr>0);
+  const gemHr = hrv.length ? Math.round(hrv.reduce((s,r)=>s+r.gem_hr,0)/hrv.length) : '—';
+  document.getElementById('stats-alle').innerHTML = `
+    <div class="stat-card"><div class="stat-label">Totaal runs</div><div class="stat-value">${RAW.alle.length}</div></div>
+    <div class="stat-card"><div class="stat-label">Totaal km</div><div class="stat-value">${Math.round(tot)}</div><div class="stat-sub">kilometer</div></div>
+    <div class="stat-card"><div class="stat-label">Gem HR</div><div class="stat-value">${gemHr}</div><div class="stat-sub">bpm over alle runs</div></div>
+    <div class="stat-card"><div class="stat-label">Langste run</div><div class="stat-value">42.4</div><div class="stat-sub">km — Haas ultra</div></div>
+    <div class="stat-card"><div class="stat-label">Hardste run</div><div class="stat-value">174</div><div class="stat-sub">bpm gem — 5 okt '25</div></div>
+  `;
+}
+
+// ===== TAB 2: DUURLOPEN =====
+let hr500map = {};
+
+function buildHr500Map() {
+  hr500map = {};
+  RAW.hr500.forEach(r => { hr500map[r.datum] = r.hr500; });
+}
+
+function filterDuur() {
+  const q = document.getElementById('search-duur').value.toLowerCase();
+  const dist = parseFloat(document.getElementById('filter-duur-dist').value)||0;
+  return RAW.duurlopen.filter(r => {
+    if (q && !r.naam.toLowerCase().includes(q) && !r.datum.toLowerCase().includes(q)) return false;
+    if (dist && r.afstand < dist) return false;
+    return true;
+  });
+}
+
+function renderDuurlopen() {
+  const data = filterDuur();
+  document.getElementById('count-duurlopen').textContent = data.length + ' duurlopen';
+  document.getElementById('tbody-duurlopen').innerHTML = data.map(r => {
+    const hr5 = hr500map[r.datum_sort];
+    const hr5cell = hr5 ? `<span style="color:${hrColor(hr5)};font-weight:500">${hr5.toFixed(1)}</span>` : '<span style="color:var(--muted2)">—</span>';
+    return `<tr>
+      <td class="td-datum">${datumFmt(r.datum)}</td>
+      <td class="td-name">${r.strava_url ? `<a href="${r.strava_url}" target="_blank" class="strava-link">${r.naam}</a>` : r.naam}</td>
+      <td class="td-num">${r.afstand.toFixed(1)} km</td>
+      <td class="td-num">${r.tijd||'—'}</td>
+      <td class="td-num">${r.tempo||'—'}</td>
+      <td class="td-num" style="color:${hrColor(r.gem_hr)};font-weight:500">${r.gem_hr||'—'}</td>
+      <td class="td-num" style="color:var(--muted2)">${r.max_hr||'—'}</td>
+      <td class="td-num">${hr5cell}</td>
+      <td><span class="hr-badge ${zClass(r.zone)}">${zLabel(r.zone)}</span></td>
+      <td class="td-plan">${r.trainingsplan||''}</td>
+    </tr>`;
+  }).join('') || '<tr><td colspan="10" style="text-align:center;padding:2.5rem;color:var(--muted2)">Geen runs gevonden</td></tr>';
+
+  const tot = RAW.duurlopen.reduce((s,r)=>s+r.afstand,0);
+  const hr5vals = RAW.hr500.filter(r=>r.hr500<160);
+  const gem5 = hr5vals.length ? (hr5vals.reduce((s,r)=>s+r.hr500,0)/hr5vals.length).toFixed(1) : '—';
+  const best5 = hr5vals.length ? Math.min(...hr5vals.map(r=>r.hr500)).toFixed(1) : '—';
+  document.getElementById('stats-duurlopen').innerHTML = `
+    <div class="stat-card"><div class="stat-label">Duurlopen</div><div class="stat-value">${RAW.duurlopen.length}</div></div>
+    <div class="stat-card"><div class="stat-label">Totaal km</div><div class="stat-value">${Math.round(tot)}</div></div>
+    <div class="stat-card"><div class="stat-label">Gem HR@5:00</div><div class="stat-value">${gem5}</div><div class="stat-sub">bpm gemiddeld</div></div>
+    <div class="stat-card"><div class="stat-label">Beste HR@5:00</div><div class="stat-value">${best5}</div><div class="stat-sub">bpm laagste ooit</div></div>
+  `;
+}
+
+function buildChart() {
+  const pts = RAW.hr500.filter(r=>r.hr500<160).sort((a,b)=>a.datum.localeCompare(b.datum));
+  const byMonth = {};
+  pts.forEach(r => {
+    const m=r.datum.slice(0,7);
+    if (!byMonth[m]) byMonth[m]=[];
+    byMonth[m].push(r.hr500);
+  });
+  const monthData = Object.entries(byMonth).sort().map(([m,vals]) => {
+    return {x:new Date(m+'-15').getTime(), y:parseFloat((vals.reduce((s,v)=>s+v,0)/vals.length).toFixed(1))};
+  });
+  const t0=new Date('2025-09-01').getTime(), tMax=new Date('2026-04-20').getTime();
+  new Chart(document.getElementById('hr500chart').getContext('2d'), {
+    type:'scatter',
+    data:{ datasets:[
+      {label:'HR@5:00', data:pts.map(r=>{return{x:new Date(r.datum).getTime(),y:r.hr500}}).filter(p=>!isNaN(p.x)),
+        backgroundColor:'rgba(59,130,246,0.4)', borderColor:'rgba(59,130,246,0.7)', pointRadius:4, pointHoverRadius:6, borderWidth:1},
+      {label:'Trend', data:[{x:t0,y:139.8},{x:tMax,y:135.2}],
+        type:'line', borderColor:'#ff4500', borderWidth:2, pointRadius:0, tension:0},
+      {label:'Maand', data:monthData,
+        type:'line', borderColor:'#22c55e', borderWidth:2, borderDash:[5,4], pointRadius:4, pointBackgroundColor:'#22c55e', tension:0.35}
+    ]},
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{display:false}, tooltip:{callbacks:{label:ctx=>{
+        const d=new Date(ctx.parsed.x);
+        return d.toLocaleDateString('nl-NL',{day:'numeric',month:'short',year:'2-digit'})+' — '+Math.round(ctx.parsed.y)+' bpm';
+      }}}},
+      scales:{
+        x:{type:'linear',min:t0,max:tMax,grid:{color:'rgba(255,255,255,0.04)'},
+          ticks:{color:'#666',font:{size:11},maxTicksLimit:8, callback:v=>{
+            const mn=['jan','feb','mrt','apr','mei','jun','jul','aug','sep','okt','nov','dec'],d=new Date(v);
+            return mn[d.getMonth()]+" '"+String(d.getFullYear()).slice(2);
+          }}},
+        y:{min:125,max:155,grid:{color:'rgba(255,255,255,0.04)'},
+          ticks:{color:'#666',font:{size:11},callback:v=>v+' bpm'}}
+      }
+    }
+  });
+}
+
+// ===== TAB 3: WEDSTRIJDEN =====
+function renderWedstrijden() {
+  const tot = RAW.events.reduce((s,e)=>s+(e.afstand||0),0);
+  document.getElementById('stats-wedstrijden').innerHTML = `
+    <div class="stat-card"><div class="stat-label">Events</div><div class="stat-value">${RAW.events.length}</div></div>
+    <div class="stat-card"><div class="stat-label">Wedstrijd km</div><div class="stat-value">${Math.round(tot)}</div></div>
+    <div class="stat-card"><div class="stat-label">Snelste 10km</div><div class="stat-value">32:53</div><div class="stat-sub">Schoorl — 3:17/km</div></div>
+    <div class="stat-card"><div class="stat-label">Marathon PR</div><div class="stat-value">2:35:45</div><div class="stat-sub">Rotterdam — 3:43/km</div></div>
+  `;
+  document.getElementById('race-grid').innerHTML = RAW.events.map(e => {
+    const wu = e.runs.filter(r=>r.gem_hr!==e.gem_hr&&r.afstand<8);
+    return `<div class="race-card">
+      <div class="race-event">${e.runs[0]?.strava_url ? `<a href="${e.runs.find(r=>r.gem_hr===e.gem_hr)?.strava_url||e.runs[0].strava_url}" target="_blank" class="strava-link">${e.naam}</a>` : e.naam}</div>
+      <div class="race-datum">${e.datum}</div>
+      <div class="race-stats">
+        <div><div class="rs-label">Afstand</div><div class="rs-val">${e.afstand} km</div></div>
+        <div><div class="rs-label">Eindtijd</div><div class="rs-val time">${e.tijd||'—'}</div></div>
+        <div><div class="rs-label">Gem tempo</div><div class="rs-val">${e.tempo||'—'}</div></div>
+        <div><div class="rs-label">Gem HR</div><div class="rs-val" style="color:${hrColor(e.gem_hr)}">${e.gem_hr||'—'}</div></div>
+      </div>
+      ${wu.length ? `<hr class="race-divider"><div class="race-warmup"><strong>W-up/c-down:</strong> ${wu.map(r=>r.afstand.toFixed(1)+'km').join(', ')}</div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+// ===== TAB 4: PR's =====
+function renderPRs() {
+  document.getElementById('pr-grid').innerHTML = RAW.prs.map(p => `
+    <div class="pr-card">
+      <div class="pr-dist">${p.afstand}</div>
+      <div class="pr-time">${p.tijd}</div>
+      <div class="pr-tempo">${p.tempo} min/km</div>
+      ${p.datum ? `<div class="pr-sub">${p.datum}</div>` : ''}
+    </div>`).join('');
+
+  // Wedstrijden tabel op PR pagina
+  const raceRuns = RAW.events.map(e => e.runs.find(r=>r.gem_hr===e.gem_hr)||e.runs[0]).filter(Boolean);
+  document.getElementById('tbody-prs').innerHTML = raceRuns.map(r => `
+    <tr>
+      <td class="td-datum">${datumFmt(r.datum)}</td>
+      <td class="td-name">${r.strava_url ? `<a href="${r.strava_url}" target="_blank" class="strava-link">${r.trainingsplan||r.naam}</a>` : (r.trainingsplan||r.naam)}</td>
+      <td class="td-num">${r.afstand.toFixed(1)} km</td>
+      <td class="td-num" style="color:var(--accent)">${r.tijd||'—'}</td>
+      <td class="td-num">${r.tempo||'—'}</td>
+      <td class="td-num" style="color:${hrColor(r.gem_hr)}">${r.gem_hr||'—'}</td>
+      <td class="td-num" style="color:var(--muted2)">${r.max_hr||'—'}</td>
+    </tr>`).join('');
+}
+
+// ===== TAB SWITCH =====
+let schemaLoaded = false;
+function switchTab(t, btn) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+t).classList.add('active');
+  if (btn) btn.classList.add('active');
+  window.scrollTo(0,0);
+  if (t === 'schema' && !schemaLoaded) { schemaLoaded = true; laadSchema(); }
+  if (t === 'invoer') { renderInvoer(); fixStickyHeaders(); }
+}
+
+// Fix sticky th: measure real header height and apply
+function fixStickyHeaders() {
+  document.querySelectorAll('th').forEach(t => {
+    t.style.top = '0px';
+  });
+}
+window.addEventListener('load', fixStickyHeaders);
+window.addEventListener('resize', fixStickyHeaders);
+
+// ===== TAB 5: SCHEMA =====
+const SHEET_URL = 'https://docs.google.com/spreadsheets/d/1J9yWcaTl9_GE_4OS2azLIo6qlg4lXRC2/export?format=csv&gid=1396316699';
+const dagen_nl = ['Maandag','Dinsdag','Woensdag','Donderdag','Vrijdag','Zaterdag','Zondag'];
+const dagen_short = ['Ma','Di','Wo','Do','Vr','Za','Zo'];
+const maanden_nl = ['jan','feb','mrt','apr','mei','jun','jul','aug','sep','okt','nov','dec'];
+
+function parseCSV(text) {
+  const lines = text.split('\n');
+  return lines.map(l => {
+    const cols = []; let cur = ''; let inq = false;
+    for (let i=0;i<l.length;i++) {
+      if (l[i]==='"') { inq=!inq; }
+      else if (l[i]===',' && !inq) { cols.push(cur.trim()); cur=''; }
+      else { cur+=l[i]; }
+    }
+    cols.push(cur.trim()); return cols;
+  });
+}
+
+function buildActualMap() {
+  // Bouw datum -> {km, naam} map uit RAW.alle
+  const map = {};
+  RAW.alle.forEach(r => {
+    const d = r.datum_sort;
+    if (!d) return;
+    if (!map[d]) map[d] = {km:0, namen:[]};
+    map[d].km += r.afstand;
+    if (r.naam && !map[d].namen.includes(r.naam)) map[d].namen.push(r.naam);
+  });
+  return map;
+}
+
+async function laadSchema() {
+  try {
+    const resp = await fetch(SHEET_URL);
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const text = await resp.text();
+    const rows = parseCSV(text);
+
+    // Zoek Erik kolom
+    let erikCol = 40;
+    for (let ri=0; ri<Math.min(20, rows.length); ri++) {
+      for (let ci=0; ci<rows[ri].length; ci++) {
+        if (rows[ri][ci].trim().toLowerCase() === 'erik') { erikCol = ci; break; }
+      }
+      if (erikCol !== 40) break;
+    }
+
+    // Bouw planning dict
+    const planning = {};
+    rows.forEach(row => {
+      if (!row[0]) return;
+      try {
+        const d = new Date(row[0]);
+        if (isNaN(d.getTime())) return;
+        const key = d.toISOString().slice(0,10);
+        planning[key] = (row[erikCol] || '').trim();
+      } catch(e) {}
+    });
+
+    renderSchema(planning);
+  } catch(e) {
+    document.getElementById('schema-loading').style.display = 'none';
+    document.getElementById('schema-error').style.display = 'block';
+    document.getElementById('schema-error').textContent = '❌ Kon schema niet laden: ' + e.message + '. Zorg dat de Google Sheet openbaar gedeeld is (Iedereen met de link kan bekijken).';
+  }
+}
+
+function renderSchema(planning) {
+  const today = new Date();
+  today.setHours(0,0,0,0);
+
+  // Van 1 jan dit jaar t/m vandaag + 2 weken
+  const startDate = new Date(today.getFullYear(), 0, 1);
+  const endDate = new Date(today);
+  endDate.setDate(endDate.getDate() + 14);
+
+  // Groepeer per week (maandag-zondag)
+  const actualMap = buildActualMap();
+
+  // Vind eerste maandag op of voor startDate
+  const firstMonday = new Date(startDate);
+  const dow = firstMonday.getDay();
+  const diff = dow === 0 ? -6 : 1 - dow;
+  firstMonday.setDate(firstMonday.getDate() + diff);
+
+  const weeks = [];
+  let weekStart = new Date(firstMonday);
+  while (weekStart <= endDate) {
+    const days = [];
+    for (let d=0; d<7; d++) {
+      const day = new Date(weekStart);
+      day.setDate(day.getDate() + d);
+      const key = day.toISOString().slice(0,10);
+      days.push({ date: new Date(day), key, plan: planning[key] || '', actual: actualMap[key] });
+    }
+    weeks.push(days);
+    weekStart.setDate(weekStart.getDate() + 7);
+  }
+
+  // Render
+  let html = '';
+  weeks.forEach(days => {
+    const weekNr = getWeekNr(days[0].date);
+    const weekKm = days.reduce((s,d) => s + (d.actual ? d.actual.km : 0), 0);
+    const maand = maanden_nl[days[0].date.getMonth()];
+    html += `<div class="week-block">
+      <div class="week-header">
+        Week ${weekNr} &middot; ${maand}
+        ${weekKm > 0 ? `<span class="week-km">${weekKm.toFixed(1)} km gelopen</span>` : ''}
+      </div>
+      <div class="schema-grid">`;
+
+    days.forEach(d => {
+      const isToday = d.date.getTime() === today.getTime();
+      const isPast = d.date < today;
+      const inRange = d.date >= new Date(today.getFullYear(), 0, 1) && d.date <= endDate;
+      if (!inRange) { html += `<div class="dag-card" style="visibility:hidden"></div>`; return; }
+
+      const cls = [
+        'dag-card',
+        isToday ? 'vandaag' : '',
+        isPast && !isToday ? 'verleden' : 'toekomst',
+        !d.plan ? 'rust' : ''
+      ].filter(Boolean).join(' ');
+
+      const datStr = `${d.date.getDate()} ${maanden_nl[d.date.getMonth()]}`;
+      const planHtml = d.plan
+        ? `<div class="dag-plan">${d.plan}</div>`
+        : `<div class="dag-plan leeg">rust</div>`;
+
+      let actualHtml = '';
+      if (d.actual) {
+        actualHtml = `<div class="dag-actual">
+          <span class="actual-km">✓ ${d.actual.km.toFixed(1)} km</span>
+          ${d.actual.namen.length ? ' · ' + d.actual.namen[0] : ''}
+        </div>`;
+      }
+
+      html += `<div class="${cls}">
+        ${isToday ? '<div class="vandaag-dot"></div>' : ''}
+        <div class="dag-name">${dagen_short[d.date.getDay() === 0 ? 6 : d.date.getDay()-1]}</div>
+        <div class="dag-datum">${datStr}</div>
+        ${planHtml}
+        ${actualHtml}
+      </div>`;
+    });
+    html += `</div></div>`;
+  });
+
+  document.getElementById('schema-loading').style.display = 'none';
+  document.getElementById('schema-content').style.display = 'block';
+  document.getElementById('schema-weeks').innerHTML = html;
+}
+
+function getWeekNr(date) {
+  const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+  const dayNum = d.getUTCDay() || 7;
+  d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
+  return Math.ceil((((d - yearStart) / 86400000) + 1)/7);
+}
+
+// ===== TAB 6: INVOER =====
+const STORAGE_KEY = 'erik_invoer_v1';
+
+function loadInvoerData() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
+  catch(e) { return {}; }
+}
+
+function saveInvoerData(data) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+function getRunKey(r) {
+  return `${r.datum_sort}|${r.naam}|${r.afstand}`;
+}
+
+function saveRow(key) {
+  const coreEl = document.getElementById('core-' + CSS.escape(key));
+  const opEl = document.getElementById('op-' + CSS.escape(key));
+  const btn = document.getElementById('btn-' + CSS.escape(key));
+  if (!coreEl || !opEl) return;
+
+  const data = loadInvoerData();
+  const core = parseInt(coreEl.value) || 0;
+  const opmerking = opEl.value.trim();
+
+  if (core === 0 && !opmerking) {
+    delete data[key];
+  } else {
+    data[key] = { core, opmerking };
+  }
+  saveInvoerData(data);
+
+  // Flash saved
+  if (btn) {
+    btn.textContent = '✓ Opgeslagen';
+    btn.classList.add('saved');
+    setTimeout(() => { btn.textContent = 'Opslaan'; btn.classList.remove('saved'); }, 1500);
+  }
+
+  // Update alle runs display
+  renderAlle();
+}
+
+function filterInvoerData() {
+  const q = document.getElementById('search-invoer')?.value.toLowerCase() || '';
+  return RAW.alle.filter(r => {
+    if (!q) return true;
+    return r.naam.toLowerCase().includes(q) || r.datum.toLowerCase().includes(q) || r.trainingsplan.toLowerCase().includes(q);
+  });
+}
+
+function renderInvoer() {
+  const data = loadInvoerData();
+  const runs = filterInvoerData();
+
+  // Stats
+  const totalCore = Object.values(data).reduce((s, v) => s + (v.core || 0), 0);
+  const runsMetCore = Object.values(data).filter(v => v.core > 0).length;
+  const runsMetOpm = Object.values(data).filter(v => v.opmerking).length;
+  document.getElementById('stats-invoer').innerHTML = `
+    <div class="stat-card"><div class="stat-label">Totaal core</div><div class="stat-value">${totalCore}</div><div class="stat-sub">minuten</div></div>
+    <div class="stat-card"><div class="stat-label">Runs met core</div><div class="stat-value">${runsMetCore}</div></div>
+    <div class="stat-card"><div class="stat-label">Met opmerking</div><div class="stat-value">${runsMetOpm}</div></div>
+    <div class="stat-card"><div class="stat-label">Gem core/run</div><div class="stat-value">${runsMetCore > 0 ? Math.round(totalCore/runsMetCore) : 0}</div><div class="stat-sub">min per sessie</div></div>
+  `;
+
+  const tbody = document.getElementById('tbody-invoer');
+  tbody.innerHTML = runs.map(r => {
+    const key = getRunKey(r);
+    const saved = data[key] || {};
+    const safeKey = key.replace(/['"\\]/g, '_');
+    return `<tr>
+      <td class="td-datum">${datumFmt(r.datum)}</td>
+      <td class="td-name">${r.strava_url ? `<a href="${r.strava_url}" target="_blank" class="strava-link">${r.naam}</a>` : r.naam}</td>
+      <td class="td-num">${r.afstand > 0 ? r.afstand.toFixed(1)+' km' : '—'}</td>
+      <td class="td-num">${r.tempo || '—'}</td>
+      <td class="td-num" style="color:${hrColor(r.gem_hr)}">${r.gem_hr || '—'}</td>
+      <td class="td-num">
+        <input class="invoer-input invoer-core" type="number" min="0" max="120"
+          id="core-${safeKey}"
+          value="${saved.core || ''}"
+          placeholder="0"
+          onkeydown="if(event.key==='Enter') saveRow('${safeKey}')">
+      </td>
+      <td>
+        <input class="invoer-input invoer-opmerking" type="text"
+          id="op-${safeKey}"
+          value="${(saved.opmerking || '').replace(/"/g, '&quot;')}"
+          placeholder="Opmerking..."
+          onkeydown="if(event.key==='Enter') saveRow('${safeKey}')">
+      </td>
+      <td>
+        <button class="save-btn" id="btn-${safeKey}" onclick="saveRow('${safeKey}')">Opslaan</button>
+      </td>
+    </tr>`;
+  }).join('') || '<tr><td colspan="8" style="text-align:center;padding:2rem;color:var(--muted2)">Geen runs gevonden</td></tr>';
+}
+
+function clearInvoer() {
+  localStorage.removeItem(STORAGE_KEY);
+  renderInvoer();
+  renderAlle();
+}
+
+function exportInvoer() {
+  const data = loadInvoerData();
+  let csv = 'Datum,Run,Afstand,Tempo,Gem HR,Core (min),Opmerking\n';
+  RAW.alle.forEach(r => {
+    const key = getRunKey(r);
+    const saved = data[key] || {};
+    if (saved.core || saved.opmerking) {
+      csv += `"${r.datum}","${r.naam}",${r.afstand},"${r.tempo}",${r.gem_hr},${saved.core||0},"${(saved.opmerking||'').replace(/"/g,'""')}"\n`;
+    }
+  });
+  const blob = new Blob([csv], {type:'text/csv'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'erik_core_opmerkingen.csv';
+  a.click();
+}
+
+// ===== INIT
+laadData();
+</script>
+</body>
+</html>
