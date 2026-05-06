@@ -182,6 +182,7 @@ for e in events:
         e["gem_hr"] = race["gem_hr"]
         e["max_hr"] = race["max_hr"]
         e["tempo"] = race["tempo"]
+        e["tempo_dec"] = race["tempo_dec"]
         e["tijd"] = race["tijd"]
         e["strava_url"] = race["strava_url"]
 

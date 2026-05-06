@@ -648,12 +648,16 @@ function renderAlle() {
   const tot = RAW.alle.filter(r=>r.afstand>0).reduce((s,r)=>s+r.afstand,0);
   const hrv = RAW.alle.filter(r=>r.gem_hr>0);
   const gemHr = hrv.length ? Math.round(hrv.reduce((s,r)=>s+r.gem_hr,0)/hrv.length) : '—';
+  const langste = RAW.alle.reduce((best,r)=>r.afstand>best.afstand?r:best, {afstand:0,naam:'',datum:''});
+  const hardste = hrv.reduce((best,r)=>r.gem_hr>best.gem_hr?r:best, {gem_hr:0,naam:'',datum:''});
+  const langsteLabel = langste.naam ? `km — ${langste.naam}` : 'km';
+  const hardsteLabel = hardste.gem_hr ? `bpm gem — ${datumFmt(hardste.datum)}` : '';
   document.getElementById('stats-alle').innerHTML = `
     <div class="stat-card"><div class="stat-label">Totaal runs</div><div class="stat-value">${RAW.alle.length}</div></div>
     <div class="stat-card"><div class="stat-label">Totaal km</div><div class="stat-value">${Math.round(tot)}</div><div class="stat-sub">kilometer</div></div>
     <div class="stat-card"><div class="stat-label">Gem HR</div><div class="stat-value">${gemHr}</div><div class="stat-sub">bpm over alle runs</div></div>
-    <div class="stat-card"><div class="stat-label">Langste run</div><div class="stat-value">42.4</div><div class="stat-sub">km — Haas ultra</div></div>
-    <div class="stat-card"><div class="stat-label">Hardste run</div><div class="stat-value">174</div><div class="stat-sub">bpm gem — 5 okt '25</div></div>
+    <div class="stat-card"><div class="stat-label">Langste run</div><div class="stat-value">${langste.afstand.toFixed(1)}</div><div class="stat-sub">${langsteLabel}</div></div>
+    <div class="stat-card"><div class="stat-label">Hardste run</div><div class="stat-value">${hardste.gem_hr||'—'}</div><div class="stat-sub">${hardsteLabel}</div></div>
   `;
 }
 
@@ -709,6 +713,8 @@ function renderDuurlopen() {
 
 function buildChart() {
   const pts = RAW.hr500.filter(r=>r.hr500<160).sort((a,b)=>a.datum.localeCompare(b.datum));
+
+  // Maandgemiddelden dynamisch
   const byMonth = {};
   pts.forEach(r => {
     const m=r.datum.slice(0,7);
@@ -718,13 +724,42 @@ function buildChart() {
   const monthData = Object.entries(byMonth).sort().map(([m,vals]) => {
     return {x:new Date(m+'-15').getTime(), y:parseFloat((vals.reduce((s,v)=>s+v,0)/vals.length).toFixed(1))};
   });
-  const t0=new Date('2025-09-01').getTime(), tMax=new Date('2026-04-20').getTime();
+
+  // Tijdrange dynamisch uit data
+  const dates = pts.map(r=>new Date(r.datum).getTime()).filter(d=>!isNaN(d));
+  const t0 = Math.min(...dates) - 7*24*3600*1000;
+  const tMax = Math.max(...dates) + 14*24*3600*1000;
+
+  // Trendlijn dynamisch berekenen via lineaire regressie
+  const xVals = pts.map(r=>new Date(r.datum).getTime());
+  const yVals = pts.map(r=>r.hr500);
+  const n = xVals.length;
+  const xMean = xVals.reduce((s,v)=>s+v,0)/n;
+  const yMean = yVals.reduce((s,v)=>s+v,0)/n;
+  const slope = xVals.reduce((s,v,i)=>s+(v-xMean)*(yVals[i]-yMean),0) /
+                xVals.reduce((s,v)=>s+(v-xMean)**2,0);
+  const intercept = yMean - slope*xMean;
+  const trendData = [{x:t0,y:intercept+slope*t0},{x:tMax,y:intercept+slope*tMax}];
+
+  // Y-as range dynamisch
+  const allY = yVals.concat(monthData.map(m=>m.y));
+  const yMin = Math.floor(Math.min(...allY)/5)*5 - 5;
+  const yMax = Math.ceil(Math.max(...allY)/5)*5 + 5;
+
+  // Bpm per maand berekenen voor label
+  const bpmPerMaand = (slope * 30 * 24 * 3600 * 1000).toFixed(1);
+  document.querySelector('.chart-legend').innerHTML = `
+    <div class="legend-item"><div class="legend-dot" style="background:#3b82f6"></div>HR per run bij 5:00/km</div>
+    <div class="legend-item"><div class="legend-solid" style="background:#ff4500;height:2px"></div>Trendlijn (${bpmPerMaand} bpm/mnd)</div>
+    <div class="legend-item"><div class="legend-dashed" style="border-color:#22c55e"></div>Maandgemiddelde</div>
+  `;
+
   new Chart(document.getElementById('hr500chart').getContext('2d'), {
     type:'scatter',
     data:{ datasets:[
       {label:'HR@5:00', data:pts.map(r=>{return{x:new Date(r.datum).getTime(),y:r.hr500}}).filter(p=>!isNaN(p.x)),
         backgroundColor:'rgba(59,130,246,0.4)', borderColor:'rgba(59,130,246,0.7)', pointRadius:4, pointHoverRadius:6, borderWidth:1},
-      {label:'Trend', data:[{x:t0,y:139.8},{x:tMax,y:135.2}],
+      {label:'Trend', data:trendData,
         type:'line', borderColor:'#ff4500', borderWidth:2, pointRadius:0, tension:0},
       {label:'Maand', data:monthData,
         type:'line', borderColor:'#22c55e', borderWidth:2, borderDash:[5,4], pointRadius:4, pointBackgroundColor:'#22c55e', tension:0.35}
@@ -741,7 +776,7 @@ function buildChart() {
             const mn=['jan','feb','mrt','apr','mei','jun','jul','aug','sep','okt','nov','dec'],d=new Date(v);
             return mn[d.getMonth()]+" '"+String(d.getFullYear()).slice(2);
           }}},
-        y:{min:125,max:155,grid:{color:'rgba(255,255,255,0.04)'},
+        y:{min:yMin,max:yMax,grid:{color:'rgba(255,255,255,0.04)'},
           ticks:{color:'#666',font:{size:11},callback:v=>v+' bpm'}}
       }
     }
@@ -750,12 +785,17 @@ function buildChart() {
 
 // ===== TAB 3: WEDSTRIJDEN =====
 function renderWedstrijden() {
-  const tot = RAW.events.reduce((s,e)=>s+(e.afstand||0),0);
+  const totWed = RAW.events.reduce((s,e)=>s+(e.afstand||0),0);
+  const snelsteEvent = RAW.events.filter(e=>e.tempo).reduce((best,e)=>
+    (e.tempo_dec||99)<(best.tempo_dec||99)?e:best, RAW.events[0]||{});
+  const marathons = RAW.events.filter(e=>e.afstand>=40);
+  const marathonPR = marathons.length ? marathons.reduce((best,e)=>
+    (e.tijd||'9:99')<(best.tijd||'9:99')?e:best) : null;
   document.getElementById('stats-wedstrijden').innerHTML = `
     <div class="stat-card"><div class="stat-label">Events</div><div class="stat-value">${RAW.events.length}</div></div>
-    <div class="stat-card"><div class="stat-label">Wedstrijd km</div><div class="stat-value">${Math.round(tot)}</div></div>
-    <div class="stat-card"><div class="stat-label">Snelste 10km</div><div class="stat-value">32:53</div><div class="stat-sub">Schoorl — 3:17/km</div></div>
-    <div class="stat-card"><div class="stat-label">Marathon PR</div><div class="stat-value">2:35:45</div><div class="stat-sub">Rotterdam — 3:43/km</div></div>
+    <div class="stat-card"><div class="stat-label">Wedstrijd km</div><div class="stat-value">${Math.round(totWed)}</div></div>
+    <div class="stat-card"><div class="stat-label">Snelste tempo</div><div class="stat-value">${snelsteEvent.tempo||'—'}</div><div class="stat-sub">${snelsteEvent.naam||''}</div></div>
+    ${marathonPR ? `<div class="stat-card"><div class="stat-label">Marathon PR</div><div class="stat-value">${marathonPR.tijd}</div><div class="stat-sub">${marathonPR.naam} — ${marathonPR.tempo}/km</div></div>` : ''}
   `;
   document.getElementById('race-grid').innerHTML = RAW.events.map(e => {
     const wu = e.runs.filter(r=>r.gem_hr!==e.gem_hr&&r.afstand<8);

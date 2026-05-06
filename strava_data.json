@@ -1,5 +1,5 @@
 {
-  "gegenereerd_op": "2026-05-06 23:15",
+  "gegenereerd_op": "2026-05-06 23:21",
   "alle": [
     {
       "datum": "2026-05-06, Woensdag",
@@ -4183,6 +4183,7 @@
       "gem_hr": 164,
       "max_hr": 179,
       "tempo": "3:43",
+      "tempo_dec": 3.717,
       "tijd": "2:35:45",
       "strava_url": "https://www.strava.com/activities/18079608179"
     },
@@ -4227,6 +4228,7 @@
       "gem_hr": 150,
       "max_hr": 168,
       "tempo": "4:07",
+      "tempo_dec": 4.117,
       "tijd": "45:49",
       "strava_url": "https://www.strava.com/activities/17972122228"
     },
@@ -4287,6 +4289,7 @@
       "gem_hr": 168,
       "max_hr": 179,
       "tempo": "3:23",
+      "tempo_dec": 3.383,
       "tijd": "1:11:57",
       "strava_url": "https://www.strava.com/activities/17811337138"
     },
@@ -4331,6 +4334,7 @@
       "gem_hr": 173,
       "max_hr": 185,
       "tempo": "3:17",
+      "tempo_dec": 3.283,
       "tijd": "32:53",
       "strava_url": "https://www.strava.com/activities/17332987388"
     },
@@ -4375,6 +4379,7 @@
       "gem_hr": 171,
       "max_hr": 185,
       "tempo": "3:32",
+      "tempo_dec": 3.533,
       "tijd": "25:43",
       "strava_url": "https://www.strava.com/activities/16893845235"
     },
@@ -4403,6 +4408,7 @@
       "gem_hr": 160,
       "max_hr": 173,
       "tempo": "4:02",
+      "tempo_dec": 4.033,
       "tijd": "2:51:03",
       "strava_url": "https://www.strava.com/activities/16191833910"
     }
