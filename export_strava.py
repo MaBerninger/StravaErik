@@ -161,41 +161,124 @@ hr500_list = [{"datum": r["datum_sort"], "hr500": r["hr_500"], "afstand": r["afs
                "gem_hr": r["gem_hr"], "gem_tempo": r["tempo_dec"]}
               for r in duurlopen if r["hr_500"]]
 
-# ── 6. Wedstrijd events ────────────────────────────────────────────────────────
-events = [
-    {"naam": "Marathon Rotterdam", "datum": "12 april 2026", "afstand": 42.2,
-     "runs": [r for r in alle_runs if "marathon rotterdam" in r["naam"].lower() or "marathondag" in r["trainingsplan"].lower()]},
-    {"naam": "Vaartspel Spanderswoud", "datum": "4 april 2026", "afstand": 11.13,
-     "runs": [r for r in alle_runs if "vaartspel spanderswoud" in r["trainingsplan"].lower() and "2026-04-04" in r["datum_sort"]]},
-    {"naam": "CPC 21,1 km", "datum": "15 maart 2026", "afstand": 21.27,
-     "runs": [r for r in alle_runs if "cpc 21" in r["trainingsplan"].lower()]},
-    {"naam": "Schoorl 10 km", "datum": "8 februari 2026", "afstand": 10.02,
-     "runs": [r for r in alle_runs if "schoorl" in r["trainingsplan"].lower()]},
-    {"naam": "Silvestercross", "datum": "31 december 2025", "afstand": 7.28,
-     "runs": [r for r in alle_runs if "silvestercross" in r["trainingsplan"].lower()]},
-    {"naam": "Haas Ultramarathon", "datum": "19 oktober 2025", "afstand": 42.41,
-     "runs": [r for r in alle_runs if "haas" in r["naam"].lower()]},
-]
-for e in events:
-    race = max((r for r in e["runs"] if r["gem_hr"] > 100), key=lambda x: x["gem_hr"], default=None)
-    if race:
-        e["gem_hr"] = race["gem_hr"]
-        e["max_hr"] = race["max_hr"]
-        e["tempo"] = race["tempo"]
-        e["tempo_dec"] = race["tempo_dec"]
-        e["tijd"] = race["tijd"]
-        e["strava_url"] = race["strava_url"]
+# ── 6. Wedstrijd events — dynamisch detecteren uit naam + trainingsplan ────────
+import re as _re
+from itertools import groupby as _groupby
 
-# ── 7. PR's ────────────────────────────────────────────────────────────────────
-prs = [
-    {"afstand": "1,5 km", "tijd": "4:22", "tempo": "2:55", "datum": ""},
-    {"afstand": "5 km", "tijd": "16:53", "tempo": "3:23", "datum": ""},
-    {"afstand": "10 km", "tijd": "32:12", "tempo": "3:13", "datum": ""},
-    {"afstand": "15 km", "tijd": "49:58", "tempo": "3:20", "datum": ""},
-    {"afstand": "16,1 km", "tijd": "55:43", "tempo": "3:27", "datum": ""},
-    {"afstand": "21,1 km", "tijd": "1:11:15", "tempo": "3:22", "datum": ""},
-    {"afstand": "42,2 km", "tijd": "2:36:07", "tempo": "3:41", "datum": "Rotterdam 2026"},
+# Wedstrijdkeywords → event naam
+WEDSTRIJD_KEYWORDS = [
+    (["marathon rotterdam", "marathondag"],          "Marathon Rotterdam"),
+    (["haas ultramarathon", "haas voor"],            "Haas"),
+    (["haas"],                                        "Haas"),
+    (["silvestercross"],                              "Silvestercross"),
+    (["schoorl"],                                     "Schoorl 10 km"),
+    (["cpc 21", "cpc 10"],                            "CPC"),
+    (["vaartspel spanderswoud"],                      "Vaartspel Spanderswoud"),
+    (["vaartspel bosberg"],                           "Vaartspel Bosberg"),
+    (["zomeravondcup"],                               "Zomeravondcup"),
+    (["de mooiste", "#de mooiste"],                   "De Mooiste"),
 ]
+
+def detecteer_event_naam(r):
+    tekst = (r["naam"] + " " + r["trainingsplan"]).lower()
+    for kws, naam in WEDSTRIJD_KEYWORDS:
+        if any(k in tekst for k in kws):
+            return naam
+    return None
+
+# Groepeer wedstrijdruns per event+datum
+event_map = {}
+for r in alle_runs:
+    if r["gem_hr"] < 155 and r["afstand"] < 5:
+        continue  # te rustig / te kort voor wedstrijd
+    naam = detecteer_event_naam(r)
+    if naam:
+        # Gebruik naam + week als key zodat verschillende edities apart blijven
+        week = r["datum_sort"][:7]  # YYYY-MM
+        key = f"{naam}|{week}"
+        if key not in event_map:
+            event_map[key] = {"naam": naam, "runs": [], "_datum_sort": r["datum_sort"]}
+        event_map[key]["runs"].append(r)
+
+# Bouw events lijst
+events = []
+for key, e in sorted(event_map.items(), key=lambda x: x[1]["_datum_sort"], reverse=True):
+    runs = e["runs"]
+    # Wedstrijdrun = de run met hoogste gem HR
+    race = max((r for r in runs if r["gem_hr"] > 100), key=lambda x: x["gem_hr"], default=None)
+    if not race:
+        continue
+
+    # Datum in leesbare vorm
+    try:
+        from datetime import datetime as _dt
+        d = _dt.strptime(race["datum_sort"], "%Y-%m-%d")
+        maanden = ["","januari","februari","maart","april","mei","juni",
+                   "juli","augustus","september","oktober","november","december"]
+        datum_nl = f"{d.day} {maanden[d.month]} {d.year}"
+    except:
+        datum_nl = race["datum_sort"]
+
+    events.append({
+        "naam": e["naam"],
+        "datum": datum_nl,
+        "afstand": round(race["afstand"], 2),
+        "gem_hr": race["gem_hr"],
+        "max_hr": race["max_hr"],
+        "tempo": race["tempo"],
+        "tempo_dec": race["tempo_dec"],
+        "tijd": race["tijd"],
+        "strava_url": race["strava_url"],
+        "runs": runs,
+    })
+
+# ── 7. PR's — dynamisch uit Strava bio parsen ──────────────────────────────────
+def parse_prs_uit_bio(bio):
+    """Parst PRs uit bio zoals: PRs 1,5km 4:22, 3km 8:59, 5km 15:30 ..."""
+    prs = []
+    if not bio:
+        return prs
+    # Zoek patronen: afstand + tijd
+    pattern = r'([\d,\.]+\s*km)\s+([\d]+:[\d]{2}(?::[\d]{2})?)'
+    matches = _re.findall(pattern, bio, _re.IGNORECASE)
+    for afstand_str, tijd_str in matches:
+        afstand_str = afstand_str.strip()
+        # Bereken tempo
+        try:
+            afstand_km = float(afstand_str.replace('km','').replace(',','.').strip())
+            parts = tijd_str.split(':')
+            if len(parts) == 3:
+                total_sec = int(parts[0])*3600 + int(parts[1])*60 + int(parts[2])
+            else:
+                total_sec = int(parts[0])*60 + int(parts[1])
+            tempo_sec = total_sec / afstand_km
+            tempo_str = f"{int(tempo_sec//60)}:{int(tempo_sec%60):02d}"
+        except:
+            tempo_str = ""
+        prs.append({"afstand": afstand_str, "tijd": tijd_str, "tempo": tempo_str, "datum": ""})
+    return prs
+
+# Lees bio uit Excel
+try:
+    import openpyxl as _opx
+    _wb = _opx.load_workbook(EXCEL_PATH, data_only=True)
+    _ws = _wb[_wb.sheetnames[0]]
+    bio_text = str(_ws['A2'].value or '')
+    prs = parse_prs_uit_bio(bio_text)
+    print(f"[OK] {len(prs)} PRs geparsed uit bio")
+except Exception as _e:
+    print(f"[!] Bio lezen mislukt: {_e}, gebruik fallback PRs")
+    prs = []
+
+# Fallback als bio leeg is
+if not prs:
+    prs = [
+        {"afstand": "1,5 km", "tijd": "4:22", "tempo": "2:55", "datum": ""},
+        {"afstand": "5 km",   "tijd": "16:53", "tempo": "3:23", "datum": ""},
+        {"afstand": "10 km",  "tijd": "32:12", "tempo": "3:13", "datum": ""},
+        {"afstand": "21,1 km","tijd": "1:11:15","tempo": "3:22","datum": ""},
+        {"afstand": "42,2 km","tijd": "2:36:07","tempo": "3:41","datum": "Rotterdam 2026"},
+    ]
 
 # ── 8. Exporteer JSON ─────────────────────────────────────────────────────────
 output = {
