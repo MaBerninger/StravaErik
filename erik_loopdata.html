@@ -408,6 +408,7 @@
   }
   .save-btn:hover { border-color: var(--accent); color: var(--accent); }
   .save-btn.saved { border-color: var(--z1); color: var(--z1); }
+  .core-editable:hover { background:rgba(255,69,0,0.06); }
   .core-badge {
     display: inline-block; background: rgba(255,69,0,0.1);
     color: var(--accent); border-radius: 20px; padding: 2px 8px;
@@ -425,20 +426,6 @@
     .pr-grid { grid-template-columns:repeat(2,1fr); }
   }
 
-  /* TOEKOMSTIGE WEDSTRIJDEN — sub-tabs */
-  .kalsub-bar {
-    display:none; gap:0; border-top:1px solid var(--border);
-    padding: 0 2rem;
-  }
-  .kalsub-bar.visible { display:flex; }
-  .kalsub-btn {
-    background:none; border:none; border-bottom:2px solid transparent;
-    color:var(--muted2); padding:0.45rem 1rem; font-family:'DM Sans',sans-serif;
-    font-size:0.73rem; font-weight:500; letter-spacing:0.04em;
-    cursor:pointer; transition:all 0.18s; white-space:nowrap;
-  }
-  .kalsub-btn:hover { color:var(--text); }
-  .kalsub-btn.active { color:var(--accent); border-bottom-color:var(--accent); }
   .kalsub-section { display:none; }
   .kalsub-section.active { display:block; }
 
@@ -454,6 +441,15 @@
   }
   .kal-cat-btn:hover { color:var(--text); }
   .kal-cat-btn.active { background:rgba(255,69,0,0.12); border-color:var(--accent); color:var(--accent); }
+  .kal-cats-sep { width:1px; background:var(--border2); margin:0 0.3rem; align-self:stretch; flex-shrink:0; }
+  .kal-nav-btn {
+    background:var(--surface); border:1px solid var(--border2);
+    color:var(--muted2); border-radius:20px; padding:0.35rem 0.9rem;
+    font-size:0.72rem; font-weight:500; letter-spacing:0.07em; text-transform:uppercase;
+    cursor:pointer; transition:all 0.18s;
+  }
+  .kal-nav-btn:hover { color:var(--text); }
+  .kal-nav-btn.active { background:rgba(100,116,139,0.15); border-color:var(--muted2); color:var(--text); }
   .kal-badge {
     display:inline-block; font-size:0.68rem; font-weight:500; letter-spacing:0.05em;
     padding:2px 8px; border-radius:10px; white-space:nowrap;
@@ -553,12 +549,6 @@
       <button class="tab-btn" onclick="switchTab('schema',this)">Schema</button>
       <button class="tab-btn" onclick="switchTab('kalender',this)">Toekomstige wedstrijden</button>
     </nav>
-  </div>
-  <div class="kalsub-bar" id="kalsub-bar-header">
-    <button class="kalsub-btn active" onclick="switchKalSub('wedstrijden',this)">Wedstrijden</button>
-    <button class="kalsub-btn" onclick="switchKalSub('nks',this)">NK's</button>
-    <button class="kalsub-btn" onclick="switchKalSub('trackmeetings',this)">Track Meetings</button>
-    <button class="kalsub-btn" onclick="switchKalSub('ultra',this)">50 &amp; 100 km</button>
   </div>
 </header>
 
@@ -724,12 +714,13 @@
     <input class="filter-input" id="kal-search" placeholder="🔍 Zoek naam of stad..." oninput="filterKalender()" style="min-width:210px">
   </div>
 
+  <!-- Categorie-filter + sectie-navigatie in één rij -->
+  <div class="kal-cats" id="kal-cats" style="margin-bottom:1.2rem;"></div>
+
   <!-- SUB 1: Wedstrijden -->
   <div class="kalsub-section active" id="kalsub-wedstrijden">
     <!-- Stats -->
     <div class="hero-stats" id="kal-stats" style="margin-bottom:1.4rem;"></div>
-    <!-- Categorie-filter -->
-    <div class="kal-cats" id="kal-cats" style="margin-bottom:1.2rem;"></div>
     <!-- World Marathon Majors -->
     <div class="section-title" style="margin-top:0;">World Marathon Majors 2026 <span style="font-size:0.72rem;font-family:'DM Sans',sans-serif;letter-spacing:0;color:var(--muted2);font-weight:400;">· Abbott WMM · 7 races</span></div>
     <div class="wmm-grid" id="wmm-grid"></div>
@@ -986,7 +977,8 @@ function renderAlle() {
   document.getElementById('tbody-alle').innerHTML = data.map(r => {
     const key = getRunKey(r);
     const invoer = loadInvoerData()[key] || {};
-    const coreBadge = invoer.core ? `<span class="core-badge">${invoer.core} min</span>` : '<span style="color:var(--muted)">—</span>';
+    const coreVal   = invoer.core || 0;
+    const coreBadge = coreVal ? `<span class="core-badge">${coreVal} min</span>` : '<span style="color:var(--muted2)">—</span>';
     return `
     <tr>
       <td class="td-datum">${r.strava_url ? `<a href="${r.strava_url}" target="_blank" class="strava-link">${datumFmt(r.datum)}</a>` : datumFmt(r.datum)}</td>
@@ -997,7 +989,7 @@ function renderAlle() {
       <td class="td-num" style="color:var(--muted2)">${r.min_hr||'—'}</td>
       <td class="td-num" style="color:${hrColor(r.gem_hr)};font-weight:500">${r.gem_hr||'—'}</td>
       <td class="td-num" style="color:var(--muted2)">${r.max_hr||'—'}</td>
-      <td class="td-num">${coreBadge}</td>
+      <td class="td-num core-editable" data-key="${key.replace(/"/g,'&quot;')}" title="Klik om core-minuten in te vullen" style="cursor:pointer;">${coreBadge}</td>
       <td><span class="hr-badge ${zClass(r.zone)}">${zLabel(r.zone)}</span></td>
       <td class="td-plan">${invoer.opmerking || r.trainingsplan || ''}</td>
       ${(() => { const k = berekenKcal(r); return k ? `<td class="kcal-cell"><span class="kcal-verbrand">${k.verbrand} verbrand</span><br><span class="kcal-extra">+${k.extra} extra</span><br><span class="kcal-totaal">${k.totaal.toLocaleString('nl-NL')} totaal</span></td>` : '<td class="kcal-cell" style="color:var(--muted)">—</td>'; })()}
@@ -1005,6 +997,40 @@ function renderAlle() {
 
 
 }
+
+// ===== CORE INLINE EDIT =====
+document.addEventListener('click', function(e) {
+  const td = e.target.closest('td.core-editable');
+  if (!td || td.querySelector('input')) return; // al in edit-mode
+  const key = td.dataset.key;
+  const data = loadInvoerData();
+  const huidig = (data[key] && data[key].core) || 0;
+
+  const inp = document.createElement('input');
+  inp.type = 'number'; inp.min = '0'; inp.max = '120'; inp.step = '5';
+  inp.value = huidig || '';
+  inp.placeholder = 'min';
+  inp.style.cssText = 'width:58px;background:var(--surface);border:1px solid var(--accent);color:var(--text);border-radius:5px;padding:3px 6px;font-family:"DM Mono",monospace;font-size:0.82rem;text-align:center;outline:none;';
+
+  function opslaan() {
+    const v = parseInt(inp.value) || 0;
+    const d = loadInvoerData();
+    if (!d[key]) d[key] = {};
+    if (v > 0) { d[key].core = v; } else { delete d[key].core; if (!Object.keys(d[key]).length) delete d[key]; }
+    saveInvoerData(d);
+    td.innerHTML = v > 0 ? `<span class="core-badge">${v} min</span>` : '<span style="color:var(--muted2)">—</span>';
+  }
+
+  inp.addEventListener('blur', opslaan);
+  inp.addEventListener('keydown', ev => {
+    if (ev.key === 'Enter')  { inp.blur(); }
+    if (ev.key === 'Escape') { td.innerHTML = huidig ? `<span class="core-badge">${huidig} min</span>` : '<span style="color:var(--muted2)">—</span>'; }
+  });
+
+  td.innerHTML = '';
+  td.appendChild(inp);
+  inp.focus(); inp.select();
+});
 
 // ===== TAB 2: DUURLOPEN =====
 let hr500map = {};
@@ -1202,8 +1228,6 @@ function switchTab(t, btn) {
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('tab-'+t).classList.add('active');
   if (btn) btn.classList.add('active');
-  const subBar = document.getElementById('kalsub-bar-header');
-  if (subBar) subBar.classList.toggle('visible', t === 'kalender');
   window.scrollTo(0,0);
   if (t === 'schema' && !schemaLoaded) { schemaLoaded = true; laadSchema(); }
   if (t === 'kalender' && !kalenderLoaded) { kalenderLoaded = true; laadKalender(); }
@@ -1211,9 +1235,13 @@ function switchTab(t, btn) {
 
 function switchKalSub(sub, btn) {
   document.querySelectorAll('.kalsub-section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('#kalsub-bar-header .kalsub-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('kalsub-' + sub).classList.add('active');
-  if (btn) btn.classList.add('active');
+  // Update nav-button active state
+  document.querySelectorAll('#kal-cats .kal-nav-btn').forEach(b =>
+    b.classList.toggle('active', b.dataset.sub === sub));
+  // Update category pill active state
+  document.querySelectorAll('#kal-cats .kal-cat-btn').forEach(b =>
+    b.classList.toggle('active', sub === 'wedstrijden' && b.dataset.cat === kalActiveCat));
   if (sub === 'nks') renderNKs();
   if (sub === 'trackmeetings') renderTrackMeetings();
   if (sub === 'ultra') renderUltra();
@@ -1807,13 +1835,28 @@ function renderKalCats() {
   ];
   const raw = [...new Set(all.map(w => w.categorie).filter(Boolean))];
   const cats = ['Alle', ...new Set(raw.map(normCat)).values()].sort((a,b) => a==='Alle'?-1:b==='Alle'?1:a.localeCompare(b));
-  document.getElementById('kal-cats').innerHTML = cats.map(c =>
-    `<button class="kal-cat-btn${c === kalActiveCat ? ' active' : ''}" data-cat="${c}" onclick="setKalCat('${c}')">${c}</button>`
+  const isWed = document.getElementById('kalsub-wedstrijden')?.classList.contains('active') ?? true;
+  const catBtns = cats.map(c =>
+    `<button class="kal-cat-btn${isWed && c === kalActiveCat ? ' active' : ''}" data-cat="${c}" onclick="setKalCat('${c}')">${c}</button>`
   ).join('');
+  const navDefs = [['nks',"NK's"],['trackmeetings','Track Meetings'],['ultra','50 &amp; 100 km']];
+  const activeSub = document.querySelector('.kalsub-section.active')?.id?.replace('kalsub-','') || 'wedstrijden';
+  const navBtns = navDefs.map(([sub, label]) =>
+    `<button class="kal-nav-btn${activeSub === sub ? ' active' : ''}" data-sub="${sub}" onclick="switchKalSub('${sub}',this)">${label}</button>`
+  ).join('');
+  document.getElementById('kal-cats').innerHTML = catBtns + '<span class="kal-cats-sep"></span>' + navBtns;
 }
 
 function setKalCat(cat) {
   kalActiveCat = cat;
+  const wedSec = document.getElementById('kalsub-wedstrijden');
+  if (!wedSec.classList.contains('active')) {
+    document.querySelectorAll('.kalsub-section').forEach(s => s.classList.remove('active'));
+    wedSec.classList.add('active');
+    document.querySelectorAll('#kal-cats .kal-nav-btn').forEach(b => b.classList.remove('active'));
+    const searchEl = document.getElementById('kal-search');
+    if (searchEl) searchEl.style.display = '';
+  }
   document.querySelectorAll('#kal-cats .kal-cat-btn').forEach(b =>
     b.classList.toggle('active', b.dataset.cat === cat));
   filterKalender();
