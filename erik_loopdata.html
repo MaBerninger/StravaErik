@@ -64,6 +64,42 @@
 
   /* PAGES */
   .page { display:none; max-width:1440px; margin:0 auto; padding:1.8rem 2rem 4rem; }
+
+  /* SCHEMA WACHTWOORD MODAL */
+  #schema-pw-overlay {
+    display:none; position:fixed; inset:0; z-index:500;
+    background:rgba(0,0,0,0.85); backdrop-filter:blur(6px);
+    align-items:center; justify-content:center;
+  }
+  #schema-pw-overlay.active { display:flex; }
+  .pw-box {
+    background:var(--surface); border:1px solid var(--border2); border-radius:14px;
+    padding:2.5rem 2.5rem 2rem; width:320px; max-width:90vw;
+    display:flex; flex-direction:column; gap:1rem; align-items:center;
+  }
+  .pw-title {
+    font-family:'Bebas Neue',sans-serif; font-size:1.6rem; letter-spacing:0.08em;
+    color:var(--text); text-align:center;
+  }
+  .pw-sub { font-size:0.76rem; color:var(--muted2); text-align:center; }
+  .pw-input {
+    width:100%; padding:0.65rem 1rem; background:#111; border:1px solid var(--border2);
+    border-radius:8px; color:var(--text); font-family:'DM Mono',monospace; font-size:1rem;
+    outline:none; text-align:center; letter-spacing:0.15em;
+    transition:border-color 0.18s;
+  }
+  .pw-input:focus { border-color:var(--accent); }
+  .pw-input.error  { border-color:#ef4444; animation:pw-shake 0.3s; }
+  .pw-btn {
+    width:100%; padding:0.65rem; background:var(--accent); border:none; border-radius:8px;
+    color:#fff; font-family:'DM Sans',sans-serif; font-size:0.9rem; font-weight:600;
+    cursor:pointer; transition:opacity 0.18s;
+  }
+  .pw-btn:hover { opacity:0.85; }
+  .pw-err { font-size:0.74rem; color:#ef4444; min-height:1rem; }
+  @keyframes pw-shake {
+    0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)}
+  }
   .page.active { display:block; }
 
   /* STATS ROW */
@@ -527,6 +563,18 @@
     <button class="kalsub-btn" onclick="switchKalSub('ultra',this)">50 &amp; 100 km</button>
   </div>
 </header>
+
+<!-- SCHEMA WACHTWOORD MODAL -->
+<div id="schema-pw-overlay">
+  <div class="pw-box">
+    <div class="pw-title">Schema</div>
+    <div class="pw-sub">Voer het wachtwoord in om het trainingsschema te bekijken.</div>
+    <input class="pw-input" id="pw-input" type="password" placeholder="••••••••"
+      onkeydown="if(event.key==='Enter')checkSchemaPw()" autocomplete="off">
+    <div class="pw-err" id="pw-err"></div>
+    <button class="pw-btn" onclick="checkSchemaPw()">Bevestigen</button>
+  </div>
+</div>
 
 <!-- ===== TAB 1: ALLE RUNS ===== -->
 <div id="tab-alle" class="page active">
@@ -1197,7 +1245,51 @@ function renderPRs() {
 
 // ===== TAB SWITCH =====
 let schemaLoaded = false;
+const SCHEMA_PW_HASH = '19fd3635f618495ce21403149b293ddb5d5dc5421a1c5dc0b2b037b7b5888f3c';
+const SCHEMA_PW_KEY  = 'schema_unlocked';
+
+async function sha256(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
+async function checkSchemaPw() {
+  const val = document.getElementById('pw-input').value;
+  const hash = await sha256(val);
+  if (hash === SCHEMA_PW_HASH) {
+    sessionStorage.setItem(SCHEMA_PW_KEY, '1');
+    document.getElementById('schema-pw-overlay').classList.remove('active');
+    document.getElementById('pw-input').value = '';
+    document.getElementById('pw-err').textContent = '';
+    openSchema();
+  } else {
+    const inp = document.getElementById('pw-input');
+    inp.classList.add('error');
+    document.getElementById('pw-err').textContent = 'Onjuist wachtwoord.';
+    setTimeout(() => inp.classList.remove('error'), 400);
+    inp.select();
+  }
+}
+
+function openSchema() {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('tab-schema').classList.add('active');
+  window.scrollTo(0,0);
+  if (!schemaLoaded) { schemaLoaded = true; laadSchema(); }
+}
+
 function switchTab(t, btn) {
+  // Schema vereist wachtwoord
+  if (t === 'schema' && !sessionStorage.getItem(SCHEMA_PW_KEY)) {
+    // Bewaar knop-referentie zodat we actief kunnen markeren na unlock
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    document.getElementById('pw-input').value = '';
+    document.getElementById('pw-err').textContent = '';
+    document.getElementById('schema-pw-overlay').classList.add('active');
+    setTimeout(() => document.getElementById('pw-input').focus(), 50);
+    return;
+  }
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('tab-'+t).classList.add('active');
@@ -2175,22 +2267,38 @@ function renderNKs() {
 
 // ===== TRACK MEETINGS =====
 const TRACK_MEETINGS = [
+  // ── Utrecht (UAV Midden-Nederland) ──────────────────────────────
   {
     datum_sort: "2026-05-01",
     datum:      "01-05-2026",
-    naam:       "Track Meeting 1",
-    locatie:    "Atletiekbaan Maarschalkerweerd",
+    naam:       "Utrecht TM 1",
+    locatie:    "Atletiekbaan Maarschalkerweerd, Utrecht",
     locatie_note: null,
+    url:        "https://www.trackmeetings.nl",
     loop:  ["100m", "200m", "800m", "1500m", "3000m"],
     horde: ["100/110m horden"],
     veld:  ["Verspringen", "Hinkstapspringen", "Hoogspringen", "Kogelstoten", "Kogelslingeren", "Zittend werpen"],
   },
+  // ── Wageningen (AV Pallas '67) ──────────────────────────────────
+  {
+    datum_sort: "2026-05-08",
+    datum:      "08-05-2026",
+    naam:       "Wageningen TM 1",
+    locatie:    "AV Pallas '67 · Wageningen",
+    locatie_note: "Bornsesteeg 2, 6708 PE Wageningen",
+    url:        "https://www.atletiek.nu/wedstrijd/main/43480/",
+    loop:  ["100m", "200m", "400m", "800m", "1500m", "5000m"],
+    horde: ["100mH", "110mH"],
+    veld:  ["Discuswerpen", "Kogelstoten", "Speerwerpen", "Hoogspringen", "Polshoogspringen", "Verspringen"],
+  },
+  // ── Utrecht ─────────────────────────────────────────────────────
   {
     datum_sort: "2026-05-22",
     datum:      "22-05-2026",
-    naam:       "Track Meeting 2",
-    locatie:    "Atletiekbaan Maarschalkerweerd",
+    naam:       "Utrecht TM 2",
+    locatie:    "Atletiekbaan Maarschalkerweerd, Utrecht",
     locatie_note: null,
+    url:        "https://www.trackmeetings.nl",
     loop:  ["100m", "400m", "800m", "1500m", "5000m"],
     horde: ["400m horden"],
     veld:  ["Verspringen", "Hinkstapspringen", "Hoogspringen", "Kogelstoten", "Discuswerpen", "Zittend werpen"],
@@ -2198,17 +2306,19 @@ const TRACK_MEETINGS = [
   {
     datum_sort: "2026-06-12",
     datum:      "12-06-2026",
-    naam:       "Track Meeting 3",
-    locatie:    "Atletiekbaan Maarschalkerweerd",
+    naam:       "Utrecht TM 3",
+    locatie:    "Atletiekbaan Maarschalkerweerd, Utrecht",
     locatie_note: null,
+    url:        "https://www.trackmeetings.nl",
     loop:  ["100m", "200m", "800m", "1500m", "3000m"],
     horde: ["100/110m horden"],
     veld:  ["Verspringen", "Hinkstapspringen", "Hoogspringen", "Polsstokhoogspringen", "Kogelstoten", "Speerwerpen", "Zittend werpen"],
   },
+  // ── Wageningen ──────────────────────────────────────────────────
   {
     datum_sort: "2026-06-19",
     datum:      "19-06-2026",
-    naam:       "Track Meeting Pallas '67",
+    naam:       "Wageningen TM 2",
     locatie:    "AV Pallas '67 · Wageningen",
     locatie_note: "Bornsesteeg 2, 6708 PE Wageningen",
     url:        "https://www.atletiek.nu/wedstrijd/main/43481/",
@@ -2216,34 +2326,65 @@ const TRACK_MEETINGS = [
     horde: ["100mH", "110mH"],
     veld:  ["Discuswerpen", "Kogelstoten", "Speerwerpen", "Hoogspringen", "Polshoogspringen", "Verspringen"],
   },
+  // ── Utrecht ─────────────────────────────────────────────────────
   {
     datum_sort: "2026-08-07",
     datum:      "07-08-2026",
-    naam:       "Track Meeting 4",
-    locatie:    "Atletiekbaan Maarschalkerweerd",
-    locatie_note: "Mogelijk op Atletiekbaan Overvecht i.v.m. onderhoud",
+    naam:       "Utrecht TM 4",
+    locatie:    "Atletiekbaan Maarschalkerweerd, Utrecht",
+    locatie_note: "Zeer waarschijnlijk op Atletiekbaan Overvecht i.v.m. onderhoud",
+    url:        "https://www.trackmeetings.nl",
     loop:  ["150m", "300m", "800m", "1500m", "1 Engelse mijl", "5000m"],
     horde: ["300m horden"],
     veld:  ["Verspringen", "Hoogspringen", "Kogelstoten", "Discuswerpen"],
   },
+  // ── Wageningen ──────────────────────────────────────────────────
+  {
+    datum_sort: "2026-08-21",
+    datum:      "21-08-2026",
+    naam:       "Wageningen TM 3",
+    locatie:    "AV Pallas '67 · Wageningen",
+    locatie_note: "Bornsesteeg 2, 6708 PE Wageningen",
+    url:        "https://www.atletiek.nu/wedstrijd/main/43482/",
+    loop:  ["100m", "200m", "400m", "800m", "1500m", "5000m"],
+    horde: ["100mH", "110mH"],
+    veld:  ["Discuswerpen", "Kogelstoten", "Speerwerpen", "Hoogspringen", "Polshoogspringen", "Verspringen"],
+  },
+  // ── Utrecht ─────────────────────────────────────────────────────
   {
     datum_sort: "2026-09-04",
     datum:      "04-09-2026",
-    naam:       "Track Meeting 5",
-    locatie:    "Atletiekbaan Maarschalkerweerd",
+    naam:       "Utrecht TM 5",
+    locatie:    "Atletiekbaan Maarschalkerweerd, Utrecht",
     locatie_note: "Mogelijk op Atletiekbaan Overvecht i.v.m. onderhoud",
+    url:        "https://www.trackmeetings.nl",
     loop:  ["100m", "200m", "400m", "800m", "1500m", "5000m"],
     horde: ["400m horden"],
     veld:  ["Verspringen", "Hinkstapspringen", "Hoogspringen", "Kogelstoten", "Kogelslingeren", "Zittend werpen"],
+  },
+  // ── Wageningen ──────────────────────────────────────────────────
+  {
+    datum_sort: "2026-09-18",
+    datum:      "18-09-2026",
+    naam:       "Wageningen TM 4",
+    locatie:    "AV Pallas '67 · Wageningen",
+    locatie_note: "Bornsesteeg 2, 6708 PE Wageningen",
+    url:        "https://www.atletiek.nu/wedstrijd/main/43483/",
+    loop:  ["100m", "200m", "400m", "800m", "1500m", "5000m"],
+    horde: ["100mH", "110mH"],
+    veld:  ["Discuswerpen", "Kogelstoten", "Speerwerpen", "Hoogspringen", "Polshoogspringen", "Verspringen"],
   },
 ];
 
 function renderTrackMeetings() {
   const today = new Date(); today.setHours(0,0,0,0);
-  const komend = TRACK_MEETINGS.filter(m => new Date(m.datum_sort) >= today).length;
+  const komend   = TRACK_MEETINGS.filter(m => new Date(m.datum_sort) >= today).length;
+  const utrecht  = TRACK_MEETINGS.filter(m => m.naam.startsWith('Utrecht')).length;
+  const wagen    = TRACK_MEETINGS.filter(m => m.naam.startsWith('Wageningen')).length;
 
   document.getElementById('tm-stats').innerHTML = `
-    <div class="stat-card" style="min-width:110px"><div class="stat-label">Meetings</div><div class="stat-value">${TRACK_MEETINGS.length}</div></div>
+    <div class="stat-card" style="min-width:110px"><div class="stat-label">Utrecht</div><div class="stat-value">${utrecht}</div></div>
+    <div class="stat-card" style="min-width:110px"><div class="stat-label">Wageningen</div><div class="stat-value">${wagen}</div></div>
     <div class="stat-card" style="min-width:110px"><div class="stat-label">Komend</div><div class="stat-value">${komend}</div></div>
   `;
 
