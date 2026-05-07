@@ -549,10 +549,8 @@
     <nav>
       <button class="tab-btn active" onclick="switchTab('alle',this)">Alle runs</button>
       <button class="tab-btn" onclick="switchTab('duurlopen',this)">Duurlopen</button>
-      <button class="tab-btn" onclick="switchTab('wedstrijden',this)">Wedstrijden</button>
-      <button class="tab-btn" onclick="switchTab('prs',this)">PR's</button>
+      <button class="tab-btn" onclick="switchTab('wedstrijden',this)">Gelopen wedstrijden</button>
       <button class="tab-btn" onclick="switchTab('schema',this)">Schema</button>
-      <button class="tab-btn" onclick="switchTab('invoer',this)">Invoer</button>
       <button class="tab-btn" onclick="switchTab('kalender',this)">Toekomstige wedstrijden</button>
     </nav>
   </div>
@@ -699,31 +697,6 @@
 </div>
 
 <!-- ===== TAB 4: PR's ===== -->
-<div id="tab-prs" class="page">
-  <div class="pr-hero">
-    <div class="pr-hero-title">Personal Records</div>
-    <div class="pr-hero-name">Erik Kallenberg</div>
-  </div>
-  <div class="section-title">Persoonlijke records</div>
-  <div class="pr-grid" id="pr-grid"></div>
-
-  <div class="section-title" style="margin-top:1rem">Alle wedstrijdresultaten</div>
-  <div class="table-wrap">
-    <table>
-      <thead><tr>
-        <th>Datum</th>
-        <th>Wedstrijd</th>
-        <th class="td-num">Afstand</th>
-        <th class="td-num">Tijd</th>
-        <th class="td-num">Tempo</th>
-        <th class="td-num">Gem HR</th>
-        <th class="td-num">Max HR</th>
-      </tr></thead>
-      <tbody id="tbody-prs"></tbody>
-    </table>
-  </div>
-</div>
-
 <!-- ===== TAB 5: SCHEMA ===== -->
 <div id="tab-schema" class="page">
   <div id="schema-loading" style="text-align:center;padding:3rem;color:var(--muted2)">
@@ -738,38 +711,6 @@
   </div>
 </div>
 
-<!-- ===== TAB 6: INVOER ===== -->
-<div id="tab-invoer" class="page">
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
-    <div>
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:0.06em;">Invoer</div>
-      <div style="font-size:0.78rem;color:var(--muted2);margin-top:2px;">Core (minuten) en opmerkingen worden lokaal opgeslagen in je browser.</div>
-    </div>
-    <div style="display:flex;gap:0.6rem;align-items:center;">
-      <input class="filter-input" id="search-invoer" placeholder="🔍 Zoeken..." oninput="renderInvoer()" style="min-width:180px">
-      <button class="filter-btn" onclick="exportInvoer()" style="border-color:var(--accent);color:var(--accent)">↓ Export CSV</button>
-      <button class="filter-btn" onclick="if(confirm('Weet je zeker dat je alle invoer wilt wissen?')){{clearInvoer()}}">Wis alles</button>
-    </div>
-  </div>
-
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0.85rem;margin-bottom:1.8rem;" id="stats-invoer"></div>
-
-  <div class="table-wrap">
-    <table>
-      <thead><tr>
-        <th>Datum</th>
-        <th>Run</th>
-        <th class="td-num">Afstand</th>
-        <th class="td-num">Tempo</th>
-        <th class="td-num">Gem HR</th>
-        <th class="td-num" style="color:var(--accent)">Core (min)</th>
-        <th>Opmerking</th>
-        <th></th>
-      </tr></thead>
-      <tbody id="tbody-invoer"></tbody>
-    </table>
-  </div>
-</div>
 
 <!-- ===== TOEKOMSTIGE WEDSTRIJDEN (met sub-tabs) ===== -->
 <div id="tab-kalender" class="page">
@@ -929,8 +870,6 @@ async function laadData() {
     renderDuurlopen();
     renderWedstrijden();
     renderPRs();
-    renderInvoer();
-    renderHomePRs();
     buildChart();
     fixStickyHeaders();
     // Laad schema voor home week (zonder blokkering)
@@ -1221,26 +1160,7 @@ function renderWedstrijden() {
 
 // ===== TAB 4: PR's =====
 function renderPRs() {
-  document.getElementById('pr-grid').innerHTML = RAW.prs.map(p => `
-    <div class="pr-card">
-      <div class="pr-dist">${p.afstand}</div>
-      <div class="pr-time">${p.tijd}</div>
-      <div class="pr-tempo">${p.tempo} min/km</div>
-      ${p.datum ? `<div class="pr-sub">${p.datum}</div>` : ''}
-    </div>`).join('');
-
-  // Wedstrijden tabel op PR pagina
-  const raceRuns = RAW.events.map(e => e.runs.find(r=>r.gem_hr===e.gem_hr)||e.runs[0]).filter(Boolean);
-  document.getElementById('tbody-prs').innerHTML = raceRuns.map(r => `
-    <tr>
-      <td class="td-datum">${r.strava_url ? `<a href="${r.strava_url}" target="_blank" class="strava-link">${datumFmt(r.datum)}</a>` : datumFmt(r.datum)}</td>
-      <td class="td-name">${r.strava_url ? `<a href="${r.strava_url}" target="_blank" class="strava-link">${r.trainingsplan||r.naam}</a>` : (r.trainingsplan||r.naam)}</td>
-      <td class="td-num">${r.afstand.toFixed(1)} km</td>
-      <td class="td-num" style="color:var(--accent)">${r.tijd||'—'}</td>
-      <td class="td-num">${r.tempo||'—'}</td>
-      <td class="td-num" style="color:${hrColor(r.gem_hr)}">${r.gem_hr||'—'}</td>
-      <td class="td-num" style="color:var(--muted2)">${r.max_hr||'—'}</td>
-    </tr>`).join('');
+  renderHomePRs();
 }
 
 // ===== TAB SWITCH =====
@@ -1286,7 +1206,6 @@ function switchTab(t, btn) {
   if (subBar) subBar.classList.toggle('visible', t === 'kalender');
   window.scrollTo(0,0);
   if (t === 'schema' && !schemaLoaded) { schemaLoaded = true; laadSchema(); }
-  if (t === 'invoer') { renderInvoer(); fixStickyHeaders(); }
   if (t === 'kalender' && !kalenderLoaded) { kalenderLoaded = true; laadKalender(); }
 }
 
