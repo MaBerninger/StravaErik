@@ -146,14 +146,54 @@ for _, r in totaal.sort_values("Datum", ascending=False).iterrows():
     })
 
 # ── 5. Duurlopen & wedstrijden categoriseren ─────────────────────────────────
-def is_wedstrijd(r):
-    naam = r["naam"].lower()
-    plan = r["trainingsplan"].lower()
-    kw = ["marathon rotterdam", "haas", "silvester", "schoorl", "cpc 21", "vaartspel spanderswoud"]
-    return any(k in naam or k in plan for k in kw)
+
+# Bouw per-km rondes HR lookup: datum_sort -> lijst van (ronde_nr, gem_hr, afstand_km)
+rondes_hr_map = {}
+for _, row in df[df["Segment"].str.strip().str.startswith("Ronde", na=False)].iterrows():
+    datum = str(row.get("Datum", "")).strip()
+    datum_sort = datum.split(",")[0].strip()
+    try:
+        ronde_nr = int(str(row["Segment"]).strip().split()[-1])
+        gem_hr = float(row["Gem HR"]) if str(row["Gem HR"]) not in ("", "nan") else 0
+        afstand = float(row["Afstand (km)"]) if str(row["Afstand (km)"]) not in ("", "nan") else 0
+        naam = str(df.loc[row.name, "Run Naam"] if "Run Naam" in df.columns else "").strip()
+        key = f"{datum_sort}|{row.get('Run Naam', '')}"
+        if key not in rondes_hr_map:
+            rondes_hr_map[key] = []
+        rondes_hr_map[key].append((ronde_nr, gem_hr, afstand))
+    except:
+        pass
+
+def heeft_aaneengesloten_hoge_hr(r, hr_drempel=169, min_km=4.9):
+    """Check of run 4.9+ km aaneengesloten boven hr_drempel heeft."""
+    key = f"{r['datum_sort']}|{r['naam']}"
+    rondes = sorted(rondes_hr_map.get(key, []), key=lambda x: x[0])
+    if not rondes:
+        return False
+    aaneengesloten_km = 0.0
+    for _, hr, km in rondes:
+        if hr > hr_drempel:
+            aaneengesloten_km += km
+            if aaneengesloten_km >= min_km:
+                return True
+        else:
+            aaneengesloten_km = 0.0
+    return False
+
+def is_wedstrijd_run(r):
+    """Bepaal of een run een wedstrijd is op basis van HR-regels."""
+    # Handmatige uitsluitingen
+    if r["datum_sort"] == "2026-02-14":
+        return False
+    if r["afstand"] > 40:
+        return r["gem_hr"] >= 158
+    if r["afstand"] > 18:
+        return r["gem_hr"] >= 164
+    else:
+        return heeft_aaneengesloten_hoge_hr(r, hr_drempel=169, min_km=4.9)
 
 def is_duurloop(r):
-    return (not is_wedstrijd(r) and r["afstand"] >= 8 and
+    return (not is_wedstrijd_run(r) and r["afstand"] >= 8 and
             ("Z1" in r["zone"] or "Z2" in r["zone"] or "duurloop" in r["trainingsplan"].lower()))
 
 duurlopen = [r for r in alle_runs if is_duurloop(r)]
@@ -161,22 +201,20 @@ hr500_list = [{"datum": r["datum_sort"], "hr500": r["hr_500"], "afstand": r["afs
                "gem_hr": r["gem_hr"], "gem_tempo": r["tempo_dec"]}
               for r in duurlopen if r["hr_500"]]
 
-# ── 6. Wedstrijd events — dynamisch detecteren uit naam + trainingsplan ────────
+# ── 6. Wedstrijd events — detecteren via HR-regels + keywords ─────────────────
 import re as _re
 from itertools import groupby as _groupby
 
-# Wedstrijdkeywords → event naam
+# Keywords alleen voor naamgeving, NIET voor detectie
 WEDSTRIJD_KEYWORDS = [
-    (["marathon rotterdam", "marathondag"],          "Marathon Rotterdam"),
-    (["haas ultramarathon", "haas voor"],            "Haas"),
-    (["haas"],                                        "Haas"),
-    (["silvestercross"],                              "Silvestercross"),
-    (["schoorl"],                                     "Schoorl 10 km"),
-    (["cpc 21", "cpc 10"],                            "CPC"),
-    (["vaartspel spanderswoud"],                      "Vaartspel Spanderswoud"),
-    (["vaartspel bosberg"],                           "Vaartspel Bosberg"),
-    (["zomeravondcup"],                               "Zomeravondcup"),
-    (["de mooiste", "#de mooiste"],                   "De Mooiste"),
+    (["marathon rotterdam", "marathondag"],    "Marathon Rotterdam"),
+    (["haas ultramarathon", "haas voor"],      "Haas"),
+    (["haas"],                                 "Haas"),
+    (["silvestercross"],                       "Silvestercross"),
+    (["schoorl"],                              "Schoorl 10 km"),
+    (["cpc 21", "cpc 10"],                    "CPC"),
+    (["zomeravondcup"],                        "Zomeravondcup"),
+    (["de mooiste", "#de mooiste"],            "De Mooiste"),
 ]
 
 def detecteer_event_naam(r):
@@ -184,21 +222,20 @@ def detecteer_event_naam(r):
     for kws, naam in WEDSTRIJD_KEYWORDS:
         if any(k in tekst for k in kws):
             return naam
+    # Geen keyword match — gebruik runnaam als event naam
     return None
 
 # Groepeer wedstrijdruns per event+datum
 event_map = {}
 for r in alle_runs:
-    if r["gem_hr"] < 155 and r["afstand"] < 5:
-        continue  # te rustig / te kort voor wedstrijd
-    naam = detecteer_event_naam(r)
-    if naam:
-        # Gebruik naam + week als key zodat verschillende edities apart blijven
-        week = r["datum_sort"][:7]  # YYYY-MM
-        key = f"{naam}|{week}"
-        if key not in event_map:
-            event_map[key] = {"naam": naam, "runs": [], "_datum_sort": r["datum_sort"]}
-        event_map[key]["runs"].append(r)
+    if not is_wedstrijd_run(r):
+        continue
+    naam = detecteer_event_naam(r) or r["naam"]  # fallback naar runnaam
+    week = r["datum_sort"][:7]  # YYYY-MM
+    key = f"{naam}|{week}"
+    if key not in event_map:
+        event_map[key] = {"naam": naam, "runs": [], "_datum_sort": r["datum_sort"]}
+    event_map[key]["runs"].append(r)
 
 # Bouw events lijst
 events = []
