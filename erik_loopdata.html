@@ -286,6 +286,14 @@
     transition: border-color 0.15s, color 0.15s;
   }
   .strava-link:hover { color: #fc4c02; border-bottom-color: #fc4c02; }
+  .strava-btn {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: rgba(252,76,2,0.1); border: 1px solid rgba(252,76,2,0.25);
+    color: #fc4c02; border-radius: 6px; padding: 3px 8px;
+    font-size: 0.72rem; font-weight: 500; text-decoration: none;
+    transition: all 0.15s; white-space: nowrap;
+  }
+  .strava-btn:hover { background: rgba(252,76,2,0.2); border-color: #fc4c02; }
   /* INVOER */
   .invoer-input {
     background: var(--surface2); border: 1px solid var(--border2);
@@ -631,7 +639,7 @@ function renderAlle() {
     const coreBadge = invoer.core ? `<span class="core-badge">${invoer.core} min</span>` : '<span style="color:var(--muted)">—</span>';
     return `
     <tr>
-      <td class="td-datum">${datumFmt(r.datum)}</td>
+      <td class="td-datum">${r.strava_url ? `<a href="${r.strava_url}" target="_blank" class="strava-link">${datumFmt(r.datum)}</a>` : datumFmt(r.datum)}</td>
       <td class="td-name">${r.strava_url ? `<a href="${r.strava_url}" target="_blank" class="strava-link">${r.naam}</a>` : r.naam}</td>
       <td class="td-num">${r.afstand>0 ? r.afstand.toFixed(1)+' km' : '—'}</td>
       <td class="td-num">${r.tijd||'—'}</td>
@@ -686,7 +694,7 @@ function renderDuurlopen() {
     const hr5 = hr500map[r.datum_sort];
     const hr5cell = hr5 ? `<span style="color:${hrColor(hr5)};font-weight:500">${hr5.toFixed(1)}</span>` : '<span style="color:var(--muted2)">—</span>';
     return `<tr>
-      <td class="td-datum">${datumFmt(r.datum)}</td>
+      <td class="td-datum">${r.strava_url ? `<a href="${r.strava_url}" target="_blank" class="strava-link">${datumFmt(r.datum)}</a>` : datumFmt(r.datum)}</td>
       <td class="td-name">${r.strava_url ? `<a href="${r.strava_url}" target="_blank" class="strava-link">${r.naam}</a>` : r.naam}</td>
       <td class="td-num">${r.afstand.toFixed(1)} km</td>
       <td class="td-num">${r.tijd||'—'}</td>
@@ -800,8 +808,8 @@ function renderWedstrijden() {
   document.getElementById('race-grid').innerHTML = RAW.events.map(e => {
     const wu = e.runs.filter(r=>r.gem_hr!==e.gem_hr&&r.afstand<8);
     return `<div class="race-card">
-      <div class="race-event">${e.runs[0]?.strava_url ? `<a href="${e.runs.find(r=>r.gem_hr===e.gem_hr)?.strava_url||e.runs[0].strava_url}" target="_blank" class="strava-link">${e.naam}</a>` : e.naam}</div>
-      <div class="race-datum">${e.datum}</div>
+      <div class="race-event">${e.strava_url ? `<a href="${e.strava_url}" target="_blank" class="strava-link">${e.naam}</a>` : e.naam}</div>
+      <div class="race-datum">${e.datum} ${e.strava_url ? `<a href="${e.strava_url}" target="_blank" class="strava-btn">↗ Strava</a>` : ''}</div>
       <div class="race-stats">
         <div><div class="rs-label">Afstand</div><div class="rs-val">${e.afstand} km</div></div>
         <div><div class="rs-label">Eindtijd</div><div class="rs-val time">${e.tijd||'—'}</div></div>
@@ -827,7 +835,7 @@ function renderPRs() {
   const raceRuns = RAW.events.map(e => e.runs.find(r=>r.gem_hr===e.gem_hr)||e.runs[0]).filter(Boolean);
   document.getElementById('tbody-prs').innerHTML = raceRuns.map(r => `
     <tr>
-      <td class="td-datum">${datumFmt(r.datum)}</td>
+      <td class="td-datum">${r.strava_url ? `<a href="${r.strava_url}" target="_blank" class="strava-link">${datumFmt(r.datum)}</a>` : datumFmt(r.datum)}</td>
       <td class="td-name">${r.strava_url ? `<a href="${r.strava_url}" target="_blank" class="strava-link">${r.trainingsplan||r.naam}</a>` : (r.trainingsplan||r.naam)}</td>
       <td class="td-num">${r.afstand.toFixed(1)} km</td>
       <td class="td-num" style="color:var(--accent)">${r.tijd||'—'}</td>
@@ -1094,7 +1102,7 @@ function renderInvoer() {
     const saved = data[key] || {};
     const safeKey = key.replace(/['"\\]/g, '_');
     return `<tr>
-      <td class="td-datum">${datumFmt(r.datum)}</td>
+      <td class="td-datum">${r.strava_url ? `<a href="${r.strava_url}" target="_blank" class="strava-link">${datumFmt(r.datum)}</a>` : datumFmt(r.datum)}</td>
       <td class="td-name">${r.strava_url ? `<a href="${r.strava_url}" target="_blank" class="strava-link">${r.naam}</a>` : r.naam}</td>
       <td class="td-num">${r.afstand > 0 ? r.afstand.toFixed(1)+' km' : '—'}</td>
       <td class="td-num">${r.tempo || '—'}</td>
