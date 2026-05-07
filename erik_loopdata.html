@@ -65,13 +65,13 @@
   /* PAGES */
   .page { display:none; max-width:1440px; margin:0 auto; padding:1.8rem 2rem 4rem; }
 
-  /* SCHEMA WACHTWOORD MODAL */
-  #schema-pw-overlay {
-    display:none; position:fixed; inset:0; z-index:500;
-    background:rgba(0,0,0,0.85); backdrop-filter:blur(6px);
+  /* SITE WACHTWOORD OVERLAY */
+  #site-pw-overlay {
+    display:flex; position:fixed; inset:0; z-index:9999;
+    background:#0a0a0a;
     align-items:center; justify-content:center;
   }
-  #schema-pw-overlay.active { display:flex; }
+  #site-pw-overlay.hidden { display:none; }
   .pw-box {
     background:var(--surface); border:1px solid var(--border2); border-radius:14px;
     padding:2.5rem 2.5rem 2rem; width:320px; max-width:90vw;
@@ -564,15 +564,15 @@
   </div>
 </header>
 
-<!-- SCHEMA WACHTWOORD MODAL -->
-<div id="schema-pw-overlay">
+<!-- SITE WACHTWOORD OVERLAY -->
+<div id="site-pw-overlay">
   <div class="pw-box">
-    <div class="pw-title">Schema</div>
-    <div class="pw-sub">Voer het wachtwoord in om het trainingsschema te bekijken.</div>
+    <div class="pw-title">Erik Kallenberg</div>
+    <div class="pw-sub">Voer het wachtwoord in om verder te gaan.</div>
     <input class="pw-input" id="pw-input" type="password" placeholder="••••••••"
-      onkeydown="if(event.key==='Enter')checkSchemaPw()" autocomplete="off">
+      onkeydown="if(event.key==='Enter')checkSitePw()" autocomplete="off">
     <div class="pw-err" id="pw-err"></div>
-    <button class="pw-btn" onclick="checkSchemaPw()">Bevestigen</button>
+    <button class="pw-btn" onclick="checkSitePw()">Bevestigen</button>
   </div>
 </div>
 
@@ -1245,23 +1245,20 @@ function renderPRs() {
 
 // ===== TAB SWITCH =====
 let schemaLoaded = false;
-const SCHEMA_PW_HASH = '19fd3635f618495ce21403149b293ddb5d5dc5421a1c5dc0b2b037b7b5888f3c';
-const SCHEMA_PW_KEY  = 'schema_unlocked';
+const SITE_PW_HASH = '19fd3635f618495ce21403149b293ddb5d5dc5421a1c5dc0b2b037b7b5888f3c';
+const SITE_PW_KEY  = 'site_unlocked';
 
 async function sha256(str) {
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
   return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
 }
 
-async function checkSchemaPw() {
+async function checkSitePw() {
   const val = document.getElementById('pw-input').value;
   const hash = await sha256(val);
-  if (hash === SCHEMA_PW_HASH) {
-    sessionStorage.setItem(SCHEMA_PW_KEY, '1');
-    document.getElementById('schema-pw-overlay').classList.remove('active');
-    document.getElementById('pw-input').value = '';
-    document.getElementById('pw-err').textContent = '';
-    openSchema();
+  if (hash === SITE_PW_HASH) {
+    sessionStorage.setItem(SITE_PW_KEY, '1');
+    document.getElementById('site-pw-overlay').classList.add('hidden');
   } else {
     const inp = document.getElementById('pw-input');
     inp.classList.add('error');
@@ -1271,30 +1268,20 @@ async function checkSchemaPw() {
   }
 }
 
-function openSchema() {
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById('tab-schema').classList.add('active');
-  window.scrollTo(0,0);
-  if (!schemaLoaded) { schemaLoaded = true; laadSchema(); }
-}
+// Controleer sessie bij laden — verberg overlay als al ingelogd
+(function() {
+  if (sessionStorage.getItem(SITE_PW_KEY)) {
+    document.getElementById('site-pw-overlay').classList.add('hidden');
+  } else {
+    setTimeout(() => document.getElementById('pw-input').focus(), 50);
+  }
+})();
 
 function switchTab(t, btn) {
-  // Schema vereist wachtwoord
-  if (t === 'schema' && !sessionStorage.getItem(SCHEMA_PW_KEY)) {
-    // Bewaar knop-referentie zodat we actief kunnen markeren na unlock
-    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-    if (btn) btn.classList.add('active');
-    document.getElementById('pw-input').value = '';
-    document.getElementById('pw-err').textContent = '';
-    document.getElementById('schema-pw-overlay').classList.add('active');
-    setTimeout(() => document.getElementById('pw-input').focus(), 50);
-    return;
-  }
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('tab-'+t).classList.add('active');
   if (btn) btn.classList.add('active');
-  // show/hide sub-tab bar in header
   const subBar = document.getElementById('kalsub-bar-header');
   if (subBar) subBar.classList.toggle('visible', t === 'kalender');
   window.scrollTo(0,0);
