@@ -382,6 +382,63 @@
     .hero-stats { grid-template-columns:repeat(2,1fr); }
     .pr-grid { grid-template-columns:repeat(2,1fr); }
   }
+
+  /* KALENDER */
+  .kal-cats {
+    display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1.4rem;
+  }
+  .kal-cat-btn {
+    background:var(--surface); border:1px solid var(--border2);
+    color:var(--muted2); border-radius:20px; padding:0.35rem 0.9rem;
+    font-size:0.72rem; font-weight:500; letter-spacing:0.07em; text-transform:uppercase;
+    cursor:pointer; transition:all 0.18s;
+  }
+  .kal-cat-btn:hover { color:var(--text); }
+  .kal-cat-btn.active { background:rgba(255,69,0,0.12); border-color:var(--accent); color:var(--accent); }
+  .kal-grid {
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(310px,1fr)); gap:1rem;
+  }
+  .kal-card {
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:12px; padding:1.2rem 1.4rem;
+    display:flex; flex-direction:column; gap:0.45rem;
+    transition:border-color 0.18s, transform 0.15s;
+    text-decoration:none; color:inherit;
+  }
+  .kal-card:hover { border-color:var(--accent); transform:translateY(-1px); }
+  .kal-card-top { display:flex; align-items:flex-start; justify-content:space-between; gap:0.5rem; }
+  .kal-card-naam {
+    font-family:'DM Sans',sans-serif; font-weight:500; font-size:0.92rem;
+    line-height:1.3; flex:1;
+  }
+  .kal-badge {
+    font-size:0.68rem; font-weight:500; letter-spacing:0.06em;
+    padding:3px 9px; border-radius:12px; white-space:nowrap; flex-shrink:0;
+  }
+  .kal-badge-5km    { background:rgba(34,197,94,0.12);   color:var(--z1); }
+  .kal-badge-10km   { background:rgba(59,130,246,0.12);  color:var(--z2); }
+  .kal-badge-15km   { background:rgba(234,179,8,0.12);   color:var(--z3); }
+  .kal-badge-10mijl { background:rgba(249,115,22,0.12);  color:var(--z4); }
+  .kal-badge-half   { background:rgba(239,68,68,0.12);   color:var(--z5); }
+  .kal-badge-mara   { background:rgba(168,85,247,0.12);  color:var(--zmax); }
+  .kal-card-meta {
+    display:flex; align-items:center; gap:0.85rem; flex-wrap:wrap;
+    font-size:0.78rem; color:var(--muted2);
+  }
+  .kal-meta-datum { font-family:'DM Mono',monospace; color:var(--text); font-size:0.8rem; }
+  .kal-meta-plaats::before { content:'📍'; margin-right:3px; }
+  .kal-meta-days {
+    margin-left:auto; font-family:'DM Mono',monospace;
+    font-size:0.72rem; color:var(--muted2);
+  }
+  .kal-meta-days.soon { color:var(--accent); font-weight:500; }
+  .kal-afstanden { font-size:0.75rem; color:var(--muted2); line-height:1.4; }
+  .kal-empty {
+    grid-column: 1/-1; text-align:center; padding:3rem;
+    color:var(--muted2); font-size:0.9rem;
+  }
+  .kal-loading { text-align:center; padding:3rem; color:var(--muted2); }
+  @media(max-width:600px) { .kal-grid { grid-template-columns:1fr; } }
 </style>
 </head>
 <body>
@@ -395,6 +452,7 @@
     <button class="tab-btn" onclick="switchTab('prs',this)">PR's</button>
     <button class="tab-btn" onclick="switchTab('schema',this)">Schema</button>
     <button class="tab-btn" onclick="switchTab('invoer',this)">Invoer</button>
+    <button class="tab-btn" onclick="switchTab('kalender',this)">Kalender</button>
   </nav>
 </header>
 
@@ -585,6 +643,25 @@
       </tr></thead>
       <tbody id="tbody-invoer"></tbody>
     </table>
+  </div>
+</div>
+
+<!-- ===== TAB 7: KALENDER ===== -->
+<div id="tab-kalender" class="page">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem;flex-wrap:wrap;gap:1rem;">
+    <div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:0.06em;">Hardloopkalender</div>
+      <div style="font-size:0.78rem;color:var(--muted2);margin-top:2px;" id="kal-bijgewerkt"></div>
+    </div>
+    <input class="filter-input" id="kal-search" placeholder="🔍 Naam of plaats..." oninput="filterKalender()" style="min-width:200px">
+  </div>
+
+  <div class="hero-stats" id="kal-stats"></div>
+
+  <div class="kal-cats" id="kal-cats"></div>
+
+  <div class="kal-grid" id="kal-grid">
+    <div class="kal-loading">Laden...</div>
   </div>
 </div>
 
@@ -896,6 +973,7 @@ function switchTab(t, btn) {
   window.scrollTo(0,0);
   if (t === 'schema' && !schemaLoaded) { schemaLoaded = true; laadSchema(); }
   if (t === 'invoer') { renderInvoer(); fixStickyHeaders(); }
+  if (t === 'kalender' && !kalenderLoaded) { kalenderLoaded = true; laadKalender(); }
 }
 
 // Fix sticky th: measure real header height and apply
@@ -995,7 +1073,7 @@ function renderHomePRs() {
   }
 
   // Filter op gewenste afstanden
-  const gewenst = ['3', '5', '10', '15', '21', '42'];
+  const gewenst = ['1.5', '3', '5', '10', '15', '21', '42'];
   const filtered = prs.filter(p => {
     const km = parseFloat(p.afstand.replace(',','.'));
     return gewenst.some(g => Math.abs(km - parseFloat(g)) < 1);
@@ -1331,6 +1409,124 @@ function exportInvoer() {
   a.href = URL.createObjectURL(blob);
   a.download = 'erik_core_opmerkingen.csv';
   a.click();
+}
+
+// ===== KALENDER =====
+let KALENDER = null;
+let kalActiveCat = 'Alle';
+let kalenderLoaded = false;
+
+const KAL_BADGE_CLASS = {
+  '5 km':                    'kal-badge-5km',
+  '10 km':                   'kal-badge-10km',
+  '15 km':                   'kal-badge-15km',
+  '10 mijl (16.1 km)':       'kal-badge-10mijl',
+  'halve marathon (21.1 km)':'kal-badge-half',
+  'marathon (42.2 km)':      'kal-badge-mara',
+};
+
+function kalDaysUntil(datum_sort) {
+  if (!datum_sort) return null;
+  const today = new Date(); today.setHours(0,0,0,0);
+  const d = new Date(datum_sort);
+  return Math.round((d - today) / 86400000);
+}
+
+function kalDayLabel(days) {
+  if (days === null) return '';
+  if (days < 0) return 'Geweest';
+  if (days === 0) return 'Vandaag!';
+  if (days === 1) return 'Morgen';
+  return `${days}d`;
+}
+
+async function laadKalender() {
+  try {
+    const resp = await fetch('hardloopwedstrijden.json');
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    KALENDER = await resp.json();
+    renderKalender();
+  } catch(e) {
+    document.getElementById('kal-grid').innerHTML =
+      `<div class="kal-empty">Kan hardloopwedstrijden.json niet laden.<br><small style="color:var(--muted)">${e.message}</small></div>`;
+  }
+}
+
+function filterKalender() { renderKalender(); }
+
+function setKalCat(cat) {
+  kalActiveCat = cat;
+  document.querySelectorAll('.kal-cat-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.cat === cat);
+  });
+  renderKalender();
+}
+
+function renderKalender() {
+  if (!KALENDER) return;
+  const weds = KALENDER.wedstrijden || [];
+  const bijgewerkt = KALENDER.bijgewerkt || '';
+  const q = (document.getElementById('kal-search')?.value || '').trim().toLowerCase();
+
+  // Bijgewerkt label
+  const bijEl = document.getElementById('kal-bijgewerkt');
+  if (bijEl && bijgewerkt) bijEl.textContent = `Bijgewerkt: ${bijgewerkt}`;
+
+  // Categorieën
+  const cats = ['Alle', ...new Set(weds.map(w => w.categorie).filter(Boolean))];
+  const catsEl = document.getElementById('kal-cats');
+  if (catsEl && catsEl.children.length === 0) {
+    catsEl.innerHTML = cats.map(c =>
+      `<button class="kal-cat-btn${c === kalActiveCat ? ' active' : ''}" data-cat="${c}" onclick="setKalCat('${c}')">${c}</button>`
+    ).join('');
+  }
+
+  // Filter
+  const filtered = weds.filter(w => {
+    const catOk = kalActiveCat === 'Alle' || w.categorie === kalActiveCat;
+    const qOk = !q || w.naam.toLowerCase().includes(q) || w.plaats.toLowerCase().includes(q);
+    return catOk && qOk;
+  });
+
+  // Stats
+  const today = new Date(); today.setHours(0,0,0,0);
+  const komend = filtered.filter(w => !w.datum_sort || new Date(w.datum_sort) >= today);
+  const thisYear = filtered.filter(w => w.datum_sort && w.datum_sort.startsWith('2026'));
+  const nextYear = filtered.filter(w => w.datum_sort && w.datum_sort.startsWith('2027'));
+  document.getElementById('kal-stats').innerHTML = `
+    <div class="stat-card"><div class="stat-label">Totaal gevonden</div><div class="stat-value">${filtered.length}</div><div class="stat-sub">wedstrijden</div></div>
+    <div class="stat-card"><div class="stat-label">Komende</div><div class="stat-value">${komend.length}</div><div class="stat-sub">nog te lopen</div></div>
+    <div class="stat-card"><div class="stat-label">2026</div><div class="stat-value">${thisYear.length}</div></div>
+    <div class="stat-card"><div class="stat-label">2027</div><div class="stat-value">${nextYear.length}</div></div>
+  `;
+
+  // Cards
+  const grid = document.getElementById('kal-grid');
+  if (!filtered.length) {
+    grid.innerHTML = '<div class="kal-empty">Geen wedstrijden gevonden.</div>';
+    return;
+  }
+
+  grid.innerHTML = filtered.map(w => {
+    const days = kalDaysUntil(w.datum_sort);
+    const dayLabel = kalDayLabel(days);
+    const isPast = days !== null && days < 0;
+    const isSoon = days !== null && days >= 0 && days <= 30;
+    const badgeClass = KAL_BADGE_CLASS[w.categorie] || 'kal-badge-5km';
+    const cardStyle = isPast ? 'opacity:0.45;' : '';
+    return `<a class="kal-card" href="${w.url}" target="_blank" rel="noopener" style="${cardStyle}">
+      <div class="kal-card-top">
+        <div class="kal-card-naam">${w.naam || '—'}</div>
+        <div class="kal-badge ${badgeClass}">${w.categorie}</div>
+      </div>
+      <div class="kal-card-meta">
+        <span class="kal-meta-datum">${w.datum || '—'}</span>
+        ${w.plaats ? `<span class="kal-meta-plaats">${w.plaats}</span>` : ''}
+        ${dayLabel ? `<span class="kal-meta-days${isSoon ? ' soon' : ''}">${dayLabel}</span>` : ''}
+      </div>
+      ${w.afstanden ? `<div class="kal-afstanden">${w.afstanden}</div>` : ''}
+    </a>`;
+  }).join('');
 }
 
 // ===== INIT
