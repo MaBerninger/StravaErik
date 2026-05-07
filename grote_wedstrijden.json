@@ -1,0 +1,785 @@
+{
+  "wedstrijden": [
+    {
+      "datum": "11-01-2026",
+      "datum_sort": "2026-01-11",
+      "naam": "Energie Barendrecht 1e van 6 marathon trainingslopen",
+      "stad": "Barendrecht",
+      "afstanden": "23,00 km",
+      "categorie": "halve marathon (21.1 km)",
+      "max_deel": 0,
+      "url": "https://www.hardlopen.nl/evenementen/35035-energie-barendrecht-1e-van-6-marathon-trainingslopen/"
+    },
+    {
+      "datum": "11-01-2026",
+      "datum_sort": "2026-01-11",
+      "naam": "NN Egmond Halve Marathon 2026",
+      "stad": "Egmond aan Zee",
+      "afstanden": "1,00 km - 1,80 km - 2,00 km - 3,00 km - 10,50 km - 21,10 km",
+      "categorie": "halve marathon (21.1 km)",
+      "max_deel": 18500,
+      "url": "https://www.hardlopen.nl/evenementen/32953-nn-egmond-halve-marathon-2026/"
+    },
+    {
+      "datum": "18-01-2026",
+      "datum_sort": "2026-01-18",
+      "naam": "Montferland Halve Marathon",
+      "stad": "'s-Heerenberg",
+      "afstanden": "5,00 km - 10,00 km - 21,10 km",
+      "categorie": "halve marathon (21.1 km)",
+      "max_deel": 8500,
+      "url": "https://www.hardlopen.nl/evenementen/34970-montferland-halve-marathon/"
+    },
+    {
+      "datum": "18-01-2026",
+      "datum_sort": "2026-01-18",
+      "naam": "Halve Marathon Zoetermeer",
+      "stad": "Zoetermeer",
+      "afstanden": "1,50 km - 5,00 km - 10,00 km - 21,10 km",
+      "categorie": "halve marathon (21.1 km)",
+      "max_deel": 2000,
+      "url": "https://www.hardlopen.nl/evenementen/35233-halve-marathon-zoetermeer/"
+    },
+    {
+      "datum": "25-01-2026",
+      "datum_sort": "2026-01-25",
+      "naam": "33e SPAR MIDWINTER HALVE MARATHON CADZAND-BAD  2026",
+      "stad": "Cadzand",
+      "afstanden": "1,00 km - 5,60 km - 21,10 km",
+      "categorie": "halve marathon (21.1 km)",
+      "max_deel": 2000,
+      "url": "https://www.hardlopen.nl/evenementen/39729-33e-spar-midwinter-halve-marathon-cadzand-bad-2026/"
+    },
+    {
+      "datum": "25-01-2026",
+      "datum_sort": "2026-01-25",
+      "naam": "Energie Barendrecht 2e van 6 marathon trainingslopen",
+      "stad": "Barendrecht",
+      "afstanden": "25,00 km",
+      "categorie": "halve marathon (21.1 km)",
+      "max_deel": 0,
+      "url": "https://www.hardlopen.nl/evenementen/35036-energie-barendrecht-2e-van-6-marathon-trainingslopen/"
+    },
+    {
+      "datum": "31-01-2026",
+      "datum_sort": "2026-01-31",
+      "naam": "Sri Chinmoy Inspiration Marathon &amp; Halve Marathon",
+      "stad": "Amstelveen",
+      "afstanden": "21,10 km - 42,20 km",
+      "categorie": "marathon (42.2 km)",
+      "max_deel": 120,
+      "url": "https://www.hardlopen.nl/evenementen/35257-sri-chinmoy-inspiration-marathon-halve-marathon/"
+    },
+    {
+      "datum": "31-01-2026",
+      "datum_sort": "2026-01-31",
+      "naam": "Centraal Beheer Marathon",
+      "stad": "Apeldoorn",
+      "afstanden": "42,00 km",
+      "categorie": "marathon (42.2 km)",
+      "max_deel": 700,
+      "url": "https://www.hardlopen.nl/evenementen/34881-centraal-beheer-marathon/"
+    },
+    {
+      "datum": "01-02-2026",
+      "datum_sort": "2026-02-01",
+      "naam": "Centraal Beheer Midwinter Marathon",
+      "stad": "Apeldoorn",
+      "afstanden": "0,50 km - 1,00 km - 8,00 km - 16,10 km - 25,00 km",
+      "categorie": "halve marathon (21.1 km)",
+      "max_deel": 0,
+      "url": "https://www.hardlopen.nl/evenementen/34879-centraal-beheer-midwinter-marathon/"
+    },
+    {
+      "datum": "07-02-2026",
+      "datum_sort": "2026-02-07",
+      "naam": "Coast marathon Nationaal Park Hollandse Duinen",
+      "stad": "Noordwijk aan Zee en Katwijk aan Zee",
+      "afstanden": "10,00 km - 21,00 km - 30,00 km - 42,00 km",
+      "categorie": "marathon (42.2 km)",
+      "max_deel": 2500,
+      "url": "https://www.hardlopen.nl/evenementen/35122-coast-marathon-nationaal-park-hollandse-duinen/"
+    },
+    {
+      "datum": "07-02-2026",
+      "datum_sort": "2026-02-07",
+      "naam": "Blaauwbekmarathon 2026",
+      "stad": "Oostwold",
+      "afstanden": "nan",
+      "categorie": "overig",
+      "max_deel": 1750,
+      "url": "https://www.hardlopen.nl/evenementen/35361-blaauwbekmarathon-2026/"
+    },
+    {
+      "datum": "08-02-2026",
+      "datum_sort": "2026-02-08",
+      "naam": "Energie Barendrecht 3e van 6 marathon trainingslopen",
+      "stad": "Barendrecht",
+      "afstanden": "28,00 km",
+      "categorie": "halve marathon (21.1 km)",
+      "max_deel": 0,
+      "url": "https://www.hardlopen.nl/evenementen/35037-energie-barendrecht-3e-van-6-marathon-trainingslopen/"
+    },
+    {
+      "datum": "22-02-2026",
+      "datum_sort": "2026-02-22",
+      "naam": "Marathonblokken - Run Your City",
+      "stad": "Soest",
+      "afstanden": "25,00 km",
+      "categorie": "halve marathon (21.1 km)",
+      "max_deel": 100,
+      "url": "https://www.hardlopen.nl/evenementen/43778-marathonblokken-run-your-city/"
+    },
+    {
+      "datum": "22-02-2026",
+      "datum_sort": "2026-02-22",
+      "naam": "Energie Barendrecht 4e van 6 marathon trainingslopen",
+      "stad": "Barendrecht",
+      "afstanden": "30,00 km",
+      "categorie": "halve marathon (21.1 km)",
+      "max_deel": 0,
+      "url": "https://www.hardlopen.nl/evenementen/35038-energie-barendrecht-4e-van-6-marathon-trainingslopen/"
+    },
+    {
+      "datum": "28-02-2026",
+      "datum_sort": "2026-02-28",
+      "naam": "19e Galgenberg Marathon 2026",
+      "stad": "Elst",
+      "afstanden": "42,30 km",
+      "categorie": "marathon (42.2 km)",
+      "max_deel": 100,
+      "url": "https://www.hardlopen.nl/evenementen/42065-19e-galgenberg-marathon-2026/"
+    },
+    {
+      "datum": "07-03-2026",
+      "datum_sort": "2026-03-07",
+      "naam": "RunX Halve Marathon van Haren",
+      "stad": "Haren Gn",
+      "afstanden": "1,60 km - 5,00 km - 10,00 km - 21100,00 km",
+      "categorie": "marathon (42.2 km)",
+      "max_deel": 2000,
+      "url": "https://www.hardlopen.nl/evenementen/35372-runx-halve-marathon-van-haren/"
+    },
+    {
+      "datum": "08-03-2026",
+      "datum_sort": "2026-03-08",
+      "naam": "Energie Barendrecht 5e van 6 marathon trainingslopen",
+      "stad": "Barendrecht",
+      "afstanden": "32,00 km",
+      "categorie": "halve marathon (21.1 km)",
+      "max_deel": 0,
+      "url": "https://www.hardlopen.nl/evenementen/35039-energie-barendrecht-5e-van-6-marathon-trainingslopen/"
+    },
+    {
+      "datum": "08-03-2026",
+      "datum_sort": "2026-03-08",
+      "naam": "Marathonblokken - Run Your City",
+      "stad": "Rotterdam",
+      "afstanden": "25,00 km",
+      "categorie": "halve marathon (21.1 km)",
+      "max_deel": 100,
+      "url": "https://www.hardlopen.nl/evenementen/43779-marathonblokken-run-your-city/"
+    },
+    {
+      "datum": "14-03-2026",
+      "datum_sort": "2026-03-14",
+      "naam": "Broekhuis Halve Marathon Harderwijk 2026",
+      "stad": "Harderwijk",
+      "afstanden": "1,00 km - 5,00 km - 10,50 km - 21,20 km - 1000,00 km",
+      "categorie": "marathon (42.2 km)",
+      "max_deel": 2500,
+      "url": "https://www.hardlopen.nl/evenementen/36605-broekhuis-halve-marathon-harderwijk-2026/"
+    },
+    {
+      "datum": "15-03-2026",
+      "datum_sort": "2026-03-15",
+      "naam": "KPMG Lentemarathon Amstelveen",
+      "stad": "Amstelveen",
+      "afstanden": "5,00 km - 10,00 km - 21,10 km - 42,20 km",
+      "categorie": "marathon (42.2 km)",
+      "max_deel": 100000,
+      "url": "https://www.hardlopen.nl/evenementen/34122-kpmg-lentemarathon-amstelveen/"
+    },
+    {
+      "datum": "15-03-2026",
+      "datum_sort": "2026-03-15",
+      "naam": "Heuvelland marathon en 1/2 marathon",
+      "stad": "Vaals",
+      "afstanden": "21,00 km - 42,00 km",
+      "categorie": "marathon (42.2 km)",
+      "max_deel": 1500,
+      "url": "https://www.hardlopen.nl/evenementen/35123-heuvelland-marathon-en-12-marathon/"
+    },
+    {
+      "datum": "15-03-2026",
+      "datum_sort": "2026-03-15",
+      "naam": "Two Rivers Marathon",
+      "stad": "Zaltbommel",
+      "afstanden": "42,20 km",
+      "categorie": "marathon (42.2 km)",
+      "max_deel": 1000,
+      "url": "https://www.hardlopen.nl/evenementen/33420-two-rivers-marathon/"
+    },
+    {
+      "datum": "22-03-2026",
+      "datum_sort": "2026-03-22",
+      "naam": "Marathonblokken - Run Your City",
+      "stad": "Vleuten",
+      "afstanden": "25,00 km",
+      "categorie": "halve marathon (21.1 km)",
+      "max_deel": 300,
+      "url": "https://www.hardlopen.nl/evenementen/43780-marathonblokken-run-your-city/"
+    },
+    {
+      "datum": "22-03-2026",
+      "datum_sort": "2026-03-22",
+      "naam": "Energie Barendrecht 6e van 6 marathon trainingslopen",
+      "stad": "Barendrecht",
+      "afstanden": "35,00 km",
+      "categorie": "halve marathon (21.1 km)",
+      "max_deel": 0,
+      "url": "https://www.hardlopen.nl/evenementen/35040-energie-barendrecht-6e-van-6-marathon-trainingslopen/"
+    },
+    {
+      "datum": "28-03-2026",
+      "datum_sort": "2026-03-28",
+      "naam": "Drent-Friese Wold Marathon",
+      "stad": "Diever",
+      "afstanden": "10,50 km - 21,10 km - 31,70 km - 42,20 km",
+      "categorie": "marathon (42.2 km)",
+      "max_deel": 1000,
+      "url": "https://www.hardlopen.nl/evenementen/34864-drent-friese-wold-marathon/"
+    },
+    {
+      "datum": "29-03-2026",
+      "datum_sort": "2026-03-29",
+      "naam": "Arrow Venloop",
+      "stad": "Venlo",
+      "afstanden": "0,50 km - 1,00 km - 5,00 km - 5,00 km - 10,00 km - 21,00 km",
+      "categorie": "halve marathon (21.1 km)",
+      "max_deel": 25000,
+      "url": "https://www.hardlopen.nl/evenementen/35136-arrow-venloop/"
+    },
+    {
+      "datum": "29-03-2026",
+      "datum_sort": "2026-03-29",
+      "naam": "Moore DRV Halve Westland marathon",
+      "stad": "Naaldwijk",
+      "afstanden": "5,00 km - 10,00 km - 21,00 km",
+      "categorie": "halve marathon (21.1 km)",
+      "max_deel": 1200,
+      "url": "https://www.hardlopen.nl/evenementen/43753-moore-drv-halve-westland-marathon/"
+    },
+    {
+      "datum": "11-04-2026",
+      "datum_sort": "2026-04-11",
+      "naam": "Marathon Zeeuws-Vlaanderen",
+      "stad": "Hulst",
+      "afstanden": "42,20 km - 42,20 km",
+      "categorie": "marathon (42.2 km)",
+      "max_deel": 850,
+      "url": "https://www.hardlopen.nl/evenementen/35251-marathon-zeeuws-vlaanderen/"
+    },
+    {
+      "datum": "11-04-2026",
+      "datum_sort": "2026-04-11",
+      "naam": "10 Mijl van Zwolle Zuid",
+      "stad": "Zwolle",
+      "afstanden": "nan",
+      "categorie": "overig",
+      "max_deel": 2000,
+      "url": "https://www.hardlopen.nl/evenementen/44095-10-mijl-van-zwolle-zuid/"
+    },
+    {
+      "datum": "12-04-2026",
+      "datum_sort": "2026-04-12",
+      "naam": "NN Marathon Rotterdam",
+      "stad": "Rotterdam",
+      "afstanden": "10,55 km - 42,20 km",
+      "categorie": "marathon (42.2 km)",
+      "max_deel": 40000,
+      "url": "https://www.hardlopen.nl/evenementen/43728-nn-marathon-rotterdam/"
+    },
+    {
+      "datum": "12-04-2026",
+      "datum_sort": "2026-04-12",
+      "naam": "Enschede Marathon",
+      "stad": "Enschede",
+      "afstanden": "1,00 km - 5,00 km - 10,00 km - 21,00 km - 42,00 km",
+      "categorie": "marathon (42.2 km)",
+      "max_deel": 20000,
+      "url": "https://www.hardlopen.nl/evenementen/37628-enschede-marathon/"
+    },
+    {
+      "datum": "18-04-2026",
+      "datum_sort": "2026-04-18",
+      "naam": "LIV Halve Marathon van Nieuwleusen",
+      "stad": "Nieuwleusen",
+      "afstanden": "1,00 km - 1,00 km - 6,40 km - 21,10 km",
+      "categorie": "halve marathon (21.1 km)",
+      "max_deel": 500,
+      "url": "https://www.hardlopen.nl/evenementen/32716-liv-halve-marathon-van-nieuwleusen/"
+    },
+    {
+      "datum": "03-05-2026",
+      "datum_sort": "2026-05-03",
+      "naam": "WatersnoodMarathon",
+      "stad": "Overasselt",
+      "afstanden": "42,20 km - 42,20 km",
+      "categorie": "marathon (42.2 km)",
+      "max_deel": 500,
+      "url": "https://www.hardlopen.nl/evenementen/44454-watersnoodmarathon/"
+    },
+    {
+      "datum": "10-05-2026",
+      "datum_sort": "2026-05-10",
+      "naam": "Leiden Marathon",
+      "stad": "Leiden",
+      "afstanden": "5,00 km - 10,00 km - 21,00 km - 42,00 km",
+      "categorie": "marathon (42.2 km)",
+      "max_deel": 24000,
+      "url": "https://www.hardlopen.nl/evenementen/45784-leiden-marathon/"
+    },
+    {
+      "datum": "23-05-2026",
+      "datum_sort": "2026-05-23",
+      "naam": "1e Schiphol Marathon",
+      "stad": "Schiphol",
+      "afstanden": "21100,00 km - 42200,00 km",
+      "categorie": "marathon (42.2 km)",
+      "max_deel": 500,
+      "url": "https://www.hardlopen.nl/evenementen/44323-1e-schiphol-marathon/"
+    },
+    {
+      "datum": "24-05-2026",
+      "datum_sort": "2026-05-24",
+      "naam": "LCW Maastricht Marathon",
+      "stad": "Maastricht",
+      "afstanden": "nan",
+      "categorie": "overig",
+      "max_deel": 5000,
+      "url": "https://www.hardlopen.nl/evenementen/33694-lcw-maastricht-marathon/"
+    },
+    {
+      "datum": "31-05-2026",
+      "datum_sort": "2026-05-31",
+      "naam": "Marathon Groningen powered by Campus Groningen",
+      "stad": "Groningen",
+      "afstanden": "2,50 km - 10,00 km - 21,00 km - 42,20 km",
+      "categorie": "marathon (42.2 km)",
+      "max_deel": 15000,
+      "url": "https://www.hardlopen.nl/evenementen/48223-marathon-groningen-powered-by-campus-groningen/"
+    },
+    {
+      "datum": "31-05-2026",
+      "datum_sort": "2026-05-31",
+      "naam": "HiPRO Utrecht Marathon",
+      "stad": "Utrecht",
+      "afstanden": "10,00 km - 21,10 km - 42,20 km",
+      "categorie": "marathon (42.2 km)",
+      "max_deel": 30000,
+      "url": "https://www.hardlopen.nl/evenementen/43734-hipro-utrecht-marathon/"
+    },
+    {
+      "datum": "31-05-2026",
+      "datum_sort": "2026-05-31",
+      "naam": "Marathon Groningen",
+      "stad": "Groningen",
+      "afstanden": "2,50 km - 10,00 km - 21,10 km - 42,20 km",
+      "categorie": "marathon (42.2 km)",
+      "max_deel": 15000,
+      "url": "https://www.hardlopen.nl/evenementen/43739-marathon-groningen/"
+    },
+    {
+      "datum": "31-05-2026",
+      "datum_sort": "2026-05-31",
+      "naam": "HiPRO Utrecht Marathon",
+      "stad": "Utrecht",
+      "afstanden": "1,00 km - 10,00 km - 21,50 km - 42,20 km",
+      "categorie": "marathon (42.2 km)",
+      "max_deel": 18500,
+      "url": "https://www.hardlopen.nl/evenementen/48218-hipro-utrecht-marathon/"
+    },
+    {
+      "datum": "06-06-2026",
+      "datum_sort": "2026-06-06",
+      "naam": "Halve Marathon Ermelo",
+      "stad": "Ermelo",
+      "afstanden": "1,00 km - 2,00 km - 5,00 km - 10,00 km - 21,10 km",
+      "categorie": "halve marathon (21.1 km)",
+      "max_deel": 1500,
+      "url": "https://www.hardlopen.nl/evenementen/44571-halve-marathon-ermelo/"
+    },
+    {
+      "datum": "06-06-2026",
+      "datum_sort": "2026-06-06",
+      "naam": "Kiekendief Marathon",
+      "stad": "Swifterbant",
+      "afstanden": "42,20 km",
+      "categorie": "marathon (42.2 km)",
+      "max_deel": 250,
+      "url": "https://www.hardlopen.nl/evenementen/44637-kiekendief-marathon/"
+    },
+    {
+      "datum": "07-06-2026",
+      "datum_sort": "2026-06-07",
+      "naam": "De brabantse wal marathon",
+      "stad": "Bergen op Zoom",
+      "afstanden": "nan",
+      "categorie": "overig",
+      "max_deel": 1000,
+      "url": "https://www.hardlopen.nl/evenementen/30991-de-brabantse-wal-marathon/"
+    },
+    {
+      "datum": "13-06-2026",
+      "datum_sort": "2026-06-13",
+      "naam": "Scania Halve Marathon Zwolle",
+      "stad": "Zwolle",
+      "afstanden": "1,00 km - 6,40 km - 21,10 km",
+      "categorie": "halve marathon (21.1 km)",
+      "max_deel": 10500,
+      "url": "https://www.hardlopen.nl/evenementen/45789-scania-halve-marathon-zwolle/"
+    },
+    {
+      "datum": "20-06-2026",
+      "datum_sort": "2026-06-20",
+      "naam": "Marathon Sneek",
+      "stad": "Sneek",
+      "afstanden": "nan",
+      "categorie": "overig",
+      "max_deel": 6400,
+      "url": "https://www.hardlopen.nl/evenementen/44616-marathon-sneek/"
+    },
+    {
+      "datum": "21-06-2026",
+      "datum_sort": "2026-06-21",
+      "naam": "Midzomernacht Halve Marathon",
+      "stad": "Zaltbommel",
+      "afstanden": "21,10 km",
+      "categorie": "halve marathon (21.1 km)",
+      "max_deel": 300,
+      "url": "https://www.hardlopen.nl/evenementen/45888-midzomernacht-halve-marathon/"
+    },
+    {
+      "datum": "22-06-2026",
+      "datum_sort": "2026-06-22",
+      "naam": "47e Singelloop Woerden",
+      "stad": "Woerden",
+      "afstanden": "5,00 km - 10,00 km",
+      "categorie": "10 km",
+      "max_deel": 1500,
+      "url": "https://www.hardlopen.nl/evenementen/43862-47e-singelloop-woerden/"
+    },
+    {
+      "datum": "27-06-2026",
+      "datum_sort": "2026-06-27",
+      "naam": "Mid Zomermarathon",
+      "stad": "Apeldoorn",
+      "afstanden": "7,00 km - 14,00 km - 21,10 km - 28,00 km - 42,20 km",
+      "categorie": "marathon (42.2 km)",
+      "max_deel": 1500,
+      "url": "https://www.hardlopen.nl/evenementen/40741-mid-zomermarathon/"
+    },
+    {
+      "datum": "28-06-2026",
+      "datum_sort": "2026-06-28",
+      "naam": "Halve Marathon van Nootdorp 2026",
+      "stad": "Nootdorp",
+      "afstanden": "0,75 km - 1,50 km - 3,20 km - 5,00 km - 6,00 km - 11,40 km - 21,00 km",
+      "categorie": "halve marathon (21.1 km)",
+      "max_deel": 350,
+      "url": "https://www.hardlopen.nl/evenementen/45831-halve-marathon-van-nootdorp-2026/"
+    },
+    {
+      "datum": "18-07-2026",
+      "datum_sort": "2026-07-18",
+      "naam": "Midzomeravond Marathon",
+      "stad": "Diever",
+      "afstanden": "10,10 km - 21,10 km - 31,50 km - 42,20 km",
+      "categorie": "marathon (42.2 km)",
+      "max_deel": 1000,
+      "url": "https://www.hardlopen.nl/evenementen/43639-midzomeravond-marathon/"
+    },
+    {
+      "datum": "23-08-2026",
+      "datum_sort": "2026-08-23",
+      "naam": "Marathonblokken - Run Your City",
+      "stad": "Amsterdam",
+      "afstanden": "25,00 km",
+      "categorie": "halve marathon (21.1 km)",
+      "max_deel": 200,
+      "url": "https://www.hardlopen.nl/evenementen/43792-marathonblokken-run-your-city/"
+    },
+    {
+      "datum": "28-08-2026",
+      "datum_sort": "2026-08-28",
+      "naam": "Pre-Run NN Dam tot Damloop 2026",
+      "stad": "Zaandam",
+      "afstanden": "5,60 km - 11,30 km",
+      "categorie": "10 km",
+      "max_deel": 1000,
+      "url": "https://www.hardlopen.nl/evenementen/37646-pre-run-nn-dam-tot-damloop-2026/"
+    },
+    {
+      "datum": "05-09-2026",
+      "datum_sort": "2026-09-05",
+      "naam": "Cargill Singelloop Gouda by Night 2026",
+      "stad": "Gouda",
+      "afstanden": "1,00 km - 5,00 km - 10,00 km",
+      "categorie": "10 km",
+      "max_deel": 4000,
+      "url": "https://www.hardlopen.nl/evenementen/41961-cargill-singelloop-gouda-by-night-2026/"
+    },
+    {
+      "datum": "06-09-2026",
+      "datum_sort": "2026-09-06",
+      "naam": "Cargill Singelloop Gouda 2026",
+      "stad": "Gouda",
+      "afstanden": "1,00 km - 2,00 km - 5,00 km - 10,00 km",
+      "categorie": "10 km",
+      "max_deel": 4000,
+      "url": "https://www.hardlopen.nl/evenementen/41960-cargill-singelloop-gouda-2026/"
+    },
+    {
+      "datum": "12-09-2026",
+      "datum_sort": "2026-09-12",
+      "naam": "Marathon, Run Winschoten",
+      "stad": "Winschoten",
+      "afstanden": "42,20 km",
+      "categorie": "marathon (42.2 km)",
+      "max_deel": 2000,
+      "url": "https://www.hardlopen.nl/evenementen/44481-marathon-run-winschoten/"
+    },
+    {
+      "datum": "13-09-2026",
+      "datum_sort": "2026-09-13",
+      "naam": "Marathonblokken - Run Your City",
+      "stad": "Soest",
+      "afstanden": "25,00 km",
+      "categorie": "halve marathon (21.1 km)",
+      "max_deel": 199,
+      "url": "https://www.hardlopen.nl/evenementen/43793-marathonblokken-run-your-city/"
+    },
+    {
+      "datum": "13-09-2026",
+      "datum_sort": "2026-09-13",
+      "naam": "Menzis Singelloop Enschede",
+      "stad": "Enschede",
+      "afstanden": "0,85 km - 0,85 km - 0,85 km - 0,85 km - 8,05 km - 16,10 km",
+      "categorie": "15 km",
+      "max_deel": 9000,
+      "url": "https://www.hardlopen.nl/evenementen/45717-menzis-singelloop-enschede/"
+    },
+    {
+      "datum": "20-09-2026",
+      "datum_sort": "2026-09-20",
+      "naam": "NN Dam tot Damloop 2026",
+      "stad": "Amsterdam",
+      "afstanden": "16,10 km",
+      "categorie": "15 km",
+      "max_deel": 65000,
+      "url": "https://www.hardlopen.nl/evenementen/32959-nn-dam-tot-damloop-2026/"
+    },
+    {
+      "datum": "27-09-2026",
+      "datum_sort": "2026-09-27",
+      "naam": "Tilburg Ten Miles",
+      "stad": "Tilburg",
+      "afstanden": "nan",
+      "categorie": "overig",
+      "max_deel": 18000,
+      "url": "https://www.hardlopen.nl/evenementen/43803-tilburg-ten-miles/"
+    },
+    {
+      "datum": "27-09-2026",
+      "datum_sort": "2026-09-27",
+      "naam": "Marathonblokken - Run Your City",
+      "stad": "Vleuten",
+      "afstanden": "25,00 km",
+      "categorie": "halve marathon (21.1 km)",
+      "max_deel": 300,
+      "url": "https://www.hardlopen.nl/evenementen/43795-marathonblokken-run-your-city/"
+    },
+    {
+      "datum": "03-10-2026",
+      "datum_sort": "2026-10-03",
+      "naam": "Isoniq Urk Marathon",
+      "stad": "Urk",
+      "afstanden": "21,10 km",
+      "categorie": "halve marathon (21.1 km)",
+      "max_deel": 200,
+      "url": "https://www.hardlopen.nl/evenementen/43758-isoniq-urk-marathon/"
+    },
+    {
+      "datum": "03-10-2026",
+      "datum_sort": "2026-10-03",
+      "naam": "Isoniq Urk Marathon",
+      "stad": "Urk",
+      "afstanden": "42,20 km",
+      "categorie": "marathon (42.2 km)",
+      "max_deel": 500,
+      "url": "https://www.hardlopen.nl/evenementen/43757-isoniq-urk-marathon/"
+    },
+    {
+      "datum": "04-10-2026",
+      "datum_sort": "2026-10-04",
+      "naam": "TREK Singelloop Utrecht",
+      "stad": "Utrecht",
+      "afstanden": "nan",
+      "categorie": "overig",
+      "max_deel": 12000,
+      "url": "https://www.hardlopen.nl/evenementen/43804-trek-singelloop-utrecht/"
+    },
+    {
+      "datum": "04-10-2026",
+      "datum_sort": "2026-10-04",
+      "naam": "Halve Marathon Oldenzaal",
+      "stad": "Oldenzaal",
+      "afstanden": "nan",
+      "categorie": "overig",
+      "max_deel": 3500,
+      "url": "https://www.hardlopen.nl/evenementen/35370-halve-marathon-oldenzaal/"
+    },
+    {
+      "datum": "04-10-2026",
+      "datum_sort": "2026-10-04",
+      "naam": "De Halve Marathon Oostland",
+      "stad": "Pijnacker",
+      "afstanden": "0,70 km - 2,00 km - 5,00 km - 10,00 km - 21,10 km",
+      "categorie": "halve marathon (21.1 km)",
+      "max_deel": 2000,
+      "url": "https://www.hardlopen.nl/evenementen/42554-de-halve-marathon-oostland/"
+    },
+    {
+      "datum": "10-10-2026",
+      "datum_sort": "2026-10-10",
+      "naam": "ASML Marathon Eindhoven",
+      "stad": "Eindhoven",
+      "afstanden": "1,50 km - 2,50 km - 5,00 km",
+      "categorie": "5 km",
+      "max_deel": 11000,
+      "url": "https://www.hardlopen.nl/evenementen/48228-asml-marathon-eindhoven/"
+    },
+    {
+      "datum": "11-10-2026",
+      "datum_sort": "2026-10-11",
+      "naam": "ASML Marathon Eindhoven",
+      "stad": "Eindhoven",
+      "afstanden": "nan",
+      "categorie": "overig",
+      "max_deel": 15000,
+      "url": "https://www.hardlopen.nl/evenementen/43805-asml-marathon-eindhoven/"
+    },
+    {
+      "datum": "11-10-2026",
+      "datum_sort": "2026-10-11",
+      "naam": "ASML Marathon Eindhoven",
+      "stad": "Eindhoven",
+      "afstanden": "10,55 km - 21,10 km - 42,20 km",
+      "categorie": "marathon (42.2 km)",
+      "max_deel": 27500,
+      "url": "https://www.hardlopen.nl/evenementen/48227-asml-marathon-eindhoven/"
+    },
+    {
+      "datum": "17-10-2026",
+      "datum_sort": "2026-10-17",
+      "naam": "50e Jan Koudstaal Dijkloop - Halve Marathon Schoonhoven",
+      "stad": "Schoonhoven",
+      "afstanden": "1,50 km - 6,00 km - 10,00 km - 21,10 km",
+      "categorie": "halve marathon (21.1 km)",
+      "max_deel": 5000,
+      "url": "https://www.hardlopen.nl/evenementen/36626-50e-jan-koudstaal-dijkloop-halve-marathon-schoonhoven/"
+    },
+    {
+      "datum": "18-10-2026",
+      "datum_sort": "2026-10-18",
+      "naam": "TCS Amsterdam Marathon 2026",
+      "stad": "Amsterdam",
+      "afstanden": "21,10 km - 42,20 km",
+      "categorie": "marathon (42.2 km)",
+      "max_deel": 50000,
+      "url": "https://www.hardlopen.nl/evenementen/32954-tcs-amsterdam-marathon-2026/"
+    },
+    {
+      "datum": "25-10-2026",
+      "datum_sort": "2026-10-25",
+      "naam": "41e BAX Halve Marathon  van Doetinchem",
+      "stad": "Doetinchem",
+      "afstanden": "1,00 km - 2,50 km - 7,50 km - 15,00 km - 21,10 km",
+      "categorie": "halve marathon (21.1 km)",
+      "max_deel": 1500,
+      "url": "https://www.hardlopen.nl/evenementen/45820-41e-bax-halve-marathon-van-doetinchem/"
+    },
+    {
+      "datum": "01-11-2026",
+      "datum_sort": "2026-11-01",
+      "naam": "Marathon The Hague",
+      "stad": "'s-Gravenhage",
+      "afstanden": "nan",
+      "categorie": "overig",
+      "max_deel": 24200,
+      "url": "https://www.hardlopen.nl/evenementen/48235-marathon-the-hague/"
+    },
+    {
+      "datum": "01-11-2026",
+      "datum_sort": "2026-11-01",
+      "naam": "TT Marathon",
+      "stad": "Assen",
+      "afstanden": "21,10 km - 42,20 km",
+      "categorie": "marathon (42.2 km)",
+      "max_deel": 2500,
+      "url": "https://www.hardlopen.nl/evenementen/45876-tt-marathon/"
+    },
+    {
+      "datum": "01-11-2026",
+      "datum_sort": "2026-11-01",
+      "naam": "Berenloop Terschelling Marathon",
+      "stad": "West-Terschelling",
+      "afstanden": "21,10 km - 42,20 km",
+      "categorie": "marathon (42.2 km)",
+      "max_deel": 5500,
+      "url": "https://www.hardlopen.nl/evenementen/44599-berenloop-terschelling-marathon/"
+    },
+    {
+      "datum": "08-11-2026",
+      "datum_sort": "2026-11-08",
+      "naam": "Halve Marathon Gouda",
+      "stad": "Gouda",
+      "afstanden": "0,40 km - 1,50 km - 10,00 km - 21,10 km",
+      "categorie": "halve marathon (21.1 km)",
+      "max_deel": 3500,
+      "url": "https://www.hardlopen.nl/evenementen/29866-halve-marathon-gouda/"
+    },
+    {
+      "datum": "29-11-2026",
+      "datum_sort": "2026-11-29",
+      "naam": "Spijkenisse-SPARK marathon",
+      "stad": "Spijkenisse",
+      "afstanden": "5,00 km - 10,00 km - 21,10 km - 42,20 km",
+      "categorie": "marathon (42.2 km)",
+      "max_deel": 1500,
+      "url": "https://www.hardlopen.nl/evenementen/44206-spijkenisse-spark-marathon/"
+    },
+    {
+      "datum": "19-12-2026",
+      "datum_sort": "2026-12-19",
+      "naam": "5e Winter Marathon Leeuwarden",
+      "stad": "Leeuwarden",
+      "afstanden": "0,50 km - 1,00 km - 1,50 km - 5,50 km - 7,50 km - 10,00 km - 16,00 km - 21,10 km - 42,20 km",
+      "categorie": "marathon (42.2 km)",
+      "max_deel": 3500,
+      "url": "https://www.hardlopen.nl/evenementen/35206-5e-winter-marathon-leeuwarden/"
+    },
+    {
+      "datum": "21-03-2027",
+      "datum_sort": "2027-03-21",
+      "naam": "Two Rivers Marathon",
+      "stad": "Zaltbommel",
+      "afstanden": "42,20 km",
+      "categorie": "marathon (42.2 km)",
+      "max_deel": 1500,
+      "url": "https://www.hardlopen.nl/evenementen/45912-two-rivers-marathon/"
+    }
+  ],
+  "bijgewerkt": "2026-05-07 14:26"
+}
