@@ -405,6 +405,37 @@
   .kal-badge-10mijl { background:rgba(249,115,22,0.12);  color:var(--z4); }
   .kal-badge-half   { background:rgba(239,68,68,0.12);   color:var(--z5); }
   .kal-badge-mara   { background:rgba(168,85,247,0.12);  color:var(--zmax); }
+
+  /* TRACK MEETINGS */
+  .tm-pills { display:flex; flex-wrap:wrap; gap:4px; }
+  .tm-pill {
+    font-family:'DM Mono',monospace; font-size:0.7rem; padding:2px 7px;
+    border-radius:8px; white-space:nowrap;
+  }
+  .tm-pill-loop  { background:rgba(255,69,0,0.13);  color:#ff7a50; border:1px solid rgba(255,69,0,0.25); }
+  .tm-pill-horde { background:rgba(234,179,8,0.12); color:var(--z3); border:1px solid rgba(234,179,8,0.2); }
+  .tm-pill-veld  { background:rgba(255,255,255,0.05); color:var(--muted2); border:1px solid var(--border); }
+  .tm-locatie-note { font-size:0.72rem; color:var(--accent2); margin-top:3px; font-style:italic; }
+
+  /* NK's */
+  .nk-type {
+    display:inline-block; font-size:0.65rem; font-weight:600; letter-spacing:0.08em;
+    text-transform:uppercase; padding:2px 8px; border-radius:8px; white-space:nowrap;
+  }
+  .nk-weg   { background:rgba(59,130,246,0.12); color:var(--z2); border:1px solid rgba(59,130,246,0.25); }
+  .nk-baan  { background:rgba(255,69,0,0.12);   color:#ff7a50;   border:1px solid rgba(255,69,0,0.25); }
+  .nk-cross { background:rgba(34,197,94,0.12);  color:var(--z1); border:1px solid rgba(34,197,94,0.25); }
+  .nk-trail { background:rgba(168,85,247,0.12); color:var(--zmax); border:1px solid rgba(168,85,247,0.25); }
+  .nk-ultra { background:rgba(239,68,68,0.12);  color:var(--z5); border:1px solid rgba(239,68,68,0.25); }
+  .nk-venue { color:var(--muted2); font-size:0.78rem; }
+  .nk-year-col { font-size:0.78rem; }
+  .nk-year-col .nk-event { color:var(--muted2); }
+  .nk-year-col .nk-date  { font-family:'DM Mono',monospace; font-size:0.75rem; color:var(--text); margin-bottom:1px; }
+  .nk-next-badge {
+    display:inline-block; font-size:0.62rem; font-weight:700; letter-spacing:0.08em;
+    text-transform:uppercase; padding:1px 6px; border-radius:6px;
+    background:rgba(255,69,0,0.18); color:var(--accent); margin-left:6px; vertical-align:middle;
+  }
 </style>
 </head>
 <body>
@@ -419,6 +450,8 @@
     <button class="tab-btn" onclick="switchTab('schema',this)">Schema</button>
     <button class="tab-btn" onclick="switchTab('invoer',this)">Invoer</button>
     <button class="tab-btn" onclick="switchTab('kalender',this)">Toekomstige wedstrijden</button>
+    <button class="tab-btn" onclick="switchTab('nks',this)">NK's</button>
+    <button class="tab-btn" onclick="switchTab('trackmeetings',this)">Track Meetings</button>
   </nav>
 </header>
 
@@ -612,7 +645,76 @@
   </div>
 </div>
 
-<!-- ===== TAB 7: TOEKOMSTIGE WEDSTRIJDEN ===== -->
+<!-- ===== TAB 7: NK's ===== -->
+<div id="tab-nks" class="page">
+
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
+    <div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:0.06em;">Nederlandse Kampioenschappen</div>
+      <div style="font-size:0.76rem;color:var(--muted2);margin-top:3px;">
+        Vereisten: Nederlandse nationaliteit · Atletiekunie-licentie · Anti-doping e-learning voltooid ·
+        <a href="https://www.atletiek.nl" target="_blank" class="strava-link">atletiek.nl</a>
+      </div>
+    </div>
+    <div id="nk-stats" class="hero-stats" style="flex:0 0 auto;margin:0;"></div>
+  </div>
+
+  <!-- Eerstvolgende NK highlight -->
+  <div id="nk-volgende" style="margin-bottom:1.5rem;"></div>
+
+  <!-- Hoofdtabel -->
+  <div class="table-wrap" style="margin-bottom:2rem;">
+    <table>
+      <thead><tr>
+        <th style="width:85px">Type</th>
+        <th>NK</th>
+        <th style="width:220px">2026 · datum &amp; locatie</th>
+        <th style="width:175px">2027 · locatie</th>
+        <th style="width:175px">2028 · locatie</th>
+        <th style="width:70px;text-align:right">Nog</th>
+      </tr></thead>
+      <tbody id="tbody-nks"></tbody>
+    </table>
+  </div>
+
+  <!-- Legenda -->
+  <div style="display:flex;gap:0.6rem;flex-wrap:wrap;align-items:center;font-size:0.73rem;color:var(--muted2);">
+    <span>Type:</span>
+    <span class="nk-type nk-weg">Weg</span>
+    <span class="nk-type nk-baan">Baan</span>
+    <span class="nk-type nk-cross">Cross</span>
+    <span class="nk-type nk-trail">Trail</span>
+    <span class="nk-type nk-ultra">Ultra</span>
+  </div>
+
+</div>
+
+<!-- ===== TAB 8: TRACK MEETINGS ===== -->
+<div id="tab-trackmeetings" class="page">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
+    <div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:0.06em;">Track Meetings Utrecht</div>
+      <div style="font-size:0.76rem;color:var(--muted2);margin-top:3px;">Atletiekbaan Maarschalkerweerd · Inschrijving via <a href="https://www.atletiek.nl" target="_blank" class="strava-link">Atletiek.nl</a></div>
+    </div>
+    <div class="hero-stats" style="flex:0 0 auto;margin:0;" id="tm-stats"></div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr>
+        <th style="width:95px">Datum</th>
+        <th style="width:130px">Meeting</th>
+        <th style="width:200px">Locatie</th>
+        <th>Loopnummers &amp; horden</th>
+        <th>Veldonderdelen</th>
+        <th style="width:70px;text-align:right">Nog</th>
+      </tr></thead>
+      <tbody id="tbody-tm"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ===== TAB 8: TOEKOMSTIGE WEDSTRIJDEN ===== -->
 <div id="tab-kalender" class="page">
 
   <!-- Header -->
@@ -699,6 +801,13 @@ async function laadData() {
 
 
 // ===== HELPERS =====
+function localDateKey(d) {
+  // Geeft lokale datum als "YYYY-MM-DD" — toISOString() gebruikt UTC en geeft in UTC+2 de vorige dag terug
+  return d.getFullYear() + '-' +
+    String(d.getMonth() + 1).padStart(2, '0') + '-' +
+    String(d.getDate()).padStart(2, '0');
+}
+
 function zClass(z) {
   if (!z) return 'hr-none';
   if (z.includes('Z1')||z.includes('Herstel')) return 'hr-z1';
@@ -973,6 +1082,8 @@ function switchTab(t, btn) {
   if (t === 'schema' && !schemaLoaded) { schemaLoaded = true; laadSchema(); }
   if (t === 'invoer') { renderInvoer(); fixStickyHeaders(); }
   if (t === 'kalender' && !kalenderLoaded) { kalenderLoaded = true; laadKalender(); }
+  if (t === 'nks') { renderNKs(); }
+  if (t === 'trackmeetings') { renderTrackMeetings(); }
 }
 
 // Fix sticky th: measure real header height and apply
@@ -1009,7 +1120,7 @@ function renderHomeWeek(planning) {
   for (let d = 0; d < 7; d++) {
     const dag = new Date(maandag);
     dag.setDate(maandag.getDate() + d);
-    const key = dag.toISOString().slice(0,10);
+    const key = localDateKey(dag);
     (actualMap[key] || []).forEach(r => weekKm += r.afstand);
   }
 
@@ -1023,7 +1134,7 @@ function renderHomeWeek(planning) {
   for (let d = 0; d < 7; d++) {
     const dag = new Date(maandag);
     dag.setDate(maandag.getDate() + d);
-    const key = dag.toISOString().slice(0,10);
+    const key = localDateKey(dag);
     const isToday = dag.getTime() === today.getTime();
     const runs = actualMap[key] || [];
     const plan = planning ? (planning[key] || '') : '';
@@ -1144,7 +1255,7 @@ async function laadSchemaVoorHome() {
       try {
         const d = new Date(row[0]);
         if (isNaN(d.getTime())) return;
-        const key = d.toISOString().slice(0,10);
+        const key = localDateKey(d);
         planning[key] = (row[erikCol] || '').trim();
       } catch(e) {}
     });
@@ -1180,7 +1291,7 @@ async function laadSchema() {
       try {
         const d = new Date(row[0]);
         if (isNaN(d.getTime())) return;
-        const key = d.toISOString().slice(0,10);
+        const key = localDateKey(d);
         planning[key] = (row[erikCol] || '').trim();
       } catch(e) {}
     });
@@ -1218,7 +1329,7 @@ function renderSchema(planning) {
     for (let d=0; d<7; d++) {
       const day = new Date(weekStart);
       day.setDate(day.getDate() + d);
-      const key = day.toISOString().slice(0,10);
+      const key = localDateKey(day);
       days.push({ date: new Date(day), key, plan: planning[key] || '', actual: actualMap[key] });
     }
     weeks.push(days);
@@ -1584,6 +1695,266 @@ async function laadKalender() {
   renderKalStats();
   if (GROTE_WED) renderGroteTable(GROTE_WED.wedstrijden || [], q);
   if (KALENDER)  renderLokaalTable(KALENDER.wedstrijden  || [], q);
+}
+
+// ===== NK's =====
+const NK_DATA = [
+  {
+    type: 'weg', type_label: 'Weg',
+    naam: 'NK Marathon',
+    url: null,
+    y2026: { datum_sort: '2026-04-12', datum_fmt: '12 apr 2026', locatie: 'NN Marathon Rotterdam' },
+    y2027: 'Marathon Rotterdam',
+    y2028: 'Amsterdam Marathon',
+  },
+  {
+    type: 'weg', type_label: 'Weg',
+    naam: 'NK Halve Marathon',
+    url: 'https://www.atletiek.nl/toernooien/nk-halve-marathon/',
+    y2026: { datum_sort: '2026-05-31', datum_fmt: '31 mei 2026', locatie: 'HiPRO Utrecht Marathon' },
+    y2027: 'Marathon Eindhoven',
+    y2028: 'Venloop',
+  },
+  {
+    type: 'baan', type_label: 'Baan',
+    naam: 'NK 10.000m',
+    url: 'https://www.atletiek.nl/toernooien/nk-10-000m/',
+    y2026: { datum_sort: '2026-06-13', datum_fmt: '13 jun 2026', locatie: 'Gouden Spike, Leiden' },
+    y2027: null,
+    y2028: null,
+  },
+  {
+    type: 'baan', type_label: 'Baan',
+    naam: 'NK Masters Atletiek',
+    url: 'https://www.atletiek.nl/toernooien/nk-masters/',
+    y2026: { datum_sort: '2026-06-05', datum_fmt: '5–7 jun 2026', locatie: 'Prins Hendrik, Vught' },
+    y2027: null,
+    y2028: null,
+  },
+  {
+    type: 'baan', type_label: 'Baan',
+    naam: 'ASICS NK Atletiek',
+    url: 'https://www.atletiek.nl/toernooien/asics-nk-atletiek/',
+    y2026: { datum_sort: '2026-07-25', datum_fmt: '25–26 jul 2026', locatie: 'FBK Stadion, Hengelo' },
+    y2027: null,
+    y2028: null,
+  },
+  {
+    type: 'weg', type_label: 'Weg',
+    naam: 'NK 5 km',
+    url: null,
+    y2026: { datum_sort: null, datum_fmt: null, locatie: '7H Recordrun, Nijmegen' },
+    y2027: '7H Recordrun, Nijmegen',
+    y2028: 'Big Series, Utrecht',
+  },
+  {
+    type: 'weg', type_label: 'Weg',
+    naam: 'NK 10 km',
+    url: 'https://www.atletiek.nl/toernooien/nk-10-km/',
+    y2026: { datum_sort: '2026-09-05', datum_fmt: '5 sep 2026', locatie: 'Singelloop Breda' },
+    y2027: 'Stadsloop Appingedam',
+    y2028: 'Groet uit Schoorl Run',
+  },
+  {
+    type: 'ultra', type_label: 'Ultra',
+    naam: 'NK 50 km & 100 km',
+    url: 'https://www.atletiek.nl/toernooien/nk-50-100km/',
+    y2026: { datum_sort: '2026-09-12', datum_fmt: '12 sep 2026', locatie: 'RUN Winschoten (50e editie)' },
+    y2027: 'RUN Winschoten',
+    y2028: 'RUN Winschoten',
+  },
+  {
+    type: 'trail', type_label: 'Trail',
+    naam: 'NK Trailrunning',
+    url: null,
+    y2026: { datum_sort: '2026-11-01', datum_fmt: 'nov 2026', locatie: 'Zevenheuvelentrail' },
+    y2027: '–',
+    y2028: '–',
+  },
+  {
+    type: 'cross', type_label: 'Cross',
+    naam: 'NK Cross Country',
+    url: null,
+    y2026: { datum_sort: '2026-11-15', datum_fmt: 'nov 2026', locatie: 'Warandeloop' },
+    y2027: 'Sylvestercross, Soest',
+    y2028: 'Sylvestercross, Soest',
+  },
+];
+
+function renderNKs() {
+  const today = new Date(); today.setHours(0,0,0,0);
+
+  // Stats
+  const komend = NK_DATA.filter(n => n.y2026.datum_sort && new Date(n.y2026.datum_sort) >= today).length;
+  const verstreken = NK_DATA.filter(n => n.y2026.datum_sort && new Date(n.y2026.datum_sort) < today).length;
+  document.getElementById('nk-stats').innerHTML = `
+    <div class="stat-card" style="min-width:100px"><div class="stat-label">NK's 2026</div><div class="stat-value">${NK_DATA.length}</div></div>
+    <div class="stat-card" style="min-width:100px"><div class="stat-label">Komend</div><div class="stat-value">${komend}</div></div>
+    <div class="stat-card" style="min-width:100px"><div class="stat-label">Geweest</div><div class="stat-value">${verstreken}</div></div>
+  `;
+
+  // Eerstvolgende NK highlight
+  const volgende = NK_DATA
+    .filter(n => n.y2026.datum_sort && new Date(n.y2026.datum_sort) >= today)
+    .sort((a,b) => a.y2026.datum_sort.localeCompare(b.y2026.datum_sort))[0];
+  const volgendeEl = document.getElementById('nk-volgende');
+  if (volgende) {
+    const days = Math.round((new Date(volgende.y2026.datum_sort) - today) / 86400000);
+    volgendeEl.innerHTML = `
+      <div style="background:linear-gradient(135deg,#140800 0%,#0d0d0d 100%);border:1px solid rgba(255,69,0,0.25);border-radius:14px;padding:1.3rem 1.8rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
+        <div>
+          <div style="font-size:0.65rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;">Eerstvolgende NK</div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.7rem;letter-spacing:0.06em;">${volgende.naam}</div>
+          <div style="font-size:0.82rem;color:var(--muted2);margin-top:2px;">${volgende.y2026.datum_fmt} · ${volgende.y2026.locatie}</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:3rem;letter-spacing:0.04em;color:var(--accent);line-height:1;">${days}</div>
+          <div style="font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted2);">dagen</div>
+        </div>
+      </div>`;
+  } else {
+    volgendeEl.innerHTML = '';
+  }
+
+  // Tabel — gesorteerd: toekomst eerst, verleden onderaan
+  const sorted = [...NK_DATA].sort((a,b) => {
+    const dA = a.y2026.datum_sort || '2099';
+    const dB = b.y2026.datum_sort || '2099';
+    const pastA = a.y2026.datum_sort && new Date(a.y2026.datum_sort) < today;
+    const pastB = b.y2026.datum_sort && new Date(b.y2026.datum_sort) < today;
+    if (pastA && !pastB) return 1;
+    if (!pastA && pastB) return -1;
+    return dA.localeCompare(dB);
+  });
+
+  document.getElementById('tbody-nks').innerHTML = sorted.map(nk => {
+    const ds = nk.y2026.datum_sort;
+    const isPast = ds && new Date(ds) < today;
+    const days = ds ? Math.round((new Date(ds) - today) / 86400000) : null;
+
+    const dagCell = days === null
+      ? `<td class="td-num" style="color:var(--muted2)">–</td>`
+      : isPast
+        ? `<td class="td-num" style="color:var(--muted);font-size:0.74rem;">geweest</td>`
+        : days === 0
+          ? `<td class="td-num" style="color:var(--accent);font-weight:600;">vandaag</td>`
+          : days <= 30
+            ? `<td class="td-num" style="color:var(--accent2);font-weight:500;">${days}d</td>`
+            : `<td class="td-num" style="color:var(--muted2)">${days}d</td>`;
+
+    const naamCell = nk.url
+      ? `<a href="${nk.url}" target="_blank" rel="noopener" class="strava-link" style="font-size:0.86rem;font-weight:500;">${nk.naam}</a>`
+      : `<span style="font-size:0.86rem;font-weight:500;">${nk.naam}</span>`;
+
+    const cel2026 = `<div class="nk-year-col">
+      ${nk.y2026.datum_fmt ? `<div class="nk-date">${nk.y2026.datum_fmt}</div>` : ''}
+      <div class="nk-event">${nk.y2026.locatie}</div>
+    </div>`;
+    const cel2027 = `<div class="nk-year-col"><div class="nk-event">${nk.y2027 || '–'}</div></div>`;
+    const cel2028 = `<div class="nk-year-col"><div class="nk-event">${nk.y2028 || '–'}</div></div>`;
+
+    return `<tr${isPast ? ' style="opacity:0.38;"' : ''}>
+      <td><span class="nk-type nk-${nk.type}">${nk.type_label}</span></td>
+      <td class="td-name" style="max-width:none;white-space:normal;">${naamCell}</td>
+      <td>${cel2026}</td>
+      <td>${cel2027}</td>
+      <td>${cel2028}</td>
+      ${dagCell}
+    </tr>`;
+  }).join('');
+}
+
+// ===== TRACK MEETINGS =====
+const TRACK_MEETINGS = [
+  {
+    datum_sort: "2026-05-01",
+    datum:      "01-05-2026",
+    naam:       "Track Meeting 1",
+    locatie:    "Atletiekbaan Maarschalkerweerd",
+    locatie_note: null,
+    loop:  ["100m", "200m", "800m", "1500m", "3000m"],
+    horde: ["100/110m horden"],
+    veld:  ["Verspringen", "Hinkstapspringen", "Hoogspringen", "Kogelstoten", "Kogelslingeren", "Zittend werpen"],
+  },
+  {
+    datum_sort: "2026-05-22",
+    datum:      "22-05-2026",
+    naam:       "Track Meeting 2",
+    locatie:    "Atletiekbaan Maarschalkerweerd",
+    locatie_note: null,
+    loop:  ["100m", "400m", "800m", "1500m", "5000m"],
+    horde: ["400m horden"],
+    veld:  ["Verspringen", "Hinkstapspringen", "Hoogspringen", "Kogelstoten", "Discuswerpen", "Zittend werpen"],
+  },
+  {
+    datum_sort: "2026-06-12",
+    datum:      "12-06-2026",
+    naam:       "Track Meeting 3",
+    locatie:    "Atletiekbaan Maarschalkerweerd",
+    locatie_note: null,
+    loop:  ["100m", "200m", "800m", "1500m", "3000m"],
+    horde: ["100/110m horden"],
+    veld:  ["Verspringen", "Hinkstapspringen", "Hoogspringen", "Polsstokhoogspringen", "Kogelstoten", "Speerwerpen", "Zittend werpen"],
+  },
+  {
+    datum_sort: "2026-08-07",
+    datum:      "07-08-2026",
+    naam:       "Track Meeting 4",
+    locatie:    "Atletiekbaan Maarschalkerweerd",
+    locatie_note: "Mogelijk op Atletiekbaan Overvecht i.v.m. onderhoud",
+    loop:  ["150m", "300m", "800m", "1500m", "1 Engelse mijl", "5000m"],
+    horde: ["300m horden"],
+    veld:  ["Verspringen", "Hoogspringen", "Kogelstoten", "Discuswerpen"],
+  },
+  {
+    datum_sort: "2026-09-04",
+    datum:      "04-09-2026",
+    naam:       "Track Meeting 5",
+    locatie:    "Atletiekbaan Maarschalkerweerd",
+    locatie_note: "Mogelijk op Atletiekbaan Overvecht i.v.m. onderhoud",
+    loop:  ["100m", "200m", "400m", "800m", "1500m", "5000m"],
+    horde: ["400m horden"],
+    veld:  ["Verspringen", "Hinkstapspringen", "Hoogspringen", "Kogelstoten", "Kogelslingeren", "Zittend werpen"],
+  },
+];
+
+function renderTrackMeetings() {
+  const today = new Date(); today.setHours(0,0,0,0);
+  const komend = TRACK_MEETINGS.filter(m => new Date(m.datum_sort) >= today).length;
+
+  document.getElementById('tm-stats').innerHTML = `
+    <div class="stat-card" style="min-width:110px"><div class="stat-label">Meetings</div><div class="stat-value">${TRACK_MEETINGS.length}</div></div>
+    <div class="stat-card" style="min-width:110px"><div class="stat-label">Komend</div><div class="stat-value">${komend}</div></div>
+  `;
+
+  document.getElementById('tbody-tm').innerHTML = TRACK_MEETINGS.map(m => {
+    const days   = Math.round((new Date(m.datum_sort) - today) / 86400000);
+    const isPast = days < 0;
+
+    const loopPills  = m.loop.map(d  => `<span class="tm-pill tm-pill-loop">${d}</span>`).join('');
+    const hordePills = m.horde.map(d => `<span class="tm-pill tm-pill-horde">${d}</span>`).join('');
+    const veldPills  = m.veld.map(d  => `<span class="tm-pill tm-pill-veld">${d}</span>`).join('');
+
+    const dagCell = isPast
+      ? `<td class="td-num" style="color:var(--muted);font-size:0.74rem;">geweest</td>`
+      : days === 0
+        ? `<td class="td-num" style="color:var(--accent);font-weight:600;">vandaag</td>`
+        : days <= 30
+          ? `<td class="td-num" style="color:var(--accent2);font-weight:500;">${days}d</td>`
+          : `<td class="td-num" style="color:var(--muted2)">${days}d</td>`;
+
+    return `<tr${isPast ? ' style="opacity:0.38;"' : ''}>
+      <td class="td-datum">${m.datum}</td>
+      <td style="font-family:'DM Sans',sans-serif;font-weight:500;font-size:0.84rem;color:var(--text)">${m.naam}</td>
+      <td style="font-family:'DM Sans',sans-serif;font-size:0.8rem;">
+        <div style="color:var(--muted2)">${m.locatie}</div>
+        ${m.locatie_note ? `<div class="tm-locatie-note">${m.locatie_note}</div>` : ''}
+      </td>
+      <td><div class="tm-pills">${loopPills}${hordePills}</div></td>
+      <td><div class="tm-pills">${veldPills}</div></td>
+      ${dagCell}
+    </tr>`;
+  }).join('');
 }
 
 // ===== INIT
