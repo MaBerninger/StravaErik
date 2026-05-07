@@ -535,6 +535,29 @@
     text-transform:uppercase; padding:1px 6px; border-radius:6px;
     background:rgba(255,69,0,0.18); color:var(--accent); margin-left:6px; vertical-align:middle;
   }
+  /* PUBLICEER */
+  .pub-btn {
+    margin-left:auto; flex-shrink:0;
+    background:rgba(255,69,0,0.1); border:1px solid rgba(255,69,0,0.3);
+    color:var(--accent); border-radius:8px; padding:0.3rem 0.85rem;
+    font-family:'DM Sans',sans-serif; font-size:0.72rem; font-weight:500;
+    letter-spacing:0.06em; cursor:pointer; transition:all 0.18s;
+  }
+  .pub-btn:hover { background:rgba(255,69,0,0.2); }
+  .pub-btn:disabled { opacity:0.45; cursor:default; }
+  #pub-toast {
+    display:none; position:fixed; bottom:1.8rem; right:1.8rem;
+    background:#141414; border:1px solid var(--border2); border-radius:12px;
+    padding:1.1rem 1.4rem; min-width:320px; max-width:520px; z-index:9999;
+    box-shadow:0 8px 32px rgba(0,0,0,0.6);
+  }
+  #pub-toast-status { font-size:0.82rem; font-weight:600; margin-bottom:0.5rem; }
+  #pub-toast-log {
+    max-height:220px; overflow-y:auto; margin:0 0 0.8rem;
+    font-family:'DM Mono',monospace; font-size:0.7rem; color:var(--muted2);
+    white-space:pre-wrap; word-break:break-word;
+  }
+  .pub-close { background:var(--surface); border:1px solid var(--border2); color:var(--muted2); border-radius:6px; padding:0.25rem 0.8rem; font-size:0.72rem; cursor:pointer; }
 </style>
 </head>
 <body>
@@ -549,8 +572,15 @@
       <button class="tab-btn" onclick="switchTab('schema',this)">Schema</button>
       <button class="tab-btn" onclick="switchTab('kalender',this)">Toekomstige wedstrijden</button>
     </nav>
+    <button class="pub-btn" id="pub-btn" onclick="publishData()" title="Core data opslaan en site bijwerken">↑ Publiceer</button>
   </div>
 </header>
+
+<div id="pub-toast">
+  <div id="pub-toast-status">Bezig...</div>
+  <pre id="pub-toast-log"></pre>
+  <button class="pub-close" onclick="document.getElementById('pub-toast').style.display='none'">Sluiten</button>
+</div>
 
 <!-- SITE WACHTWOORD OVERLAY -->
 <div id="site-pw-overlay">
@@ -851,9 +881,89 @@
 <script>
 let RAW = null;
 
+const CORE_GITHUB_URL = 'https://raw.githubusercontent.com/MaBerninger/StravaErik/main/core_data.json';
+const LOCAL_SERVER    = 'http://localhost:8765';
+
+async function loadCoreFromGithub() {
+  try {
+    const r = await fetch(CORE_GITHUB_URL + '?t=' + Date.now());
+    if (!r.ok) return;
+    const remote = await r.json();
+    const local  = loadInvoerData();
+    let changed  = false;
+    for (const [k, v] of Object.entries(remote)) {
+      if (!local[k]) { local[k] = v; changed = true; }
+    }
+    if (changed) saveInvoerData(local);
+  } catch(e) { /* GitHub niet bereikbaar, geen probleem */ }
+}
+
+async function publishData() {
+  const btn  = document.getElementById('pub-btn');
+  const toast = document.getElementById('pub-toast');
+  const status = document.getElementById('pub-toast-status');
+  const log    = document.getElementById('pub-toast-log');
+
+  btn.disabled = true;
+  toast.style.display = 'block';
+  log.textContent = '';
+
+  // 1. Controleer of lokale server draait
+  status.textContent = '🔌 Verbinding met lokale server...';
+  try {
+    await fetch(LOCAL_SERVER + '/ping', { signal: AbortSignal.timeout(2000) });
+  } catch(e) {
+    status.style.color = '#ef4444';
+    status.textContent = '✗ Lokale server niet bereikbaar';
+    log.textContent = 'Start eerst: python local_server.py\n(in de map C:\\Strava\\17)';
+    btn.disabled = false;
+    return;
+  }
+
+  // 2. Sla core data op
+  status.style.color = '';
+  status.textContent = '💾 Core data opslaan...';
+  try {
+    const data = loadInvoerData();
+    const r = await fetch(LOCAL_SERVER + '/save-core', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    log.textContent += await r.text() + '\n';
+  } catch(e) {
+    status.style.color = '#ef4444';
+    status.textContent = '✗ Fout bij opslaan core data';
+    log.textContent += e.message;
+    btn.disabled = false;
+    return;
+  }
+
+  // 3. Draai update.py
+  status.style.color = '';
+  status.textContent = '🚀 Publiceren naar GitHub... (kan ~30s duren)';
+  try {
+    const r = await fetch(LOCAL_SERVER + '/update', { signal: AbortSignal.timeout(180000) });
+    const output = await r.text();
+    log.textContent += output;
+    log.scrollTop = log.scrollHeight;
+    status.style.color = '#22c55e';
+    status.textContent = '✓ Gepubliceerd!';
+  } catch(e) {
+    status.style.color = '#ef4444';
+    status.textContent = '✗ Fout tijdens publiceren';
+    log.textContent += e.message;
+  }
+
+  btn.disabled = false;
+}
+
 async function laadData() {
   try {
-    const resp = await fetch('strava_data.json');
+    const [resp] = await Promise.all([
+      fetch('strava_data.json'),
+      loadCoreFromGithub(),
+    ]);
     if (!resp.ok) throw new Error('HTTP ' + resp.status);
     RAW = await resp.json();
     buildHr500Map();
@@ -1834,17 +1944,22 @@ function renderKalCats() {
     ...(KALENDER?.wedstrijden  || []),
   ];
   const raw = [...new Set(all.map(w => w.categorie).filter(Boolean))];
-  const cats = ['Alle', ...new Set(raw.map(normCat)).values()].sort((a,b) => a==='Alle'?-1:b==='Alle'?1:a.localeCompare(b));
+  const allNorm = ['Alle', ...new Set(raw.map(normCat))];
+  const ORDER = ['Alle','5 km','10 km','15 km / 10 mijl','halve marathon (21.1 km)','marathon (42.2 km)'];
+  const mainCats = [
+    ...ORDER.filter(c => allNorm.includes(c)),
+    ...allNorm.filter(c => !ORDER.includes(c) && c !== 'overig'),
+  ];
   const isWed = document.getElementById('kalsub-wedstrijden')?.classList.contains('active') ?? true;
-  const catBtns = cats.map(c =>
-    `<button class="kal-cat-btn${isWed && c === kalActiveCat ? ' active' : ''}" data-cat="${c}" onclick="setKalCat('${c}')">${c}</button>`
-  ).join('');
-  const navDefs = [['nks',"NK's"],['trackmeetings','Track Meetings'],['ultra','50 &amp; 100 km']];
   const activeSub = document.querySelector('.kalsub-section.active')?.id?.replace('kalsub-','') || 'wedstrijden';
-  const navBtns = navDefs.map(([sub, label]) =>
+  const catBtn = c => `<button class="kal-cat-btn${isWed && c === kalActiveCat ? ' active' : ''}" data-cat="${c}" onclick="setKalCat('${c}')">${c}</button>`;
+  const catBtns  = mainCats.map(catBtn).join('');
+  const overigBtn = allNorm.includes('overig') ? catBtn('overig') : '';
+  const ultraBtn = `<button class="kal-nav-btn${activeSub === 'ultra' ? ' active' : ''}" data-sub="ultra" onclick="switchKalSub('ultra',this)">50 &amp; 100 km</button>`;
+  const navBtns = [['nks',"NK's"],['trackmeetings','Track Meetings']].map(([sub, label]) =>
     `<button class="kal-nav-btn${activeSub === sub ? ' active' : ''}" data-sub="${sub}" onclick="switchKalSub('${sub}',this)">${label}</button>`
   ).join('');
-  document.getElementById('kal-cats').innerHTML = catBtns + '<span class="kal-cats-sep"></span>' + navBtns;
+  document.getElementById('kal-cats').innerHTML = catBtns + ultraBtn + '<span class="kal-cats-sep"></span>' + navBtns + overigBtn;
 }
 
 function setKalCat(cat) {
