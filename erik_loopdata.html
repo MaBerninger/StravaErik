@@ -147,6 +147,10 @@
   .td-datum { color:var(--muted2); font-size:0.76rem; }
   .td-num { text-align:right; }
   .td-plan { color:var(--muted2); font-family:'DM Sans',sans-serif; font-size:0.75rem; max-width:200px; overflow:hidden; text-overflow:ellipsis; }
+  .kcal-cell { font-family:'DM Mono',monospace; font-size:0.75rem; text-align:right; white-space:nowrap; }
+  .kcal-verbrand { color:var(--muted2); }
+  .kcal-extra { color:#f97316; font-weight:600; }
+  .kcal-totaal { color:var(--text); font-weight:700; }
 
   /* HR BADGE */
   .hr-badge {
@@ -383,6 +387,20 @@
     .pr-grid { grid-template-columns:repeat(2,1fr); }
   }
 
+  /* TOEKOMSTIGE WEDSTRIJDEN — sub-tabs */
+  .kalsub-bar {
+    display:flex; gap:0; border-bottom:2px solid var(--border); margin-bottom:1.5rem;
+  }
+  .kalsub-btn {
+    background:none; border:none; border-bottom:2px solid transparent; margin-bottom:-2px;
+    color:var(--muted2); padding:0.6rem 1.2rem; font-family:'DM Sans',sans-serif;
+    font-size:0.84rem; font-weight:500; cursor:pointer; transition:all 0.18s; white-space:nowrap;
+  }
+  .kalsub-btn:hover { color:var(--text); }
+  .kalsub-btn.active { color:var(--accent); border-bottom-color:var(--accent); }
+  .kalsub-section { display:none; }
+  .kalsub-section.active { display:block; }
+
   /* TOEKOMSTIGE WEDSTRIJDEN */
   .kal-cats {
     display:flex; gap:0.5rem; flex-wrap:wrap;
@@ -406,6 +424,32 @@
   .kal-badge-half   { background:rgba(239,68,68,0.12);   color:var(--z5); }
   .kal-badge-mara   { background:rgba(168,85,247,0.12);  color:var(--zmax); }
 
+  /* WORLD MARATHON MAJORS */
+  .wmm-grid {
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(138px,1fr)); gap:0.65rem;
+    margin-bottom:2rem;
+  }
+  .wmm-card {
+    background:var(--surface); border:1px solid rgba(218,165,32,0.35); border-radius:10px;
+    padding:0.75rem 0.9rem; position:relative; overflow:hidden; cursor:pointer;
+    transition:border-color 0.18s;
+  }
+  .wmm-card:hover { border-color:rgba(218,165,32,0.65); }
+  .wmm-card.past  { opacity:0.38; }
+  .wmm-badge {
+    display:inline-block; font-size:0.6rem; font-weight:700; letter-spacing:0.1em;
+    text-transform:uppercase; padding:1px 7px; border-radius:6px; margin-bottom:0.4rem;
+    background:rgba(218,165,32,0.15); color:#d4a017; border:1px solid rgba(218,165,32,0.35);
+  }
+  .wmm-city {
+    font-family:'Bebas Neue',sans-serif; font-size:1.15rem; letter-spacing:0.04em;
+    color:var(--text); line-height:1.1; display:block;
+  }
+  .wmm-date { font-size:0.72rem; color:var(--muted2); margin-top:0.2rem; }
+  .wmm-days-soon { font-size:0.72rem; color:var(--accent2); font-weight:600; }
+  .wmm-days-far  { font-size:0.72rem; color:var(--muted2); }
+  .wmm-days-gone { font-size:0.68rem; color:var(--muted); font-style:italic; }
+
   /* TRACK MEETINGS */
   .tm-pills { display:flex; flex-wrap:wrap; gap:4px; }
   .tm-pill {
@@ -416,6 +460,24 @@
   .tm-pill-horde { background:rgba(234,179,8,0.12); color:var(--z3); border:1px solid rgba(234,179,8,0.2); }
   .tm-pill-veld  { background:rgba(255,255,255,0.05); color:var(--muted2); border:1px solid var(--border); }
   .tm-locatie-note { font-size:0.72rem; color:var(--accent2); margin-top:3px; font-style:italic; }
+
+  /* ULTRA */
+  .ultra-highlight {
+    background:var(--surface); border-radius:12px; padding:1rem 1.2rem;
+    display:flex; flex-direction:column; gap:0.3rem;
+  }
+  .ultra-highlight.nk-card  { border:1px solid rgba(255,69,0,0.35); }
+  .ultra-highlight.wk-card  { border:1px solid rgba(218,165,32,0.4); }
+  .ultra-highlight.intl-card { border:1px solid var(--border2); }
+  .ultra-hl-badge {
+    font-size:0.6rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase;
+    padding:2px 8px; border-radius:6px; display:inline-block; width:fit-content;
+  }
+  .ultra-hl-badge.nk  { background:rgba(255,69,0,0.14);   color:var(--accent); border:1px solid rgba(255,69,0,0.3); }
+  .ultra-hl-badge.wk  { background:rgba(218,165,32,0.14); color:#d4a017;        border:1px solid rgba(218,165,32,0.3); }
+  .ultra-hl-naam { font-family:'Bebas Neue',sans-serif; font-size:1.2rem; letter-spacing:0.05em; color:var(--text); }
+  .ultra-hl-sub  { font-size:0.76rem; color:var(--muted2); }
+  .ultra-hl-days { font-size:0.8rem; font-weight:600; margin-top:0.2rem; }
 
   /* NK's */
   .nk-type {
@@ -450,8 +512,6 @@
     <button class="tab-btn" onclick="switchTab('schema',this)">Schema</button>
     <button class="tab-btn" onclick="switchTab('invoer',this)">Invoer</button>
     <button class="tab-btn" onclick="switchTab('kalender',this)">Toekomstige wedstrijden</button>
-    <button class="tab-btn" onclick="switchTab('nks',this)">NK's</button>
-    <button class="tab-btn" onclick="switchTab('trackmeetings',this)">Track Meetings</button>
   </nav>
 </header>
 
@@ -487,6 +547,10 @@
     <span style="margin-left:auto;font-size:0.75rem;color:var(--muted2)" id="count-alle"></span>
   </div>
 
+  <div style="margin-bottom:0.75rem;padding:0.55rem 1rem;background:rgba(249,115,22,0.07);border-left:3px solid #f97316;border-radius:0 6px 6px 0;font-size:0.75rem;color:var(--muted2);font-family:'DM Sans',sans-serif;">
+    <span style="color:#f97316;font-weight:600;">Kcal advies</span> — basis ~2.300 kcal/dag · rustdag: <span style="color:var(--text)">2.200–2.400 kcal</span> · dag na zware training: extra koolhydraten voor herstel
+  </div>
+
   <div class="table-wrap">
     <table id="tbl-alle">
       <thead><tr>
@@ -501,6 +565,7 @@
         <th class="td-num" style="color:var(--accent)">Core</th>
         <th>Zone</th>
         <th>Opmerking</th>
+        <th class="td-num" style="color:#f97316">Kcal advies</th>
       </tr></thead>
       <tbody id="tbody-alle"></tbody>
     </table>
@@ -645,80 +710,11 @@
   </div>
 </div>
 
-<!-- ===== TAB 7: NK's ===== -->
-<div id="tab-nks" class="page">
-
-  <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
-    <div>
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:0.06em;">Nederlandse Kampioenschappen</div>
-      <div style="font-size:0.76rem;color:var(--muted2);margin-top:3px;">
-        Vereisten: Nederlandse nationaliteit · Atletiekunie-licentie · Anti-doping e-learning voltooid ·
-        <a href="https://www.atletiek.nl" target="_blank" class="strava-link">atletiek.nl</a>
-      </div>
-    </div>
-    <div id="nk-stats" class="hero-stats" style="flex:0 0 auto;margin:0;"></div>
-  </div>
-
-  <!-- Eerstvolgende NK highlight -->
-  <div id="nk-volgende" style="margin-bottom:1.5rem;"></div>
-
-  <!-- Hoofdtabel -->
-  <div class="table-wrap" style="margin-bottom:2rem;">
-    <table>
-      <thead><tr>
-        <th style="width:85px">Type</th>
-        <th>NK</th>
-        <th style="width:220px">2026 · datum &amp; locatie</th>
-        <th style="width:175px">2027 · locatie</th>
-        <th style="width:175px">2028 · locatie</th>
-        <th style="width:70px;text-align:right">Nog</th>
-      </tr></thead>
-      <tbody id="tbody-nks"></tbody>
-    </table>
-  </div>
-
-  <!-- Legenda -->
-  <div style="display:flex;gap:0.6rem;flex-wrap:wrap;align-items:center;font-size:0.73rem;color:var(--muted2);">
-    <span>Type:</span>
-    <span class="nk-type nk-weg">Weg</span>
-    <span class="nk-type nk-baan">Baan</span>
-    <span class="nk-type nk-cross">Cross</span>
-    <span class="nk-type nk-trail">Trail</span>
-    <span class="nk-type nk-ultra">Ultra</span>
-  </div>
-
-</div>
-
-<!-- ===== TAB 8: TRACK MEETINGS ===== -->
-<div id="tab-trackmeetings" class="page">
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
-    <div>
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:0.06em;">Track Meetings Utrecht</div>
-      <div style="font-size:0.76rem;color:var(--muted2);margin-top:3px;">Atletiekbaan Maarschalkerweerd · Inschrijving via <a href="https://www.atletiek.nl" target="_blank" class="strava-link">Atletiek.nl</a></div>
-    </div>
-    <div class="hero-stats" style="flex:0 0 auto;margin:0;" id="tm-stats"></div>
-  </div>
-
-  <div class="table-wrap">
-    <table>
-      <thead><tr>
-        <th style="width:95px">Datum</th>
-        <th style="width:130px">Meeting</th>
-        <th style="width:200px">Locatie</th>
-        <th>Loopnummers &amp; horden</th>
-        <th>Veldonderdelen</th>
-        <th style="width:70px;text-align:right">Nog</th>
-      </tr></thead>
-      <tbody id="tbody-tm"></tbody>
-    </table>
-  </div>
-</div>
-
-<!-- ===== TAB 8: TOEKOMSTIGE WEDSTRIJDEN ===== -->
+<!-- ===== TOEKOMSTIGE WEDSTRIJDEN (met sub-tabs) ===== -->
 <div id="tab-kalender" class="page">
 
   <!-- Header -->
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem;flex-wrap:wrap;gap:1rem;">
     <div>
       <div style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:0.06em;">Toekomstige wedstrijden</div>
       <div style="font-size:0.76rem;color:var(--muted2);margin-top:3px;" id="kal-bijgewerkt"></div>
@@ -726,42 +722,143 @@
     <input class="filter-input" id="kal-search" placeholder="🔍 Zoek naam of stad..." oninput="filterKalender()" style="min-width:210px">
   </div>
 
-  <!-- Stats -->
-  <div class="hero-stats" id="kal-stats" style="margin-bottom:1.4rem;"></div>
-
-  <!-- Categorie-filter -->
-  <div class="kal-cats" id="kal-cats" style="margin-bottom:1.2rem;"></div>
-
-  <!-- SECTIE 1: Grote Nederlandse wedstrijden -->
-  <div class="section-title" style="margin-top:0;">Grote Nederlandse wedstrijden</div>
-  <div class="table-wrap" style="margin-bottom:2rem;">
-    <table id="grote-table">
-      <thead><tr>
-        <th style="width:100px">Datum</th>
-        <th>Naam</th>
-        <th style="width:140px">Stad</th>
-        <th style="width:160px">Categorie</th>
-        <th style="width:90px;text-align:right">Deelnemers</th>
-        <th style="width:70px;text-align:right">Nog</th>
-      </tr></thead>
-      <tbody id="tbody-grote"><tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--muted2)">Laden...</td></tr></tbody>
-    </table>
+  <!-- Sub-tab balk -->
+  <div class="kalsub-bar">
+    <button class="kalsub-btn active" onclick="switchKalSub('wedstrijden',this)">Wedstrijden</button>
+    <button class="kalsub-btn" onclick="switchKalSub('nks',this)">NK's</button>
+    <button class="kalsub-btn" onclick="switchKalSub('trackmeetings',this)">Track Meetings</button>
+    <button class="kalsub-btn" onclick="switchKalSub('ultra',this)">50 &amp; 100 km</button>
   </div>
 
-  <!-- SECTIE 2: Lokale wedstrijden -->
-  <div class="section-title">Lokale wedstrijden <span style="font-size:0.78rem;font-family:'DM Sans',sans-serif;letter-spacing:0;color:var(--muted2);font-weight:400;">· 50km rond 3755</span></div>
-  <div class="table-wrap">
-    <table id="lokaal-table">
-      <thead><tr>
-        <th style="width:100px">Datum</th>
-        <th>Naam</th>
-        <th style="width:140px">Plaats</th>
-        <th style="width:160px">Categorie</th>
-        <th>Afstanden</th>
-        <th style="width:70px;text-align:right">Nog</th>
-      </tr></thead>
-      <tbody id="tbody-lokaal"><tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--muted2)">Laden...</td></tr></tbody>
-    </table>
+  <!-- SUB 1: Wedstrijden -->
+  <div class="kalsub-section active" id="kalsub-wedstrijden">
+    <!-- Stats -->
+    <div class="hero-stats" id="kal-stats" style="margin-bottom:1.4rem;"></div>
+    <!-- Categorie-filter -->
+    <div class="kal-cats" id="kal-cats" style="margin-bottom:1.2rem;"></div>
+    <!-- World Marathon Majors -->
+    <div class="section-title" style="margin-top:0;">World Marathon Majors 2026 <span style="font-size:0.72rem;font-family:'DM Sans',sans-serif;letter-spacing:0;color:var(--muted2);font-weight:400;">· Abbott WMM · 7 races</span></div>
+    <div class="wmm-grid" id="wmm-grid"></div>
+
+    <!-- Grote wedstrijden -->
+    <div class="section-title">Grote wedstrijden</div>
+    <div class="table-wrap" style="margin-bottom:2rem;">
+      <table id="grote-table">
+        <thead><tr>
+          <th style="width:100px">Datum</th>
+          <th>Naam</th>
+          <th style="width:140px">Stad / Land</th>
+          <th style="width:160px">Categorie</th>
+          <th style="width:90px;text-align:right">Deelnemers</th>
+          <th style="width:70px;text-align:right">Nog</th>
+        </tr></thead>
+        <tbody id="tbody-grote"><tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--muted2)">Laden...</td></tr></tbody>
+      </table>
+    </div>
+    <!-- Lokale wedstrijden -->
+    <div class="section-title">Lokale wedstrijden <span style="font-size:0.78rem;font-family:'DM Sans',sans-serif;letter-spacing:0;color:var(--muted2);font-weight:400;">· 50km rond 3755</span></div>
+    <div class="table-wrap">
+      <table id="lokaal-table">
+        <thead><tr>
+          <th style="width:100px">Datum</th>
+          <th>Naam</th>
+          <th style="width:140px">Plaats</th>
+          <th style="width:160px">Categorie</th>
+          <th>Afstanden</th>
+          <th style="width:70px;text-align:right">Nog</th>
+        </tr></thead>
+        <tbody id="tbody-lokaal"><tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--muted2)">Laden...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SUB 2: NK's -->
+  <div class="kalsub-section" id="kalsub-nks">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
+      <div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:0.06em;">Nederlandse Kampioenschappen</div>
+        <div style="font-size:0.76rem;color:var(--muted2);margin-top:3px;">
+          Vereisten: Nederlandse nationaliteit · Atletiekunie-licentie · Anti-doping e-learning ·
+          <a href="https://www.atletiek.nl" target="_blank" class="strava-link">atletiek.nl</a>
+        </div>
+      </div>
+      <div id="nk-stats" class="hero-stats" style="flex:0 0 auto;margin:0;"></div>
+    </div>
+    <div id="nk-volgende" style="margin-bottom:1.5rem;"></div>
+    <div class="table-wrap" style="margin-bottom:2rem;">
+      <table>
+        <thead><tr>
+          <th style="width:85px">Type</th>
+          <th>NK</th>
+          <th style="width:220px">2026 · datum &amp; locatie</th>
+          <th style="width:175px">2027 · locatie</th>
+          <th style="width:175px">2028 · locatie</th>
+          <th style="width:70px;text-align:right">Nog</th>
+        </tr></thead>
+        <tbody id="tbody-nks"></tbody>
+      </table>
+    </div>
+    <div style="display:flex;gap:0.6rem;flex-wrap:wrap;align-items:center;font-size:0.73rem;color:var(--muted2);">
+      <span>Type:</span>
+      <span class="nk-type nk-weg">Weg</span>
+      <span class="nk-type nk-baan">Baan</span>
+      <span class="nk-type nk-cross">Cross</span>
+      <span class="nk-type nk-trail">Trail</span>
+      <span class="nk-type nk-ultra">Ultra</span>
+    </div>
+  </div>
+
+  <!-- SUB 3: Track Meetings -->
+  <div class="kalsub-section" id="kalsub-trackmeetings">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
+      <div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:0.06em;">Track Meetings Utrecht</div>
+        <div style="font-size:0.76rem;color:var(--muted2);margin-top:3px;">Atletiekbaan Maarschalkerweerd · Inschrijving via <a href="https://www.atletiek.nl" target="_blank" class="strava-link">Atletiek.nl</a></div>
+      </div>
+      <div class="hero-stats" style="flex:0 0 auto;margin:0;" id="tm-stats"></div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th style="width:95px">Datum</th>
+          <th style="width:130px">Meeting</th>
+          <th style="width:200px">Locatie</th>
+          <th>Loopnummers &amp; horden</th>
+          <th>Veldonderdelen</th>
+          <th style="width:70px;text-align:right">Nog</th>
+        </tr></thead>
+        <tbody id="tbody-tm"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SUB 4: 50 & 100 km -->
+  <div class="kalsub-section" id="kalsub-ultra">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
+      <div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:0.06em;">50 km &amp; 100 km Races</div>
+        <div style="font-size:0.76rem;color:var(--muted2);margin-top:3px;">Nederlandse &amp; internationale ultramarathons · NK's &amp; WK's</div>
+      </div>
+      <div class="hero-stats" id="ultra-stats" style="flex:0 0 auto;margin:0;"></div>
+    </div>
+
+    <!-- NK / WK highlights -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:0.9rem;margin-bottom:2rem;" id="ultra-highlights"></div>
+
+    <!-- Races tabel -->
+    <div class="section-title" style="margin-top:0;">Wedstrijden</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th style="width:105px">Datum</th>
+          <th>Naam</th>
+          <th style="width:150px">Stad</th>
+          <th style="width:140px">Afstand</th>
+          <th style="width:70px;text-align:right">Nog</th>
+        </tr></thead>
+        <tbody id="tbody-ultra"></tbody>
+      </table>
+    </div>
   </div>
 
 </div>
@@ -801,6 +898,27 @@ async function laadData() {
 
 
 // ===== HELPERS =====
+const KCAL_CFG = { gewicht: 70, hrmax: 192, basis: 2300 };
+
+function berekenKcal(r) {
+  if (!r.afstand || r.afstand < 0.5) return null;
+  const verbrand = Math.round((r.afstand * KCAL_CFG.gewicht * 1.04) / 25) * 25;
+  const hr = r.gem_hr || 0;
+  let zoneFactor;
+  if      (hr >= 175) zoneFactor = 0.75;
+  else if (hr >= 165) zoneFactor = 0.70;
+  else if (hr >= 155) zoneFactor = 0.65;
+  else if (hr >= 140) zoneFactor = 0.55;
+  else                zoneFactor = 0.50;
+  // EPOC bonus bij intervaltraining (hoge HR-spread of naam bevat interval-trefwoord)
+  const isInterval = /\d+x\d+|interval|herhaling|fartlek/i.test(r.naam || '') ||
+    (r.max_hr && r.gem_hr && (r.max_hr - r.gem_hr) > 25);
+  const epoc = isInterval ? 150 : 0;
+  const extra = Math.round((verbrand * zoneFactor + epoc) / 50) * 50;
+  const totaal = KCAL_CFG.basis + extra;
+  return { verbrand, extra, totaal };
+}
+
 function localDateKey(d) {
   // Geeft lokale datum als "YYYY-MM-DD" — toISOString() gebruikt UTC en geeft in UTC+2 de vorige dag terug
   return d.getFullYear() + '-' +
@@ -890,7 +1008,8 @@ function renderAlle() {
       <td class="td-num">${coreBadge}</td>
       <td><span class="hr-badge ${zClass(r.zone)}">${zLabel(r.zone)}</span></td>
       <td class="td-plan">${invoer.opmerking || r.trainingsplan || ''}</td>
-    </tr>`}).join('') || '<tr><td colspan="11" style="text-align:center;padding:2.5rem;color:var(--muted2)">Geen runs gevonden</td></tr>';
+      ${(() => { const k = berekenKcal(r); return k ? `<td class="kcal-cell"><span class="kcal-verbrand">${k.verbrand} verbrand</span><br><span class="kcal-extra">+${k.extra} extra</span><br><span class="kcal-totaal">${k.totaal.toLocaleString('nl-NL')} totaal</span></td>` : '<td class="kcal-cell" style="color:var(--muted)">—</td>'; })()}
+    </tr>`}).join('') || '<tr><td colspan="12" style="text-align:center;padding:2.5rem;color:var(--muted2)">Geen runs gevonden</td></tr>';
 
 
 }
@@ -1082,8 +1201,19 @@ function switchTab(t, btn) {
   if (t === 'schema' && !schemaLoaded) { schemaLoaded = true; laadSchema(); }
   if (t === 'invoer') { renderInvoer(); fixStickyHeaders(); }
   if (t === 'kalender' && !kalenderLoaded) { kalenderLoaded = true; laadKalender(); }
-  if (t === 'nks') { renderNKs(); }
-  if (t === 'trackmeetings') { renderTrackMeetings(); }
+}
+
+function switchKalSub(sub, btn) {
+  document.querySelectorAll('.kalsub-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.kalsub-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('kalsub-' + sub).classList.add('active');
+  if (btn) btn.classList.add('active');
+  if (sub === 'nks') renderNKs();
+  if (sub === 'trackmeetings') renderTrackMeetings();
+  if (sub === 'ultra') renderUltra();
+  // toggle search box visibility (only relevant for wedstrijden)
+  const searchEl = document.getElementById('kal-search');
+  if (searchEl) searchEl.style.display = sub === 'wedstrijden' ? '' : 'none';
 }
 
 // Fix sticky th: measure real header height and apply
@@ -1531,7 +1661,8 @@ const KAL_BADGE_CLASS = {
   '5 km':                    'kal-badge-5km',
   '10 km':                   'kal-badge-10km',
   '15 km':                   'kal-badge-15km',
-  '10 mijl (16.1 km)':       'kal-badge-10mijl',
+  '10 mijl (16.1 km)':       'kal-badge-15km',
+  '15 km / 10 mijl':         'kal-badge-15km',
   'halve marathon (21.1 km)':'kal-badge-half',
   'marathon (42.2 km)':      'kal-badge-mara',
 };
@@ -1553,7 +1684,8 @@ function kalDayCell(days) {
 
 function wedFilter(weds, q, cat, cityField) {
   return weds.filter(w => {
-    const catOk = cat === 'Alle' || w.categorie === cat;
+    const wCat = normCat(w.categorie);
+    const catOk = cat === 'Alle' || wCat === cat;
     const city  = (w[cityField] || '').toLowerCase();
     const qOk   = !q || w.naam.toLowerCase().includes(q) || city.includes(q);
     return catOk && qOk;
@@ -1574,16 +1706,42 @@ function renderGroteTable(weds, q) {
     const badge  = KAL_BADGE_CLASS[w.categorie] || 'kal-badge-5km';
     const deel   = w.max_deel > 0 ? `${(w.max_deel).toLocaleString('nl-NL')}` : '—';
     const rowStyle = isPast ? ' style="opacity:0.38;"' : '';
+    const wmmTag = w.wmm ? `<span class="wmm-badge" style="margin-left:6px;vertical-align:middle;">WMM</span>` : '';
     return `<tr${rowStyle}>
       <td class="td-datum">${w.datum || '—'}</td>
       <td class="td-name" style="max-width:none;overflow:visible;white-space:normal;">
-        <a href="${w.url}" target="_blank" rel="noopener" class="strava-link" style="font-size:0.84rem;">${w.naam || '—'}</a>
+        <a href="${w.url}" target="_blank" rel="noopener" class="strava-link" style="font-size:0.84rem;">${w.naam || '—'}</a>${wmmTag}
       </td>
       <td style="color:var(--muted2);font-family:'DM Sans',sans-serif;font-size:0.82rem;">${w.stad || '—'}</td>
       <td><span class="kal-badge ${badge}" style="font-size:0.67rem;">${w.categorie}</span></td>
       <td class="td-num" style="color:var(--muted2);font-size:0.78rem;">${deel}</td>
       ${kalDayCell(days)}
     </tr>`;
+  }).join('');
+}
+
+function renderWMM() {
+  const grid = document.getElementById('wmm-grid');
+  if (!grid || !GROTE_WED) return;
+  const wmm = GROTE_WED.wedstrijden.filter(w => w.wmm);
+  const today = new Date(); today.setHours(0,0,0,0);
+  grid.innerHTML = wmm.map(w => {
+    const days = kalDaysUntil(w.datum_sort);
+    const isPast = days !== null && days < 0;
+    let daysHtml;
+    if      (days === null)  daysHtml = '';
+    else if (isPast)         daysHtml = `<div class="wmm-days-gone">geweest</div>`;
+    else if (days === 0)     daysHtml = `<div class="wmm-days-soon">vandaag!</div>`;
+    else if (days <= 60)     daysHtml = `<div class="wmm-days-soon">${days} dagen</div>`;
+    else                     daysHtml = `<div class="wmm-days-far">${days} dagen</div>`;
+    const city = w.stad.split(',')[0];
+    return `<a href="${w.url}" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="wmm-card${isPast ? ' past' : ''}">
+        <span class="wmm-badge">WMM</span>
+        <span class="wmm-city">${city}</span>
+        <div class="wmm-date">${w.datum}</div>
+        ${daysHtml}
+      </div></a>`;
   }).join('');
 }
 
@@ -1631,12 +1789,19 @@ function renderKalStats() {
   `;
 }
 
+function normCat(c) {
+  // merge "15 km" and "10 mijl (16.1 km)" into one display category
+  if (c === '15 km' || c === '10 mijl (16.1 km)') return '15 km / 10 mijl';
+  return c;
+}
+
 function renderKalCats() {
   const all = [
     ...(GROTE_WED?.wedstrijden || []),
     ...(KALENDER?.wedstrijden  || []),
   ];
-  const cats = ['Alle', ...new Set(all.map(w => w.categorie).filter(Boolean).sort())];
+  const raw = [...new Set(all.map(w => w.categorie).filter(Boolean))];
+  const cats = ['Alle', ...new Set(raw.map(normCat)).values()].sort((a,b) => a==='Alle'?-1:b==='Alle'?1:a.localeCompare(b));
   document.getElementById('kal-cats').innerHTML = cats.map(c =>
     `<button class="kal-cat-btn${c === kalActiveCat ? ' active' : ''}" data-cat="${c}" onclick="setKalCat('${c}')">${c}</button>`
   ).join('');
@@ -1652,9 +1817,24 @@ function setKalCat(cat) {
 function filterKalender() {
   const q = (document.getElementById('kal-search')?.value || '').trim().toLowerCase();
   renderKalStats();
+  renderWMM();
   if (GROTE_WED) renderGroteTable(GROTE_WED.wedstrijden || [], q);
   if (KALENDER)  renderLokaalTable(KALENDER.wedstrijden  || [], q);
 }
+
+// Vaste internationale marathons (niet op hardlopen.nl)
+// wmm:true = Abbott World Marathon Major
+const INTL_MARATHONS = [
+  { datum:'01-03-2026', datum_sort:'2026-03-01', naam:'Tokyo Marathon',    stad:'Tokio, JP',     categorie:'marathon (42.2 km)', max_deel:38000, url:'https://www.marathon.tokyo/',                    wmm:true },
+  { datum:'20-04-2026', datum_sort:'2026-04-20', naam:'Boston Marathon',   stad:'Boston, VS',    categorie:'marathon (42.2 km)', max_deel:30000, url:'https://www.baa.org/races/boston-marathon',      wmm:true },
+  { datum:'26-04-2026', datum_sort:'2026-04-26', naam:'London Marathon',   stad:'Londen, GB',    categorie:'marathon (42.2 km)', max_deel:50000, url:'https://www.tcslondonmarathon.com/',             wmm:true },
+  { datum:'26-04-2026', datum_sort:'2026-04-26', naam:'Hamburg Marathon',  stad:'Hamburg, DE',   categorie:'marathon (42.2 km)', max_deel:30000, url:'https://www.haspa-marathon-hamburg.de/' },
+  { datum:'13-09-2026', datum_sort:'2026-09-13', naam:'Sydney Marathon',   stad:'Sydney, AU',    categorie:'marathon (42.2 km)', max_deel:10000, url:'https://www.sydneymarathon.com/',                wmm:true },
+  { datum:'27-09-2026', datum_sort:'2026-09-27', naam:'Berlin Marathon',   stad:'Berlijn, DE',   categorie:'marathon (42.2 km)', max_deel:50000, url:'https://www.bmw-berlin-marathon.com/',           wmm:true },
+  { datum:'11-10-2026', datum_sort:'2026-10-11', naam:'Chicago Marathon',  stad:'Chicago, VS',   categorie:'marathon (42.2 km)', max_deel:45000, url:'https://www.chicagomarathon.com/',               wmm:true },
+  { datum:'25-10-2026', datum_sort:'2026-10-25', naam:'Frankfurt Marathon', stad:'Frankfurt, DE', categorie:'marathon (42.2 km)', max_deel:15000, url:'https://www.frankfurt-marathon.com/' },
+  { datum:'01-11-2026', datum_sort:'2026-11-01', naam:'New York Marathon', stad:'New York, VS',  categorie:'marathon (42.2 km)', max_deel:53000, url:'https://www.nyrr.org/tcsnycmarathon',            wmm:true },
+];
 
 async function laadKalender() {
   const q = '';
@@ -1667,9 +1847,13 @@ async function laadKalender() {
     GROTE_WED = await r.json();
   } catch(e) {
     errors.push('grote_wedstrijden.json');
-    document.getElementById('tbody-grote').innerHTML =
-      `<tr><td colspan="6" style="text-align:center;padding:1.5rem;color:var(--muted2)">Niet gevonden (run eerst de scraper)</td></tr>`;
+    GROTE_WED = { wedstrijden: [], bijgewerkt: '' };
   }
+  // Voeg altijd de internationale marathons toe (niet op hardlopen.nl)
+  GROTE_WED.wedstrijden = [
+    ...INTL_MARATHONS,
+    ...(GROTE_WED.wedstrijden || []),
+  ].sort((a,b) => (a.datum_sort||'9999').localeCompare(b.datum_sort||'9999'));
 
   // Lokale wedstrijden
   try {
@@ -1693,8 +1877,126 @@ async function laadKalender() {
 
   renderKalCats();
   renderKalStats();
+  renderWMM();
   if (GROTE_WED) renderGroteTable(GROTE_WED.wedstrijden || [], q);
   if (KALENDER)  renderLokaalTable(KALENDER.wedstrijden  || [], q);
+}
+
+// ===== ULTRA (50 km & 100 km) =====
+const ULTRA_RACES = [
+  // — Nederlandse races —
+  {
+    datum:'12-09-2026', datum_sort:'2026-09-12',
+    naam:'RUN Winschoten', stad:'Winschoten, NL',
+    afstanden:'50 km + 100 km',
+    url:'https://www.runwinschoten.nl/',
+    nk:true, nk_label:'NK 50 km & 100 km',
+    wk:false,
+    note:'50e jubileumeditie',
+  },
+  // — Grote internationale races —
+  {
+    datum:'19-06-2026', datum_sort:'2026-06-19',
+    naam:'Biel-Bienne 100km', stad:'Biel, CH',
+    afstanden:'100 km',
+    url:'https://www.100km.ch/',
+    nk:false, wk:false,
+    note:'Grootste 100km-race van Europa',
+  },
+  {
+    datum:'29-08-2026', datum_sort:'2026-08-29',
+    naam:'UTMB Mont-Blanc (100 Miles)', stad:'Chamonix, FR',
+    afstanden:'~170 km',
+    url:'https://utmb.world/',
+    nk:false, wk:false,
+    note:'Grootste ultratrail ter wereld · diverse afstanden',
+  },
+  // — WK / EK —
+  {
+    datum:null, datum_sort:null,
+    naam:'IAU 100km World Championship 2026', stad:'TBD',
+    afstanden:'100 km',
+    url:'https://iau-ultramarathon.org/',
+    nk:false, wk:true, wk_label:'WK 100 km',
+    note:'2026-locatie nog niet officieel bekendgemaakt',
+  },
+  {
+    datum:null, datum_sort:null,
+    naam:'IAU 50km World Championship 2026', stad:'TBD',
+    afstanden:'50 km',
+    url:'https://iau-ultramarathon.org/',
+    nk:false, wk:true, wk_label:'WK 50 km',
+    note:'2026-locatie nog niet officieel bekendgemaakt',
+  },
+];
+
+function renderUltra() {
+  const today = new Date(); today.setHours(0,0,0,0);
+
+  // Stats
+  const komend = ULTRA_RACES.filter(r => r.datum_sort && new Date(r.datum_sort) >= today).length;
+  document.getElementById('ultra-stats').innerHTML = `
+    <div class="stat-card" style="min-width:110px"><div class="stat-label">Races</div><div class="stat-value">${ULTRA_RACES.length}</div></div>
+    <div class="stat-card" style="min-width:110px"><div class="stat-label">Komend</div><div class="stat-value">${komend}</div></div>
+  `;
+
+  // NK / WK highlights
+  const nk = ULTRA_RACES.filter(r => r.nk);
+  const wk = ULTRA_RACES.filter(r => r.wk);
+  const highlights = [...nk, ...wk];
+  document.getElementById('ultra-highlights').innerHTML = highlights.map(r => {
+    const isNK = r.nk;
+    const days = r.datum_sort ? Math.round((new Date(r.datum_sort) - today) / 86400000) : null;
+    let daysHtml = '';
+    if      (days === null)  daysHtml = `<div class="ultra-hl-days" style="color:var(--muted2);">Datum TBD</div>`;
+    else if (days < 0)       daysHtml = `<div class="ultra-hl-days" style="color:var(--muted);">Geweest</div>`;
+    else if (days <= 30)     daysHtml = `<div class="ultra-hl-days" style="color:var(--accent2);">${days} dagen</div>`;
+    else                     daysHtml = `<div class="ultra-hl-days" style="color:var(--muted2);">${days} dagen</div>`;
+    const badgeClass = isNK ? 'nk' : 'wk';
+    const badgeLabel = isNK ? (r.nk_label || 'NK') : (r.wk_label || 'WK');
+    const cardClass  = isNK ? 'nk-card' : 'wk-card';
+    return `<a href="${r.url}" target="_blank" rel="noopener" style="text-decoration:none;">
+      <div class="ultra-highlight ${cardClass}">
+        <span class="ultra-hl-badge ${badgeClass}">${badgeLabel}</span>
+        <div class="ultra-hl-naam">${r.naam}</div>
+        <div class="ultra-hl-sub">${r.stad}${r.datum ? ' · ' + r.datum : ''}${r.afstanden ? ' · ' + r.afstanden : ''}</div>
+        ${r.note ? `<div class="ultra-hl-sub" style="font-style:italic;">${r.note}</div>` : ''}
+        ${daysHtml}
+      </div></a>`;
+  }).join('');
+
+  // Races tabel
+  const sorted = [...ULTRA_RACES].sort((a,b) => {
+    if (!a.datum_sort && !b.datum_sort) return 0;
+    if (!a.datum_sort) return 1;
+    if (!b.datum_sort) return -1;
+    return a.datum_sort.localeCompare(b.datum_sort);
+  });
+  document.getElementById('tbody-ultra').innerHTML = sorted.map(r => {
+    const days = r.datum_sort ? Math.round((new Date(r.datum_sort) - today) / 86400000) : null;
+    const isPast = days !== null && days < 0;
+    let dagCell;
+    if      (days === null)  dagCell = `<td class="td-num" style="color:var(--muted2);font-size:0.74rem;">TBD</td>`;
+    else if (isPast)         dagCell = `<td class="td-num" style="color:var(--muted);font-size:0.74rem;">geweest</td>`;
+    else if (days === 0)     dagCell = `<td class="td-num" style="color:var(--accent);font-weight:600;">vandaag</td>`;
+    else if (days <= 30)     dagCell = `<td class="td-num" style="color:var(--accent2);font-weight:500;">${days}d</td>`;
+    else                     dagCell = `<td class="td-num" style="color:var(--muted2)">${days}d</td>`;
+    const nkWkTag = r.nk
+      ? `<span class="ultra-hl-badge nk" style="margin-left:6px;vertical-align:middle;">${r.nk_label||'NK'}</span>`
+      : r.wk
+        ? `<span class="ultra-hl-badge wk" style="margin-left:6px;vertical-align:middle;">${r.wk_label||'WK'}</span>`
+        : '';
+    return `<tr${isPast ? ' style="opacity:0.38;"' : ''}>
+      <td class="td-datum">${r.datum || '<span style="color:var(--muted2);font-style:italic;">TBD</span>'}</td>
+      <td class="td-name" style="max-width:none;overflow:visible;white-space:normal;">
+        <a href="${r.url}" target="_blank" rel="noopener" class="strava-link" style="font-size:0.84rem;">${r.naam}</a>${nkWkTag}
+        ${r.note ? `<div style="font-size:0.72rem;color:var(--muted2);margin-top:2px;font-style:italic;">${r.note}</div>` : ''}
+      </td>
+      <td style="color:var(--muted2);font-family:'DM Sans',sans-serif;font-size:0.82rem;">${r.stad}</td>
+      <td><span class="kal-badge kal-badge-mara" style="font-size:0.67rem;">${r.afstanden}</span></td>
+      ${dagCell}
+    </tr>`;
+  }).join('');
 }
 
 // ===== NK's =====
@@ -1897,6 +2199,17 @@ const TRACK_MEETINGS = [
     veld:  ["Verspringen", "Hinkstapspringen", "Hoogspringen", "Polsstokhoogspringen", "Kogelstoten", "Speerwerpen", "Zittend werpen"],
   },
   {
+    datum_sort: "2026-06-19",
+    datum:      "19-06-2026",
+    naam:       "Track Meeting Pallas '67",
+    locatie:    "AV Pallas '67 · Wageningen",
+    locatie_note: "Bornsesteeg 2, 6708 PE Wageningen",
+    url:        "https://www.atletiek.nu/wedstrijd/main/43481/",
+    loop:  ["100m", "200m", "400m", "800m", "1500m", "5000m"],
+    horde: ["100mH", "110mH"],
+    veld:  ["Discuswerpen", "Kogelstoten", "Speerwerpen", "Hoogspringen", "Polshoogspringen", "Verspringen"],
+  },
+  {
     datum_sort: "2026-08-07",
     datum:      "07-08-2026",
     naam:       "Track Meeting 4",
@@ -1943,9 +2256,12 @@ function renderTrackMeetings() {
           ? `<td class="td-num" style="color:var(--accent2);font-weight:500;">${days}d</td>`
           : `<td class="td-num" style="color:var(--muted2)">${days}d</td>`;
 
+    const naamHtml = m.url
+      ? `<a href="${m.url}" target="_blank" rel="noopener" class="strava-link" style="font-size:0.84rem;font-weight:500;">${m.naam}</a>`
+      : `<span style="font-size:0.84rem;font-weight:500;color:var(--text)">${m.naam}</span>`;
     return `<tr${isPast ? ' style="opacity:0.38;"' : ''}>
       <td class="td-datum">${m.datum}</td>
-      <td style="font-family:'DM Sans',sans-serif;font-weight:500;font-size:0.84rem;color:var(--text)">${m.naam}</td>
+      <td style="font-family:'DM Sans',sans-serif;">${naamHtml}</td>
       <td style="font-family:'DM Sans',sans-serif;font-size:0.8rem;">
         <div style="color:var(--muted2)">${m.locatie}</div>
         ${m.locatie_note ? `<div class="tm-locatie-note">${m.locatie_note}</div>` : ''}
