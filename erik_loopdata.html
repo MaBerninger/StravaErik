@@ -33,12 +33,14 @@
 
   /* NAV */
   header {
-    height: 48px;
     background: #0a0a0a;
     border-bottom: 1px solid var(--border2);
     position: sticky; top:0; z-index:200;
-    display: flex; align-items:center; padding: 0 2rem;
-    gap: 2rem;
+    display: flex; flex-direction:column;
+  }
+  .header-main {
+    height: 48px;
+    display: flex; align-items:center; padding: 0 2rem; gap: 2rem;
   }
   .logo {
     font-family:'Bebas Neue',sans-serif; font-size:1.45rem; letter-spacing:0.1em;
@@ -389,12 +391,15 @@
 
   /* TOEKOMSTIGE WEDSTRIJDEN — sub-tabs */
   .kalsub-bar {
-    display:flex; gap:0; border-bottom:2px solid var(--border); margin-bottom:1.5rem;
+    display:none; gap:0; border-top:1px solid var(--border);
+    padding: 0 2rem;
   }
+  .kalsub-bar.visible { display:flex; }
   .kalsub-btn {
-    background:none; border:none; border-bottom:2px solid transparent; margin-bottom:-2px;
-    color:var(--muted2); padding:0.6rem 1.2rem; font-family:'DM Sans',sans-serif;
-    font-size:0.84rem; font-weight:500; cursor:pointer; transition:all 0.18s; white-space:nowrap;
+    background:none; border:none; border-bottom:2px solid transparent;
+    color:var(--muted2); padding:0.45rem 1rem; font-family:'DM Sans',sans-serif;
+    font-size:0.73rem; font-weight:500; letter-spacing:0.04em;
+    cursor:pointer; transition:all 0.18s; white-space:nowrap;
   }
   .kalsub-btn:hover { color:var(--text); }
   .kalsub-btn.active { color:var(--accent); border-bottom-color:var(--accent); }
@@ -503,16 +508,24 @@
 <body>
 
 <header>
-  <div class="logo"><span class="logo-pulse"></span>Erik Kallenberg</div>
-  <nav>
-    <button class="tab-btn active" onclick="switchTab('alle',this)">Alle runs</button>
-    <button class="tab-btn" onclick="switchTab('duurlopen',this)">Duurlopen</button>
-    <button class="tab-btn" onclick="switchTab('wedstrijden',this)">Wedstrijden</button>
-    <button class="tab-btn" onclick="switchTab('prs',this)">PR's</button>
-    <button class="tab-btn" onclick="switchTab('schema',this)">Schema</button>
-    <button class="tab-btn" onclick="switchTab('invoer',this)">Invoer</button>
-    <button class="tab-btn" onclick="switchTab('kalender',this)">Toekomstige wedstrijden</button>
-  </nav>
+  <div class="header-main">
+    <div class="logo"><span class="logo-pulse"></span>Erik Kallenberg</div>
+    <nav>
+      <button class="tab-btn active" onclick="switchTab('alle',this)">Alle runs</button>
+      <button class="tab-btn" onclick="switchTab('duurlopen',this)">Duurlopen</button>
+      <button class="tab-btn" onclick="switchTab('wedstrijden',this)">Wedstrijden</button>
+      <button class="tab-btn" onclick="switchTab('prs',this)">PR's</button>
+      <button class="tab-btn" onclick="switchTab('schema',this)">Schema</button>
+      <button class="tab-btn" onclick="switchTab('invoer',this)">Invoer</button>
+      <button class="tab-btn" onclick="switchTab('kalender',this)">Toekomstige wedstrijden</button>
+    </nav>
+  </div>
+  <div class="kalsub-bar" id="kalsub-bar-header">
+    <button class="kalsub-btn active" onclick="switchKalSub('wedstrijden',this)">Wedstrijden</button>
+    <button class="kalsub-btn" onclick="switchKalSub('nks',this)">NK's</button>
+    <button class="kalsub-btn" onclick="switchKalSub('trackmeetings',this)">Track Meetings</button>
+    <button class="kalsub-btn" onclick="switchKalSub('ultra',this)">50 &amp; 100 km</button>
+  </div>
 </header>
 
 <!-- ===== TAB 1: ALLE RUNS ===== -->
@@ -720,14 +733,6 @@
       <div style="font-size:0.76rem;color:var(--muted2);margin-top:3px;" id="kal-bijgewerkt"></div>
     </div>
     <input class="filter-input" id="kal-search" placeholder="🔍 Zoek naam of stad..." oninput="filterKalender()" style="min-width:210px">
-  </div>
-
-  <!-- Sub-tab balk -->
-  <div class="kalsub-bar">
-    <button class="kalsub-btn active" onclick="switchKalSub('wedstrijden',this)">Wedstrijden</button>
-    <button class="kalsub-btn" onclick="switchKalSub('nks',this)">NK's</button>
-    <button class="kalsub-btn" onclick="switchKalSub('trackmeetings',this)">Track Meetings</button>
-    <button class="kalsub-btn" onclick="switchKalSub('ultra',this)">50 &amp; 100 km</button>
   </div>
 
   <!-- SUB 1: Wedstrijden -->
@@ -1197,6 +1202,9 @@ function switchTab(t, btn) {
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('tab-'+t).classList.add('active');
   if (btn) btn.classList.add('active');
+  // show/hide sub-tab bar in header
+  const subBar = document.getElementById('kalsub-bar-header');
+  if (subBar) subBar.classList.toggle('visible', t === 'kalender');
   window.scrollTo(0,0);
   if (t === 'schema' && !schemaLoaded) { schemaLoaded = true; laadSchema(); }
   if (t === 'invoer') { renderInvoer(); fixStickyHeaders(); }
@@ -1205,13 +1213,12 @@ function switchTab(t, btn) {
 
 function switchKalSub(sub, btn) {
   document.querySelectorAll('.kalsub-section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.kalsub-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('#kalsub-bar-header .kalsub-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('kalsub-' + sub).classList.add('active');
   if (btn) btn.classList.add('active');
   if (sub === 'nks') renderNKs();
   if (sub === 'trackmeetings') renderTrackMeetings();
   if (sub === 'ultra') renderUltra();
-  // toggle search box visibility (only relevant for wedstrijden)
   const searchEl = document.getElementById('kal-search');
   if (searchEl) searchEl.style.display = sub === 'wedstrijden' ? '' : 'none';
 }
