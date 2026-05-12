@@ -1,0 +1,788 @@
+{
+  "wedstrijden": [
+    {
+      "datum": "09-05-2026",
+      "datum_sort": "2026-05-09",
+      "naam": "On The Run",
+      "plaats": "Barneveld (GE)",
+      "afstanden": "1 km - 2 km - 5 km - 10 km - 15 km - 10 Engelse mijl - 20 km - halve marathon",
+      "categorie": "5 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1773141052/On-The-Run"
+    },
+    {
+      "datum": "09-05-2026",
+      "datum_sort": "2026-05-09",
+      "naam": "SlooOW Natuurloop 2026",
+      "plaats": "Lelystad (FL)",
+      "afstanden": "2 km - 5 km - 10 km - halve marathon - marathon",
+      "categorie": "5 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1769707680/SlooOW-Natuurloop-2026"
+    },
+    {
+      "datum": "09-05-2026",
+      "datum_sort": "2026-05-09",
+      "naam": "SilvercityRUN 2026",
+      "plaats": "Schoonhoven, gemeente Krimpenerwaard (ZH)",
+      "afstanden": "2 km - 5 km - 10 km",
+      "categorie": "5 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1762279779/SilvercityRUN-2026"
+    },
+    {
+      "datum": "09-05-2026",
+      "datum_sort": "2026-05-09",
+      "naam": "On The Run",
+      "plaats": "Barneveld (GE)",
+      "afstanden": "1 km - 2 km - 5 km - 10 km - 15 km - 10 Engelse mijl - 20 km - halve marathon",
+      "categorie": "10 mijl (16.1 km)",
+      "url": "https://hardloopkalender.nl/loopevenement/1773141052/On-The-Run"
+    },
+    {
+      "datum": "09-05-2026",
+      "datum_sort": "2026-05-09",
+      "naam": "On The Run",
+      "plaats": "Barneveld (GE)",
+      "afstanden": "1 km - 2 km - 5 km - 10 km - 15 km - 10 Engelse mijl - 20 km - halve marathon",
+      "categorie": "halve marathon (21.1 km)",
+      "url": "https://hardloopkalender.nl/loopevenement/1773141052/On-The-Run"
+    },
+    {
+      "datum": "09-05-2026",
+      "datum_sort": "2026-05-09",
+      "naam": "Run2Day Vlinderloop",
+      "plaats": "Houten (UT)",
+      "afstanden": "4,4 km - 10,7 km - 14,8 km - halve marathon",
+      "categorie": "halve marathon (21.1 km)",
+      "url": "https://hardloopkalender.nl/loopevenement/1750968054/Run2Day-Vlinderloop"
+    },
+    {
+      "datum": "09-05-2026",
+      "datum_sort": "2026-05-09",
+      "naam": "On The Run",
+      "plaats": "Barneveld (GE)",
+      "afstanden": "1 km - 2 km - 5 km - 10 km - 15 km - 10 Engelse mijl - 20 km - halve marathon",
+      "categorie": "15 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1773141052/On-The-Run"
+    },
+    {
+      "datum": "09-05-2026",
+      "datum_sort": "2026-05-09",
+      "naam": "SlooOW Natuurloop 2026",
+      "plaats": "Lelystad (FL)",
+      "afstanden": "2 km - 5 km - 10 km - halve marathon - marathon",
+      "categorie": "halve marathon (21.1 km)",
+      "url": "https://hardloopkalender.nl/loopevenement/1769707680/SlooOW-Natuurloop-2026"
+    },
+    {
+      "datum": "09-05-2026",
+      "datum_sort": "2026-05-09",
+      "naam": "Austerlitz Trail",
+      "plaats": "Zeist (UT)",
+      "afstanden": "10 km - halve marathon - 30 km",
+      "categorie": "halve marathon (21.1 km)",
+      "url": "https://hardloopkalender.nl/loopevenement/1760087786/Austerlitz-Trail"
+    },
+    {
+      "datum": "09-05-2026",
+      "datum_sort": "2026-05-09",
+      "naam": "SlooOW Natuurloop 2026",
+      "plaats": "Lelystad (FL)",
+      "afstanden": "2 km - 5 km - 10 km - halve marathon - marathon",
+      "categorie": "marathon (42.2 km)",
+      "url": "https://hardloopkalender.nl/loopevenement/1769707680/SlooOW-Natuurloop-2026"
+    },
+    {
+      "datum": "09-05-2026",
+      "datum_sort": "2026-05-09",
+      "naam": "Austerlitz Trail",
+      "plaats": "Zeist (UT)",
+      "afstanden": "10 km - halve marathon - 30 km",
+      "categorie": "10 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1760087786/Austerlitz-Trail"
+    },
+    {
+      "datum": "09-05-2026",
+      "datum_sort": "2026-05-09",
+      "naam": "SilvercityRUN 2026",
+      "plaats": "Schoonhoven, gemeente Krimpenerwaard (ZH)",
+      "afstanden": "2 km - 5 km - 10 km",
+      "categorie": "10 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1762279779/SilvercityRUN-2026"
+    },
+    {
+      "datum": "09-05-2026",
+      "datum_sort": "2026-05-09",
+      "naam": "SlooOW Natuurloop 2026",
+      "plaats": "Lelystad (FL)",
+      "afstanden": "2 km - 5 km - 10 km - halve marathon - marathon",
+      "categorie": "10 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1769707680/SlooOW-Natuurloop-2026"
+    },
+    {
+      "datum": "09-05-2026",
+      "datum_sort": "2026-05-09",
+      "naam": "On The Run",
+      "plaats": "Barneveld (GE)",
+      "afstanden": "1 km - 2 km - 5 km - 10 km - 15 km - 10 Engelse mijl - 20 km - halve marathon",
+      "categorie": "10 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1773141052/On-The-Run"
+    },
+    {
+      "datum": "10-05-2026",
+      "datum_sort": "2026-05-10",
+      "naam": "Austerlitz Trail",
+      "plaats": "Zeist (UT)",
+      "afstanden": "10 km - halve marathon - 30 km",
+      "categorie": "halve marathon (21.1 km)",
+      "url": "https://hardloopkalender.nl/loopevenement/1760087826/Austerlitz-Trail"
+    },
+    {
+      "datum": "10-05-2026",
+      "datum_sort": "2026-05-10",
+      "naam": "Austerlitz Trail",
+      "plaats": "Zeist (UT)",
+      "afstanden": "10 km - halve marathon - 30 km",
+      "categorie": "10 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1760087826/Austerlitz-Trail"
+    },
+    {
+      "datum": "15-05-2026",
+      "datum_sort": "2026-05-15",
+      "naam": "Putten Power Run",
+      "plaats": "Putten (GE)",
+      "afstanden": "0,8 km - 2,3 km - 5 km - 10 km",
+      "categorie": "5 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1762891077/Putten-Power-Run"
+    },
+    {
+      "datum": "15-05-2026",
+      "datum_sort": "2026-05-15",
+      "naam": "Putten Power Run",
+      "plaats": "Putten (GE)",
+      "afstanden": "0,8 km - 2,3 km - 5 km - 10 km",
+      "categorie": "10 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1762891077/Putten-Power-Run"
+    },
+    {
+      "datum": "16-05-2026",
+      "datum_sort": "2026-05-16",
+      "naam": "Nobel Run by night",
+      "plaats": "Almere (FL)",
+      "afstanden": "2 km - 3 km - 5 km",
+      "categorie": "5 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1759920360/Nobel-Run-by-night"
+    },
+    {
+      "datum": "17-05-2026",
+      "datum_sort": "2026-05-17",
+      "naam": "Nobel Run",
+      "plaats": "Almere (FL)",
+      "afstanden": "1,6 km - 5 km - 10 km - 15 km",
+      "categorie": "5 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1759920220/Nobel-Run"
+    },
+    {
+      "datum": "17-05-2026",
+      "datum_sort": "2026-05-17",
+      "naam": "Freedom Run Wageningen",
+      "plaats": "Wageningen (GE)",
+      "afstanden": "5 km - 7,5 km - 10 km - 15 km - halve marathon",
+      "categorie": "15 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1748876385/Freedom-Run-Wageningen"
+    },
+    {
+      "datum": "17-05-2026",
+      "datum_sort": "2026-05-17",
+      "naam": "Nobel Run",
+      "plaats": "Almere (FL)",
+      "afstanden": "1,6 km - 5 km - 10 km - 15 km",
+      "categorie": "15 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1759920220/Nobel-Run"
+    },
+    {
+      "datum": "17-05-2026",
+      "datum_sort": "2026-05-17",
+      "naam": "Freedom Run Wageningen",
+      "plaats": "Wageningen (GE)",
+      "afstanden": "5 km - 7,5 km - 10 km - 15 km - halve marathon",
+      "categorie": "5 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1748876385/Freedom-Run-Wageningen"
+    },
+    {
+      "datum": "17-05-2026",
+      "datum_sort": "2026-05-17",
+      "naam": "Nobel Run",
+      "plaats": "Almere (FL)",
+      "afstanden": "1,6 km - 5 km - 10 km - 15 km",
+      "categorie": "10 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1759920220/Nobel-Run"
+    },
+    {
+      "datum": "17-05-2026",
+      "datum_sort": "2026-05-17",
+      "naam": "Freedom Run Wageningen",
+      "plaats": "Wageningen (GE)",
+      "afstanden": "5 km - 7,5 km - 10 km - 15 km - halve marathon",
+      "categorie": "10 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1748876385/Freedom-Run-Wageningen"
+    },
+    {
+      "datum": "17-05-2026",
+      "datum_sort": "2026-05-17",
+      "naam": "Freedom Run Wageningen",
+      "plaats": "Wageningen (GE)",
+      "afstanden": "5 km - 7,5 km - 10 km - 15 km - halve marathon",
+      "categorie": "halve marathon (21.1 km)",
+      "url": "https://hardloopkalender.nl/loopevenement/1748876385/Freedom-Run-Wageningen"
+    },
+    {
+      "datum": "23-05-2026",
+      "datum_sort": "2026-05-23",
+      "naam": "1e Schiphol Marathon Ronde om de Haarlemmermeer",
+      "plaats": "Schiphol-Oost, gemeente Haarlemmermeer (NH)",
+      "afstanden": "halve marathon - marathon - 61 km",
+      "categorie": "halve marathon (21.1 km)",
+      "url": "https://hardloopkalender.nl/loopevenement/1770497661/1e-Schiphol-Marathon-Ronde-om-de-Haarlemmermeer"
+    },
+    {
+      "datum": "23-05-2026",
+      "datum_sort": "2026-05-23",
+      "naam": "IJsselsteinloop",
+      "plaats": "IJsselstein (UT)",
+      "afstanden": "1 km - 2 km - 5 km - 10 km - halve marathon",
+      "categorie": "5 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1762521457/IJsselsteinloop"
+    },
+    {
+      "datum": "23-05-2026",
+      "datum_sort": "2026-05-23",
+      "naam": "1e Schiphol Marathon Ronde om de Haarlemmermeer",
+      "plaats": "Schiphol-Oost, gemeente Haarlemmermeer (NH)",
+      "afstanden": "halve marathon - marathon - 61 km",
+      "categorie": "marathon (42.2 km)",
+      "url": "https://hardloopkalender.nl/loopevenement/1770497661/1e-Schiphol-Marathon-Ronde-om-de-Haarlemmermeer"
+    },
+    {
+      "datum": "23-05-2026",
+      "datum_sort": "2026-05-23",
+      "naam": "IJsselsteinloop",
+      "plaats": "IJsselstein (UT)",
+      "afstanden": "1 km - 2 km - 5 km - 10 km - halve marathon",
+      "categorie": "halve marathon (21.1 km)",
+      "url": "https://hardloopkalender.nl/loopevenement/1762521457/IJsselsteinloop"
+    },
+    {
+      "datum": "23-05-2026",
+      "datum_sort": "2026-05-23",
+      "naam": "IJsselsteinloop",
+      "plaats": "IJsselstein (UT)",
+      "afstanden": "1 km - 2 km - 5 km - 10 km - halve marathon",
+      "categorie": "10 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1762521457/IJsselsteinloop"
+    },
+    {
+      "datum": "25-05-2026",
+      "datum_sort": "2026-05-25",
+      "naam": "Badhoevedorp Run",
+      "plaats": "Badhoevedorp, gemeente Haarlemmermeer (NH)",
+      "afstanden": "2,5 km - 5 km - 10 km",
+      "categorie": "10 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1773653522/Badhoevedorp-Run"
+    },
+    {
+      "datum": "25-05-2026",
+      "datum_sort": "2026-05-25",
+      "naam": "Badhoevedorp Run",
+      "plaats": "Badhoevedorp, gemeente Haarlemmermeer (NH)",
+      "afstanden": "2,5 km - 5 km - 10 km",
+      "categorie": "5 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1773653522/Badhoevedorp-Run"
+    },
+    {
+      "datum": "30-05-2026",
+      "datum_sort": "2026-05-30",
+      "naam": "Ronde van Barneveld",
+      "plaats": "Barneveld (GE)",
+      "afstanden": "5 km",
+      "categorie": "5 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1774615961/Ronde-van-Barneveld"
+    },
+    {
+      "datum": "30-05-2026",
+      "datum_sort": "2026-05-30",
+      "naam": "Prestatie-run De Vissenloop",
+      "plaats": "IJmuiden, gemeente Velsen (NH)",
+      "afstanden": "2,7 km - 8,2 km - 15 km",
+      "categorie": "15 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1761568095/Prestatie-run-De-Vissenloop"
+    },
+    {
+      "datum": "31-05-2026",
+      "datum_sort": "2026-05-31",
+      "naam": "Dichtbij Vrijstad Vianen Loop",
+      "plaats": "Vianen, gemeente Vijfheerenlanden (UT)",
+      "afstanden": "1 km - 2 km - 5 km - 10 km - halve marathon",
+      "categorie": "halve marathon (21.1 km)",
+      "url": "https://hardloopkalender.nl/loopevenement/1752064242/Dichtbij-Vrijstad-Vianen-Loop"
+    },
+    {
+      "datum": "31-05-2026",
+      "datum_sort": "2026-05-31",
+      "naam": "Dichtbij Vrijstad Vianen Loop",
+      "plaats": "Vianen, gemeente Vijfheerenlanden (UT)",
+      "afstanden": "1 km - 2 km - 5 km - 10 km - halve marathon",
+      "categorie": "5 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1752064242/Dichtbij-Vrijstad-Vianen-Loop"
+    },
+    {
+      "datum": "31-05-2026",
+      "datum_sort": "2026-05-31",
+      "naam": "Dichtbij Vrijstad Vianen Loop",
+      "plaats": "Vianen, gemeente Vijfheerenlanden (UT)",
+      "afstanden": "1 km - 2 km - 5 km - 10 km - halve marathon",
+      "categorie": "10 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1752064242/Dichtbij-Vrijstad-Vianen-Loop"
+    },
+    {
+      "datum": "06-06-2026",
+      "datum_sort": "2026-06-06",
+      "naam": "Halve marathon Ermelo",
+      "plaats": "Ermelo (GE)",
+      "afstanden": "1 km - 2 km - 5 km - 10 km - halve marathon",
+      "categorie": "10 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1771944932/Halve-marathon-Ermelo"
+    },
+    {
+      "datum": "06-06-2026",
+      "datum_sort": "2026-06-06",
+      "naam": "Palingrun",
+      "plaats": "Volendam, gemeente Edam-Volendam (NH)",
+      "afstanden": "8 km - 10 Engelse mijl",
+      "categorie": "10 mijl (16.1 km)",
+      "url": "https://hardloopkalender.nl/loopevenement/1773397805/Palingrun-"
+    },
+    {
+      "datum": "06-06-2026",
+      "datum_sort": "2026-06-06",
+      "naam": "Halve marathon Ermelo",
+      "plaats": "Ermelo (GE)",
+      "afstanden": "1 km - 2 km - 5 km - 10 km - halve marathon",
+      "categorie": "halve marathon (21.1 km)",
+      "url": "https://hardloopkalender.nl/loopevenement/1771944932/Halve-marathon-Ermelo"
+    },
+    {
+      "datum": "06-06-2026",
+      "datum_sort": "2026-06-06",
+      "naam": "Halve marathon Ermelo",
+      "plaats": "Ermelo (GE)",
+      "afstanden": "1 km - 2 km - 5 km - 10 km - halve marathon",
+      "categorie": "5 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1771944932/Halve-marathon-Ermelo"
+    },
+    {
+      "datum": "06-06-2026",
+      "datum_sort": "2026-06-06",
+      "naam": "Up and Running hardloopevent",
+      "plaats": "Utrecht (UT)",
+      "afstanden": "5 km",
+      "categorie": "5 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1773143562/Up-and-Running-hardloopevent"
+    },
+    {
+      "datum": "07-06-2026",
+      "datum_sort": "2026-06-07",
+      "naam": "LoveLife Run Hilversum",
+      "plaats": "Hilversum (NH)",
+      "afstanden": "5 km - 10 km",
+      "categorie": "5 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1773066668/LoveLife-Run-Hilversum"
+    },
+    {
+      "datum": "07-06-2026",
+      "datum_sort": "2026-06-07",
+      "naam": "LoveLife Run Hilversum",
+      "plaats": "Hilversum (NH)",
+      "afstanden": "5 km - 10 km",
+      "categorie": "10 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1773066668/LoveLife-Run-Hilversum"
+    },
+    {
+      "datum": "12-06-2026",
+      "datum_sort": "2026-06-12",
+      "naam": "FMCG Halve Marathon Relay",
+      "plaats": "Amsterdam (NH)",
+      "afstanden": "halve marathon",
+      "categorie": "halve marathon (21.1 km)",
+      "url": "https://hardloopkalender.nl/loopevenement/1770308552/FMCG-Halve-Marathon-Relay"
+    },
+    {
+      "datum": "13-06-2026",
+      "datum_sort": "2026-06-13",
+      "naam": "Hooge Vuursche Trail",
+      "plaats": "Baarn (UT)",
+      "afstanden": "7 km - 13 km - halve marathon",
+      "categorie": "halve marathon (21.1 km)",
+      "url": "https://hardloopkalender.nl/loopevenement/1754563180/Hooge-Vuursche-Trail"
+    },
+    {
+      "datum": "17-06-2026",
+      "datum_sort": "2026-06-17",
+      "naam": "SV Puttenloop Zomer Estafette",
+      "plaats": "Putten (GE)",
+      "afstanden": "5 km",
+      "categorie": "5 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1775641479/SV-Puttenloop-Zomer-Estafette"
+    },
+    {
+      "datum": "19-06-2026",
+      "datum_sort": "2026-06-19",
+      "naam": "Midzomernachtcross",
+      "plaats": "Amstelveen (NH)",
+      "afstanden": "1,6 km - 5 km - 10 km - 10 Engelse mijl",
+      "categorie": "5 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1773321915/Midzomernachtcross"
+    },
+    {
+      "datum": "19-06-2026",
+      "datum_sort": "2026-06-19",
+      "naam": "B Business Run",
+      "plaats": "Amsterdam (NH)",
+      "afstanden": "5 km - 10 km",
+      "categorie": "5 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1776783129/B-Business-Run"
+    },
+    {
+      "datum": "19-06-2026",
+      "datum_sort": "2026-06-19",
+      "naam": "De ZorgSpecialist Grachtenloop",
+      "plaats": "Haarlem (NH)",
+      "afstanden": "1 km - 5 km - 10 km",
+      "categorie": "5 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1772540711/De-ZorgSpecialist-Grachtenloop"
+    },
+    {
+      "datum": "19-06-2026",
+      "datum_sort": "2026-06-19",
+      "naam": "Midzomernachtcross",
+      "plaats": "Amstelveen (NH)",
+      "afstanden": "1,6 km - 5 km - 10 km - 10 Engelse mijl",
+      "categorie": "10 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1773321915/Midzomernachtcross"
+    },
+    {
+      "datum": "19-06-2026",
+      "datum_sort": "2026-06-19",
+      "naam": "Midzomernachtcross",
+      "plaats": "Amstelveen (NH)",
+      "afstanden": "1,6 km - 5 km - 10 km - 10 Engelse mijl",
+      "categorie": "10 mijl (16.1 km)",
+      "url": "https://hardloopkalender.nl/loopevenement/1773321915/Midzomernachtcross"
+    },
+    {
+      "datum": "19-06-2026",
+      "datum_sort": "2026-06-19",
+      "naam": "B Business Run",
+      "plaats": "Amsterdam (NH)",
+      "afstanden": "5 km - 10 km",
+      "categorie": "10 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1776783129/B-Business-Run"
+    },
+    {
+      "datum": "19-06-2026",
+      "datum_sort": "2026-06-19",
+      "naam": "De ZorgSpecialist Grachtenloop",
+      "plaats": "Haarlem (NH)",
+      "afstanden": "1 km - 5 km - 10 km",
+      "categorie": "10 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1772540711/De-ZorgSpecialist-Grachtenloop"
+    },
+    {
+      "datum": "19-06-2026",
+      "datum_sort": "2026-06-19",
+      "naam": "Klimaatmarathon",
+      "plaats": "Utrecht (UT)",
+      "afstanden": "0,4 km - 4,2 km - 6 km - 30 km - marathon",
+      "categorie": "marathon (42.2 km)",
+      "url": "https://hardloopkalender.nl/loopevenement/1774535281/Klimaatmarathon"
+    },
+    {
+      "datum": "20-06-2026",
+      "datum_sort": "2026-06-20",
+      "naam": "Pierewaai Trail Beachrun IJmuiden",
+      "plaats": "IJmuiden, gemeente Velsen (NH)",
+      "afstanden": "10 km - 15 km - halve marathon - marathon - 60 km",
+      "categorie": "marathon (42.2 km)",
+      "url": "https://hardloopkalender.nl/loopevenement/1775910662/Pierewaai-Trail-Beachrun-IJmuiden"
+    },
+    {
+      "datum": "20-06-2026",
+      "datum_sort": "2026-06-20",
+      "naam": "Pierewaai Trail Beachrun IJmuiden",
+      "plaats": "IJmuiden, gemeente Velsen (NH)",
+      "afstanden": "10 km - 15 km - halve marathon - marathon - 60 km",
+      "categorie": "15 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1775910662/Pierewaai-Trail-Beachrun-IJmuiden"
+    },
+    {
+      "datum": "20-06-2026",
+      "datum_sort": "2026-06-20",
+      "naam": "Pierewaai Trail Beachrun IJmuiden",
+      "plaats": "IJmuiden, gemeente Velsen (NH)",
+      "afstanden": "10 km - 15 km - halve marathon - marathon - 60 km",
+      "categorie": "10 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1775910662/Pierewaai-Trail-Beachrun-IJmuiden"
+    },
+    {
+      "datum": "20-06-2026",
+      "datum_sort": "2026-06-20",
+      "naam": "Pierewaai Trail Beachrun IJmuiden",
+      "plaats": "IJmuiden, gemeente Velsen (NH)",
+      "afstanden": "10 km - 15 km - halve marathon - marathon - 60 km",
+      "categorie": "halve marathon (21.1 km)",
+      "url": "https://hardloopkalender.nl/loopevenement/1775910662/Pierewaai-Trail-Beachrun-IJmuiden"
+    },
+    {
+      "datum": "21-06-2026",
+      "datum_sort": "2026-06-21",
+      "naam": "Midzomernacht Halve Marathon",
+      "plaats": "Zaltbommel (GE)",
+      "afstanden": "halve marathon",
+      "categorie": "halve marathon (21.1 km)",
+      "url": "https://hardloopkalender.nl/loopevenement/1773957017/Midzomernacht-Halve-Marathon"
+    },
+    {
+      "datum": "25-06-2026",
+      "datum_sort": "2026-06-25",
+      "naam": "De Ronde van Nieuwveen",
+      "plaats": "Nieuwveen, gemeente Nieuwkoop (ZH)",
+      "afstanden": "0,4 km - 0,8 km - 1,7 km - 5 km - 10 km - 15 km",
+      "categorie": "10 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1777927645/De-Ronde-van-Nieuwveen"
+    },
+    {
+      "datum": "25-06-2026",
+      "datum_sort": "2026-06-25",
+      "naam": "De Ronde van Nieuwveen",
+      "plaats": "Nieuwveen, gemeente Nieuwkoop (ZH)",
+      "afstanden": "0,4 km - 0,8 km - 1,7 km - 5 km - 10 km - 15 km",
+      "categorie": "15 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1777927645/De-Ronde-van-Nieuwveen"
+    },
+    {
+      "datum": "27-06-2026",
+      "datum_sort": "2026-06-27",
+      "naam": "Midzomer Marathon",
+      "plaats": "Apeldoorn (GE)",
+      "afstanden": "7,5 km - 14 km - halve marathon - 28 km - marathon",
+      "categorie": "halve marathon (21.1 km)",
+      "url": "https://hardloopkalender.nl/loopevenement/1763459289/Midzomer-Marathon"
+    },
+    {
+      "datum": "27-06-2026",
+      "datum_sort": "2026-06-27",
+      "naam": "Midzomer Marathon",
+      "plaats": "Apeldoorn (GE)",
+      "afstanden": "7,5 km - 14 km - halve marathon - 28 km - marathon",
+      "categorie": "marathon (42.2 km)",
+      "url": "https://hardloopkalender.nl/loopevenement/1763459289/Midzomer-Marathon"
+    },
+    {
+      "datum": "28-06-2026",
+      "datum_sort": "2026-06-28",
+      "naam": "Vechtloop",
+      "plaats": "Weesp (NH)",
+      "afstanden": "1 km - 2 km - 5 km - 10 Engelse mijl",
+      "categorie": "10 mijl (16.1 km)",
+      "url": "https://hardloopkalender.nl/loopevenement/1762288703/Vechtloop"
+    },
+    {
+      "datum": "12-07-2026",
+      "datum_sort": "2026-07-12",
+      "naam": "Amerongse Berg Trail",
+      "plaats": "Overberg, gemeente Utrechtse Heuvelrug (UT)",
+      "afstanden": "12 km - 17 km - halve marathon",
+      "categorie": "halve marathon (21.1 km)",
+      "url": "https://hardloopkalender.nl/loopevenement/1754379216/Amerongse-Berg-Trail"
+    },
+    {
+      "datum": "15-07-2026",
+      "datum_sort": "2026-07-15",
+      "naam": "Stapin nu Henschotermeer Games",
+      "plaats": "Woudenberg (UT)",
+      "afstanden": "5,5 km - 15 km",
+      "categorie": "15 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1777033103/Stapin-nu-Henschotermeer-Games"
+    },
+    {
+      "datum": "15-08-2026",
+      "datum_sort": "2026-08-15",
+      "naam": "Stakenberg Trail",
+      "plaats": "Elspeet, gemeente Nunspeet (GE)",
+      "afstanden": "10 km - halve marathon - 30 km",
+      "categorie": "halve marathon (21.1 km)",
+      "url": "https://hardloopkalender.nl/loopevenement/1754565348/Stakenberg-Trail"
+    },
+    {
+      "datum": "29-08-2026",
+      "datum_sort": "2026-08-29",
+      "naam": "Heiderun",
+      "plaats": "Ede (GE)",
+      "afstanden": "0,7 km - 1,4 km - 6 km - 12 km - halve marathon",
+      "categorie": "halve marathon (21.1 km)",
+      "url": "https://hardloopkalender.nl/loopevenement/1774475083/Heiderun"
+    },
+    {
+      "datum": "30-08-2026",
+      "datum_sort": "2026-08-30",
+      "naam": "duurlopen met hazen",
+      "plaats": "Amsterdam (NH)",
+      "afstanden": "15 km - 20 km - 25 km - 30 km - 35 km",
+      "categorie": "15 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1776341140/duurlopen-met-hazen"
+    },
+    {
+      "datum": "05-09-2026",
+      "datum_sort": "2026-09-05",
+      "naam": "Veluwsetrailrun",
+      "plaats": "Ermelo (GE)",
+      "afstanden": "10 km - 15 km - 22 km - 30 km - marathon - 60 km",
+      "categorie": "15 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1766339830/Veluwsetrailrun"
+    },
+    {
+      "datum": "05-09-2026",
+      "datum_sort": "2026-09-05",
+      "naam": "Veluwsetrailrun",
+      "plaats": "Ermelo (GE)",
+      "afstanden": "10 km - 15 km - 22 km - 30 km - marathon - 60 km",
+      "categorie": "marathon (42.2 km)",
+      "url": "https://hardloopkalender.nl/loopevenement/1766339830/Veluwsetrailrun"
+    },
+    {
+      "datum": "06-09-2026",
+      "datum_sort": "2026-09-06",
+      "naam": "Stichting Almere PoortRun",
+      "plaats": "Almere (FL)",
+      "afstanden": "1 km - 5 km - 10 km - 10 Engelse mijl",
+      "categorie": "10 mijl (16.1 km)",
+      "url": "https://hardloopkalender.nl/loopevenement/1773703332/Stichting-Almere-PoortRun"
+    },
+    {
+      "datum": "06-09-2026",
+      "datum_sort": "2026-09-06",
+      "naam": "DijkenSport",
+      "plaats": "Beneden-Leeuwen, gemeente West Maas en Waal (GE)",
+      "afstanden": "5 km - 10 km - halve marathon - marathon",
+      "categorie": "marathon (42.2 km)",
+      "url": "https://hardloopkalender.nl/loopevenement/1773592459/DijkenSport"
+    },
+    {
+      "datum": "13-09-2026",
+      "datum_sort": "2026-09-13",
+      "naam": "Markenbinnenrun",
+      "plaats": "Markenbinnen, gemeente Alkmaar (NH)",
+      "afstanden": "5 km - 10 km - 10 Engelse mijl",
+      "categorie": "10 mijl (16.1 km)",
+      "url": "https://hardloopkalender.nl/loopevenement/1776068627/Markenbinnenrun"
+    },
+    {
+      "datum": "13-09-2026",
+      "datum_sort": "2026-09-13",
+      "naam": "45e Zeevangsloop",
+      "plaats": "Middelie, gemeente Edam-Volendam (NH)",
+      "afstanden": "3 km - 6 km - 10 km - 15 km - halve marathon",
+      "categorie": "15 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1762243594/45e-Zeevangsloop"
+    },
+    {
+      "datum": "13-09-2026",
+      "datum_sort": "2026-09-13",
+      "naam": "duurlopen met hazen",
+      "plaats": "Amsterdam-Noord, gemeente Amsterdam (NH)",
+      "afstanden": "15 km - 20 km - 25 km - 30 km - 35 km",
+      "categorie": "15 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1776341402/duurlopen-met-hazen"
+    },
+    {
+      "datum": "19-09-2026",
+      "datum_sort": "2026-09-19",
+      "naam": "11e Kwintelooyen Run",
+      "plaats": "Rhenen (UT)",
+      "afstanden": "1 km - 5 km - 10 km - 15 km",
+      "categorie": "15 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1776111347/11e-Kwintelooyen-Run"
+    },
+    {
+      "datum": "27-09-2026",
+      "datum_sort": "2026-09-27",
+      "naam": "duurlopen met hazen",
+      "plaats": "Amsterdam (NH)",
+      "afstanden": "15 km - 20 km - 25 km - 30 km - 35 km",
+      "categorie": "15 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1776341536/duurlopen-met-hazen"
+    },
+    {
+      "datum": "27-09-2026",
+      "datum_sort": "2026-09-27",
+      "naam": "AMAK-loop",
+      "plaats": "Akersloot, gemeente Castricum (NH)",
+      "afstanden": "0,8 km - 1,6 km - 5 km - 10 km - 15 km",
+      "categorie": "15 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1761479023/AMAK-loop"
+    },
+    {
+      "datum": "27-09-2026",
+      "datum_sort": "2026-09-27",
+      "naam": "Earth Race - Forest Edition",
+      "plaats": "Amsterdam (NH)",
+      "afstanden": "5 km - 10 km - halve marathon - marathon",
+      "categorie": "marathon (42.2 km)",
+      "url": "https://hardloopkalender.nl/loopevenement/1775465235/Earth-Race---Forest-Edition"
+    },
+    {
+      "datum": "27-09-2026",
+      "datum_sort": "2026-09-27",
+      "naam": "Heyu VathorstRun",
+      "plaats": "Hooglanderveen, gemeente Amersfoort (UT)",
+      "afstanden": "5 km - 10 km - 10 Engelse mijl",
+      "categorie": "10 mijl (16.1 km)",
+      "url": "https://hardloopkalender.nl/loopevenement/1777032865/Heyu-VathorstRun"
+    },
+    {
+      "datum": "03-10-2026",
+      "datum_sort": "2026-10-03",
+      "naam": "Pieken en Dalen Festival",
+      "plaats": "Doorn, gemeente Utrechtse Heuvelrug (UT)",
+      "afstanden": "5 km - 10 km - halve marathon - marathon",
+      "categorie": "marathon (42.2 km)",
+      "url": "https://hardloopkalender.nl/loopevenement/1768488917/Pieken-en-Dalen-Festival-"
+    },
+    {
+      "datum": "10-10-2026",
+      "datum_sort": "2026-10-10",
+      "naam": "Rouwkost Run",
+      "plaats": "Amersfoort (UT)",
+      "afstanden": "5 km - 10 km - 15 km - 20 km - 30 km",
+      "categorie": "15 km",
+      "url": "https://hardloopkalender.nl/loopevenement/1775206834/Rouwkost-Run"
+    },
+    {
+      "datum": "21-03-2027",
+      "datum_sort": "2027-03-21",
+      "naam": "Two Rivers Marathon",
+      "plaats": "Zaltbommel (GE)",
+      "afstanden": "halve marathon - marathon",
+      "categorie": "halve marathon (21.1 km)",
+      "url": "https://hardloopkalender.nl/loopevenement/1774543505/Two-Rivers-Marathon"
+    },
+    {
+      "datum": "21-03-2027",
+      "datum_sort": "2027-03-21",
+      "naam": "Two Rivers Marathon",
+      "plaats": "Zaltbommel (GE)",
+      "afstanden": "halve marathon - marathon",
+      "categorie": "marathon (42.2 km)",
+      "url": "https://hardloopkalender.nl/loopevenement/1774543505/Two-Rivers-Marathon"
+    }
+  ],
+  "bijgewerkt": "2026-05-12 21:32"
+}

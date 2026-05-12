@@ -1,6 +1,38 @@
 {
-  "gegenereerd_op": "2026-05-08 23:57",
+  "gegenereerd_op": "2026-05-12 21:32",
   "alle": [
+    {
+      "datum": "2026-05-10, Zondag",
+      "datum_sort": "2026-05-10",
+      "naam": "Morning Run",
+      "afstand": 31.02,
+      "tempo": "4:53",
+      "tempo_dec": 4.883,
+      "tijd": "2:31:28",
+      "min_hr": 63,
+      "gem_hr": 133,
+      "max_hr": 146,
+      "zone": "🟢 Z1 - Herstel",
+      "trainingsplan": "duurloop 32 km zone 1 laag",
+      "strava_url": "https://www.strava.com/activities/18447656531",
+      "hr_500": 128.2
+    },
+    {
+      "datum": "2026-05-09, Zaterdag",
+      "datum_sort": "2026-05-09",
+      "naam": "Morning Run",
+      "afstand": 19.71,
+      "tempo": "4:39",
+      "tempo_dec": 4.65,
+      "tijd": "1:31:39",
+      "min_hr": 76,
+      "gem_hr": 144,
+      "max_hr": 172,
+      "zone": "🟢 Z1 - Herstel",
+      "trainingsplan": "10.00 Bosberg Vaartspel extensief",
+      "strava_url": "https://www.strava.com/activities/18435784980",
+      "hr_500": 133.6
+    },
     {
       "datum": "2026-05-08, Vrijdag",
       "datum_sort": "2026-05-08",
@@ -15,7 +47,7 @@
       "zone": "🟢 Z1 - Herstel",
       "trainingsplan": "duurloop 60 min zone 1",
       "strava_url": "https://www.strava.com/activities/18426047677",
-      "hr_500": 126.9
+      "hr_500": null
     },
     {
       "datum": "2026-05-07, Donderdag",
@@ -30,7 +62,7 @@
       "max_hr": 181,
       "zone": "🟢 Z1 - Herstel",
       "trainingsplan": "2x3x1000m zone 3 naar 4 p1=2'p2=4' /gesprek (2)",
-      "strava_url": "https://www.strava.com/activities/18415819541",
+      "strava_url": "https://www.strava.com/activities/18415819571",
       "hr_500": null
     },
     {
@@ -79,7 +111,7 @@
       "zone": "🟢 Z1 - Herstel",
       "trainingsplan": "duurloop 90 min zone 1",
       "strava_url": "https://www.strava.com/activities/18383814546",
-      "hr_500": null
+      "hr_500": 134.1
     },
     {
       "datum": "2026-05-04, Maandag",
@@ -95,7 +127,7 @@
       "zone": "🟢 Z1 - Herstel",
       "trainingsplan": "rust",
       "strava_url": "https://www.strava.com/activities/18373572509",
-      "hr_500": null
+      "hr_500": 134.9
     },
     {
       "datum": "2026-05-03, Zondag",
@@ -181,22 +213,6 @@
       "datum": "2026-04-04, Zaterdag",
       "datum_sort": "2026-04-04",
       "naam": "Morning Run",
-      "afstand": 11.13,
-      "tempo": "4:07",
-      "tempo_dec": 4.117,
-      "tijd": "45:49",
-      "min_hr": 94,
-      "gem_hr": 150,
-      "max_hr": 168,
-      "zone": "🟢 Z2 - Aerobe duur",
-      "trainingsplan": "10.00 Vaartspel Spanderswoud, Spanderslaan 3 (met 1x5km MT op wedstrijdschoenen)",
-      "strava_url": "https://www.strava.com/activities/17972122060",
-      "hr_500": null
-    },
-    {
-      "datum": "2026-04-04, Zaterdag",
-      "datum_sort": "2026-04-04",
-      "naam": "Morning Run",
       "afstand": 4.94,
       "tempo": "5:07",
       "tempo_dec": 5.117,
@@ -205,6 +221,22 @@
       "gem_hr": 132,
       "max_hr": 149,
       "zone": "🟢 Z1 - Herstel",
+      "trainingsplan": "10.00 Vaartspel Spanderswoud, Spanderslaan 3 (met 1x5km MT op wedstrijdschoenen)",
+      "strava_url": "https://www.strava.com/activities/17972122060",
+      "hr_500": null
+    },
+    {
+      "datum": "2026-04-04, Zaterdag",
+      "datum_sort": "2026-04-04",
+      "naam": "Morning Run",
+      "afstand": 11.13,
+      "tempo": "4:07",
+      "tempo_dec": 4.117,
+      "tijd": "45:49",
+      "min_hr": 94,
+      "gem_hr": 150,
+      "max_hr": 168,
+      "zone": "🟢 Z2 - Aerobe duur",
       "trainingsplan": "10.00 Vaartspel Spanderswoud, Spanderslaan 3 (met 1x5km MT op wedstrijdschoenen)",
       "strava_url": "https://www.strava.com/activities/17972122060",
       "hr_500": null
@@ -260,17 +292,17 @@
     {
       "datum": "2026-03-28, Zaterdag",
       "datum_sort": "2026-03-28",
-      "naam": "Morning Run",
-      "afstand": 2.04,
-      "tempo": "4:48",
-      "tempo_dec": 4.8,
-      "tijd": "9:47",
-      "min_hr": 93,
-      "gem_hr": 132,
-      "max_hr": 143,
+      "naam": "Lunch Run",
+      "afstand": 0.7,
+      "tempo": "4:53",
+      "tempo_dec": 4.883,
+      "tijd": "3:25",
+      "min_hr": 104,
+      "gem_hr": 137,
+      "max_hr": 142,
       "zone": "🟢 Z1 - Herstel",
       "trainingsplan": "middag: duurloop 25km zone 1 laag",
-      "strava_url": "https://www.strava.com/activities/17887624140",
+      "strava_url": "https://www.strava.com/activities/17887624145",
       "hr_500": null
     },
     {
@@ -292,17 +324,17 @@
     {
       "datum": "2026-03-28, Zaterdag",
       "datum_sort": "2026-03-28",
-      "naam": "Lunch Run",
-      "afstand": 0.7,
-      "tempo": "4:53",
-      "tempo_dec": 4.883,
-      "tijd": "3:25",
-      "min_hr": 104,
-      "gem_hr": 137,
-      "max_hr": 142,
+      "naam": "Morning Run",
+      "afstand": 2.04,
+      "tempo": "4:48",
+      "tempo_dec": 4.8,
+      "tijd": "9:47",
+      "min_hr": 93,
+      "gem_hr": 132,
+      "max_hr": 143,
       "zone": "🟢 Z1 - Herstel",
       "trainingsplan": "middag: duurloop 25km zone 1 laag",
-      "strava_url": "https://www.strava.com/activities/17887624145",
+      "strava_url": "https://www.strava.com/activities/17887624140",
       "hr_500": null
     },
     {
@@ -420,22 +452,6 @@
     {
       "datum": "2026-03-23, Maandag",
       "datum_sort": "2026-03-23",
-      "naam": "Evening Run",
-      "afstand": 10.14,
-      "tempo": "4:54",
-      "tempo_dec": 4.9,
-      "tijd": "49:41",
-      "min_hr": 98,
-      "gem_hr": 134,
-      "max_hr": 143,
-      "zone": "🟢 Z1 - Herstel",
-      "trainingsplan": "duurloop 15km zone 1",
-      "strava_url": "https://www.strava.com/activities/17830793101",
-      "hr_500": 133.0
-    },
-    {
-      "datum": "2026-03-23, Maandag",
-      "datum_sort": "2026-03-23",
       "naam": "Afternoon Run",
       "afstand": 3.05,
       "tempo": "4:55",
@@ -448,6 +464,22 @@
       "trainingsplan": "duurloop 15km zone 1",
       "strava_url": "https://www.strava.com/activities/17829574369",
       "hr_500": null
+    },
+    {
+      "datum": "2026-03-23, Maandag",
+      "datum_sort": "2026-03-23",
+      "naam": "Evening Run",
+      "afstand": 10.14,
+      "tempo": "4:54",
+      "tempo_dec": 4.9,
+      "tijd": "49:41",
+      "min_hr": 98,
+      "gem_hr": 134,
+      "max_hr": 143,
+      "zone": "🟢 Z1 - Herstel",
+      "trainingsplan": "duurloop 15km zone 1",
+      "strava_url": "https://www.strava.com/activities/17830793101",
+      "hr_500": 133.0
     },
     {
       "datum": "2026-03-22, Zondag",
@@ -463,6 +495,22 @@
       "zone": "🟢 Z2 - Aerobe duur",
       "trainingsplan": "duurloop 60 min zone 1",
       "strava_url": "https://www.strava.com/activities/17811337271",
+      "hr_500": null
+    },
+    {
+      "datum": "2026-03-15, Zondag",
+      "datum_sort": "2026-03-15",
+      "naam": "Afternoon Run",
+      "afstand": 3.0,
+      "tempo": "6:14",
+      "tempo_dec": 6.233,
+      "tijd": "18:41",
+      "min_hr": 107,
+      "gem_hr": 130,
+      "max_hr": 145,
+      "zone": "🟢 Z1 - Herstel",
+      "trainingsplan": "CPC 21,1 km",
+      "strava_url": "https://www.strava.com/activities/17811337079",
       "hr_500": null
     },
     {
@@ -495,22 +543,6 @@
       "zone": "🟢 Z1 - Herstel",
       "trainingsplan": "CPC 21,1 km",
       "strava_url": "https://www.strava.com/activities/17811337253",
-      "hr_500": null
-    },
-    {
-      "datum": "2026-03-15, Zondag",
-      "datum_sort": "2026-03-15",
-      "naam": "Afternoon Run",
-      "afstand": 3.0,
-      "tempo": "6:14",
-      "tempo_dec": 6.233,
-      "tijd": "18:41",
-      "min_hr": 107,
-      "gem_hr": 130,
-      "max_hr": 145,
-      "zone": "🟢 Z1 - Herstel",
-      "trainingsplan": "CPC 21,1 km",
-      "strava_url": "https://www.strava.com/activities/17811337079",
       "hr_500": null
     },
     {
@@ -660,6 +692,22 @@
     {
       "datum": "2026-02-25, Woensdag",
       "datum_sort": "2026-02-25",
+      "naam": "Afternoon Run",
+      "afstand": 9.02,
+      "tempo": "4:55",
+      "tempo_dec": 4.917,
+      "tijd": "44:20",
+      "min_hr": 75,
+      "gem_hr": 133,
+      "max_hr": 144,
+      "zone": "🟢 Z1 - Herstel",
+      "trainingsplan": "duurloop 105 min zone 1",
+      "strava_url": "https://www.strava.com/activities/17519853351",
+      "hr_500": 132.7
+    },
+    {
+      "datum": "2026-02-25, Woensdag",
+      "datum_sort": "2026-02-25",
       "naam": "Evening Run",
       "afstand": 5.22,
       "tempo": "5:12",
@@ -674,20 +722,20 @@
       "hr_500": null
     },
     {
-      "datum": "2026-02-25, Woensdag",
-      "datum_sort": "2026-02-25",
-      "naam": "Afternoon Run",
-      "afstand": 9.02,
-      "tempo": "4:55",
-      "tempo_dec": 4.917,
-      "tijd": "44:20",
-      "min_hr": 75,
-      "gem_hr": 133,
-      "max_hr": 144,
-      "zone": "🟢 Z1 - Herstel",
-      "trainingsplan": "duurloop 105 min zone 1",
-      "strava_url": "https://www.strava.com/activities/17519853351",
-      "hr_500": 132.7
+      "datum": "2026-02-22, Zondag",
+      "datum_sort": "2026-02-22",
+      "naam": "rdl",
+      "afstand": 5.0,
+      "tempo": "5:00",
+      "tempo_dec": 5.0,
+      "tijd": "25:00",
+      "min_hr": 0,
+      "gem_hr": 0,
+      "max_hr": 0,
+      "zone": "Geen data",
+      "trainingsplan": "10.00 Spanderswoud, vaartspel 4x5 MT training",
+      "strava_url": "https://www.strava.com/activities/17480546997",
+      "hr_500": null
     },
     {
       "datum": "2026-02-22, Zondag",
@@ -719,22 +767,6 @@
       "zone": "🟢 Z1 - Herstel",
       "trainingsplan": "10.00 Spanderswoud, vaartspel 4x5 MT training",
       "strava_url": "https://www.strava.com/activities/17480260268",
-      "hr_500": null
-    },
-    {
-      "datum": "2026-02-22, Zondag",
-      "datum_sort": "2026-02-22",
-      "naam": "rdl",
-      "afstand": 5.0,
-      "tempo": "5:00",
-      "tempo_dec": 5.0,
-      "tijd": "25:00",
-      "min_hr": 0,
-      "gem_hr": 0,
-      "max_hr": 0,
-      "zone": "Geen data",
-      "trainingsplan": "10.00 Spanderswoud, vaartspel 4x5 MT training",
-      "strava_url": "https://www.strava.com/activities/17480546997",
       "hr_500": null
     },
     {
@@ -932,22 +964,6 @@
     {
       "datum": "2026-01-30, Vrijdag",
       "datum_sort": "2026-01-30",
-      "naam": "Afternoon Run",
-      "afstand": 3.11,
-      "tempo": "4:45",
-      "tempo_dec": 4.75,
-      "tijd": "14:46",
-      "min_hr": 113,
-      "gem_hr": 141,
-      "max_hr": 151,
-      "zone": "🟢 Z1 - Herstel",
-      "trainingsplan": "duurloop 75 min zone 1",
-      "strava_url": "https://www.strava.com/activities/17227864363",
-      "hr_500": null
-    },
-    {
-      "datum": "2026-01-30, Vrijdag",
-      "datum_sort": "2026-01-30",
       "naam": "Evening Run",
       "afstand": 9.0,
       "tempo": "4:55",
@@ -960,6 +976,22 @@
       "trainingsplan": "duurloop 75 min zone 1",
       "strava_url": "https://www.strava.com/activities/17230863837",
       "hr_500": 141.8
+    },
+    {
+      "datum": "2026-01-30, Vrijdag",
+      "datum_sort": "2026-01-30",
+      "naam": "Afternoon Run",
+      "afstand": 3.11,
+      "tempo": "4:45",
+      "tempo_dec": 4.75,
+      "tijd": "14:46",
+      "min_hr": 113,
+      "gem_hr": 141,
+      "max_hr": 151,
+      "zone": "🟢 Z1 - Herstel",
+      "trainingsplan": "duurloop 75 min zone 1",
+      "strava_url": "https://www.strava.com/activities/17227864363",
+      "hr_500": null
     },
     {
       "datum": "2026-01-29, Donderdag",
@@ -1140,22 +1172,6 @@
     {
       "datum": "2026-01-21, Woensdag",
       "datum_sort": "2026-01-21",
-      "naam": "Evening Run",
-      "afstand": 4.94,
-      "tempo": "5:40",
-      "tempo_dec": 5.667,
-      "tijd": "27:59",
-      "min_hr": 73,
-      "gem_hr": 123,
-      "max_hr": 139,
-      "zone": "🟢 Z1 - Herstel",
-      "trainingsplan": "duurloop 75 min zone 1",
-      "strava_url": "https://www.strava.com/activities/17130069447",
-      "hr_500": null
-    },
-    {
-      "datum": "2026-01-21, Woensdag",
-      "datum_sort": "2026-01-21",
       "naam": "Afternoon Run",
       "afstand": 12.0,
       "tempo": "4:58",
@@ -1170,20 +1186,20 @@
       "hr_500": 133.7
     },
     {
-      "datum": "2026-01-20, Dinsdag",
-      "datum_sort": "2026-01-20",
+      "datum": "2026-01-21, Woensdag",
+      "datum_sort": "2026-01-21",
       "naam": "Evening Run",
-      "afstand": 11.03,
-      "tempo": "5:09",
-      "tempo_dec": 5.15,
-      "tijd": "56:48",
-      "min_hr": 78,
-      "gem_hr": 136,
-      "max_hr": 157,
+      "afstand": 4.94,
+      "tempo": "5:40",
+      "tempo_dec": 5.667,
+      "tijd": "27:59",
+      "min_hr": 73,
+      "gem_hr": 123,
+      "max_hr": 139,
       "zone": "🟢 Z1 - Herstel",
-      "trainingsplan": "duurloop 90 min zone 1",
-      "strava_url": "https://www.strava.com/activities/17120845054",
-      "hr_500": 138.9
+      "trainingsplan": "duurloop 75 min zone 1",
+      "strava_url": "https://www.strava.com/activities/17130069447",
+      "hr_500": null
     },
     {
       "datum": "2026-01-20, Dinsdag",
@@ -1200,6 +1216,22 @@
       "trainingsplan": "duurloop 90 min zone 1",
       "strava_url": "https://www.strava.com/activities/17120844969",
       "hr_500": null
+    },
+    {
+      "datum": "2026-01-20, Dinsdag",
+      "datum_sort": "2026-01-20",
+      "naam": "Evening Run",
+      "afstand": 11.03,
+      "tempo": "5:09",
+      "tempo_dec": 5.15,
+      "tijd": "56:48",
+      "min_hr": 78,
+      "gem_hr": 136,
+      "max_hr": 157,
+      "zone": "🟢 Z1 - Herstel",
+      "trainingsplan": "duurloop 90 min zone 1",
+      "strava_url": "https://www.strava.com/activities/17120845054",
+      "hr_500": 138.9
     },
     {
       "datum": "2026-01-19, Maandag",
@@ -1909,22 +1941,6 @@
       "datum": "2025-11-29, Zaterdag",
       "datum_sort": "2025-11-29",
       "naam": "Morning Run",
-      "afstand": 8.63,
-      "tempo": "4:31",
-      "tempo_dec": 4.517,
-      "tijd": "38:58",
-      "min_hr": 81,
-      "gem_hr": 140,
-      "max_hr": 162,
-      "zone": "🟢 Z1 - Herstel",
-      "trainingsplan": "",
-      "strava_url": "https://www.strava.com/activities/16602246692",
-      "hr_500": null
-    },
-    {
-      "datum": "2025-11-29, Zaterdag",
-      "datum_sort": "2025-11-29",
-      "naam": "Morning Run",
       "afstand": 5.39,
       "tempo": "4:42",
       "tempo_dec": 4.7,
@@ -1949,6 +1965,22 @@
       "gem_hr": 173,
       "max_hr": 186,
       "zone": "🔴 Z5 - VO2max",
+      "trainingsplan": "",
+      "strava_url": "https://www.strava.com/activities/16602246692",
+      "hr_500": null
+    },
+    {
+      "datum": "2025-11-29, Zaterdag",
+      "datum_sort": "2025-11-29",
+      "naam": "Morning Run",
+      "afstand": 8.63,
+      "tempo": "4:31",
+      "tempo_dec": 4.517,
+      "tijd": "38:58",
+      "min_hr": 81,
+      "gem_hr": 140,
+      "max_hr": 162,
+      "zone": "🟢 Z1 - Herstel",
       "trainingsplan": "",
       "strava_url": "https://www.strava.com/activities/16602246692",
       "hr_500": null
@@ -2916,22 +2948,6 @@
     {
       "datum": "2025-07-03, Donderdag",
       "datum_sort": "2025-07-03",
-      "naam": "4x1000 in +- 3:30",
-      "afstand": 5.65,
-      "tempo": "4:40",
-      "tempo_dec": 4.667,
-      "tijd": "26:22",
-      "min_hr": 0,
-      "gem_hr": 0,
-      "max_hr": 0,
-      "zone": "Geen data",
-      "trainingsplan": "",
-      "strava_url": "https://www.strava.com/activities/14996339601",
-      "hr_500": null
-    },
-    {
-      "datum": "2025-07-03, Donderdag",
-      "datum_sort": "2025-07-03",
       "naam": "7x 1000.",
       "afstand": 3.01,
       "tempo": "3:20",
@@ -2941,6 +2957,22 @@
       "gem_hr": 153,
       "max_hr": 174,
       "zone": "🟢 Z2 - Aerobe duur",
+      "trainingsplan": "",
+      "strava_url": "https://www.strava.com/activities/14996339601",
+      "hr_500": null
+    },
+    {
+      "datum": "2025-07-03, Donderdag",
+      "datum_sort": "2025-07-03",
+      "naam": "4x1000 in +- 3:30",
+      "afstand": 5.65,
+      "tempo": "4:40",
+      "tempo_dec": 4.667,
+      "tijd": "26:22",
+      "min_hr": 0,
+      "gem_hr": 0,
+      "max_hr": 0,
+      "zone": "Geen data",
       "trainingsplan": "",
       "strava_url": "https://www.strava.com/activities/14996339601",
       "hr_500": null
@@ -3236,22 +3268,6 @@
     {
       "datum": "2025-06-02, Maandag",
       "datum_sort": "2025-06-02",
-      "naam": "Evening Run",
-      "afstand": 6.04,
-      "tempo": "4:33",
-      "tempo_dec": 4.55,
-      "tijd": "27:28",
-      "min_hr": 73,
-      "gem_hr": 138,
-      "max_hr": 149,
-      "zone": "🟢 Z1 - Herstel",
-      "trainingsplan": "",
-      "strava_url": "https://www.strava.com/activities/14682146735",
-      "hr_500": null
-    },
-    {
-      "datum": "2025-06-02, Maandag",
-      "datum_sort": "2025-06-02",
       "naam": "Afternoon Run",
       "afstand": 6.54,
       "tempo": "4:38",
@@ -3260,6 +3276,22 @@
       "min_hr": 106,
       "gem_hr": 142,
       "max_hr": 168,
+      "zone": "🟢 Z1 - Herstel",
+      "trainingsplan": "",
+      "strava_url": "https://www.strava.com/activities/14682146735",
+      "hr_500": null
+    },
+    {
+      "datum": "2025-06-02, Maandag",
+      "datum_sort": "2025-06-02",
+      "naam": "Evening Run",
+      "afstand": 6.04,
+      "tempo": "4:33",
+      "tempo_dec": 4.55,
+      "tijd": "27:28",
+      "min_hr": 73,
+      "gem_hr": 138,
+      "max_hr": 149,
       "zone": "🟢 Z1 - Herstel",
       "trainingsplan": "",
       "strava_url": "https://www.strava.com/activities/14682146735",
@@ -3332,22 +3364,6 @@
     {
       "datum": "2025-05-28, Woensdag",
       "datum_sort": "2025-05-28",
-      "naam": "Evening Run",
-      "afstand": 6.98,
-      "tempo": "4:34",
-      "tempo_dec": 4.567,
-      "tijd": "31:52",
-      "min_hr": 83,
-      "gem_hr": 138,
-      "max_hr": 149,
-      "zone": "🟢 Z1 - Herstel",
-      "trainingsplan": "",
-      "strava_url": "https://www.strava.com/activities/14635145295",
-      "hr_500": null
-    },
-    {
-      "datum": "2025-05-28, Woensdag",
-      "datum_sort": "2025-05-28",
       "naam": "Afternoon Run",
       "afstand": 4.21,
       "tempo": "4:26",
@@ -3356,6 +3372,22 @@
       "min_hr": 79,
       "gem_hr": 139,
       "max_hr": 153,
+      "zone": "🟢 Z1 - Herstel",
+      "trainingsplan": "",
+      "strava_url": "https://www.strava.com/activities/14635145295",
+      "hr_500": null
+    },
+    {
+      "datum": "2025-05-28, Woensdag",
+      "datum_sort": "2025-05-28",
+      "naam": "Evening Run",
+      "afstand": 6.98,
+      "tempo": "4:34",
+      "tempo_dec": 4.567,
+      "tijd": "31:52",
+      "min_hr": 83,
+      "gem_hr": 138,
+      "max_hr": 149,
       "zone": "🟢 Z1 - Herstel",
       "trainingsplan": "",
       "strava_url": "https://www.strava.com/activities/14635145295",
@@ -3748,6 +3780,38 @@
   ],
   "duurlopen": [
     {
+      "datum": "2026-05-10, Zondag",
+      "datum_sort": "2026-05-10",
+      "naam": "Morning Run",
+      "afstand": 31.02,
+      "tempo": "4:53",
+      "tempo_dec": 4.883,
+      "tijd": "2:31:28",
+      "min_hr": 63,
+      "gem_hr": 133,
+      "max_hr": 146,
+      "zone": "🟢 Z1 - Herstel",
+      "trainingsplan": "duurloop 32 km zone 1 laag",
+      "strava_url": "https://www.strava.com/activities/18447656531",
+      "hr_500": 128.2
+    },
+    {
+      "datum": "2026-05-09, Zaterdag",
+      "datum_sort": "2026-05-09",
+      "naam": "Morning Run",
+      "afstand": 19.71,
+      "tempo": "4:39",
+      "tempo_dec": 4.65,
+      "tijd": "1:31:39",
+      "min_hr": 76,
+      "gem_hr": 144,
+      "max_hr": 172,
+      "zone": "🟢 Z1 - Herstel",
+      "trainingsplan": "10.00 Bosberg Vaartspel extensief",
+      "strava_url": "https://www.strava.com/activities/18435784980",
+      "hr_500": 133.6
+    },
+    {
       "datum": "2026-05-08, Vrijdag",
       "datum_sort": "2026-05-08",
       "naam": "Afternoon Run",
@@ -3761,7 +3825,7 @@
       "zone": "🟢 Z1 - Herstel",
       "trainingsplan": "duurloop 60 min zone 1",
       "strava_url": "https://www.strava.com/activities/18426047677",
-      "hr_500": 126.9
+      "hr_500": null
     },
     {
       "datum": "2026-05-07, Donderdag",
@@ -3776,7 +3840,7 @@
       "max_hr": 181,
       "zone": "🟢 Z1 - Herstel",
       "trainingsplan": "2x3x1000m zone 3 naar 4 p1=2'p2=4' /gesprek (2)",
-      "strava_url": "https://www.strava.com/activities/18415819541",
+      "strava_url": "https://www.strava.com/activities/18415819571",
       "hr_500": null
     },
     {
@@ -3809,7 +3873,7 @@
       "zone": "🟢 Z1 - Herstel",
       "trainingsplan": "duurloop 90 min zone 1",
       "strava_url": "https://www.strava.com/activities/18383814546",
-      "hr_500": null
+      "hr_500": 134.1
     },
     {
       "datum": "2026-05-04, Maandag",
@@ -3825,7 +3889,7 @@
       "zone": "🟢 Z1 - Herstel",
       "trainingsplan": "rust",
       "strava_url": "https://www.strava.com/activities/18373572509",
-      "hr_500": null
+      "hr_500": 134.9
     },
     {
       "datum": "2026-04-27, Maandag",
@@ -4422,22 +4486,6 @@
     {
       "datum": "2026-01-20, Dinsdag",
       "datum_sort": "2026-01-20",
-      "naam": "Evening Run",
-      "afstand": 11.03,
-      "tempo": "5:09",
-      "tempo_dec": 5.15,
-      "tijd": "56:48",
-      "min_hr": 78,
-      "gem_hr": 136,
-      "max_hr": 157,
-      "zone": "🟢 Z1 - Herstel",
-      "trainingsplan": "duurloop 90 min zone 1",
-      "strava_url": "https://www.strava.com/activities/17120845054",
-      "hr_500": 138.9
-    },
-    {
-      "datum": "2026-01-20, Dinsdag",
-      "datum_sort": "2026-01-20",
       "naam": "Night Run",
       "afstand": 8.0,
       "tempo": "5:48",
@@ -4450,6 +4498,22 @@
       "trainingsplan": "duurloop 90 min zone 1",
       "strava_url": "https://www.strava.com/activities/17120844969",
       "hr_500": null
+    },
+    {
+      "datum": "2026-01-20, Dinsdag",
+      "datum_sort": "2026-01-20",
+      "naam": "Evening Run",
+      "afstand": 11.03,
+      "tempo": "5:09",
+      "tempo_dec": 5.15,
+      "tijd": "56:48",
+      "min_hr": 78,
+      "gem_hr": 136,
+      "max_hr": 157,
+      "zone": "🟢 Z1 - Herstel",
+      "trainingsplan": "duurloop 90 min zone 1",
+      "strava_url": "https://www.strava.com/activities/17120845054",
+      "hr_500": 138.9
     },
     {
       "datum": "2026-01-19, Maandag",
@@ -5606,11 +5670,32 @@
   ],
   "hr500": [
     {
-      "datum": "2026-05-08",
-      "hr500": 126.9,
-      "afstand": 13.02,
-      "gem_hr": 130,
-      "gem_tempo": 4.8
+      "datum": "2026-05-10",
+      "hr500": 128.2,
+      "afstand": 31.02,
+      "gem_hr": 133,
+      "gem_tempo": 4.883
+    },
+    {
+      "datum": "2026-05-09",
+      "hr500": 133.6,
+      "afstand": 19.71,
+      "gem_hr": 144,
+      "gem_tempo": 4.65
+    },
+    {
+      "datum": "2026-05-05",
+      "hr500": 134.1,
+      "afstand": 13.01,
+      "gem_hr": 140,
+      "gem_tempo": 4.583
+    },
+    {
+      "datum": "2026-05-04",
+      "hr500": 134.9,
+      "afstand": 11.7,
+      "gem_hr": 138,
+      "gem_tempo": 4.65
     },
     {
       "datum": "2026-04-05",

@@ -2005,11 +2005,11 @@ async function laadKalender() {
 
   // Grote wedstrijden
   try {
-    const r = await fetch('grote_wedstrijden.json');
+    const r = await fetch('hardloopwedstrijden/grote_wedstrijden.json');
     if (!r.ok) throw new Error('HTTP ' + r.status);
     GROTE_WED = await r.json();
   } catch(e) {
-    errors.push('grote_wedstrijden.json');
+    errors.push('hardloopwedstrijden/grote_wedstrijden.json');
     GROTE_WED = { wedstrijden: [], bijgewerkt: '' };
   }
   // Voeg altijd de internationale marathons toe (niet op hardlopen.nl)
@@ -2020,11 +2020,11 @@ async function laadKalender() {
 
   // Lokale wedstrijden
   try {
-    const r = await fetch('hardloopwedstrijden.json');
+    const r = await fetch('hardloopwedstrijden/hardloopwedstrijden.json');
     if (!r.ok) throw new Error('HTTP ' + r.status);
     KALENDER = await r.json();
   } catch(e) {
-    errors.push('hardloopwedstrijden.json');
+    errors.push('hardloopwedstrijden/hardloopwedstrijden.json');
     document.getElementById('tbody-lokaal').innerHTML =
       `<tr><td colspan="6" style="text-align:center;padding:1.5rem;color:var(--muted2)">Niet gevonden (run eerst de scraper)</td></tr>`;
   }

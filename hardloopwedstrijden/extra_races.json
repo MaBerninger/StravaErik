@@ -1,0 +1,532 @@
+{
+  "bijgewerkt": "2026-05-12 21:32",
+  "intl_marathons": [
+    {
+      "datum": "01-03-2026",
+      "datum_sort": "2026-03-01",
+      "naam": "Tokyo Marathon",
+      "stad": "Tokio, JP",
+      "categorie": "marathon (42.2 km)",
+      "max_deel": 38000,
+      "url": "https://www.marathon.tokyo/",
+      "wmm": true
+    },
+    {
+      "datum": "20-04-2026",
+      "datum_sort": "2026-04-20",
+      "naam": "Boston Marathon",
+      "stad": "Boston, VS",
+      "categorie": "marathon (42.2 km)",
+      "max_deel": 30000,
+      "url": "https://www.baa.org/races/boston-marathon",
+      "wmm": true
+    },
+    {
+      "datum": "26-04-2026",
+      "datum_sort": "2026-04-26",
+      "naam": "London Marathon",
+      "stad": "Londen, GB",
+      "categorie": "marathon (42.2 km)",
+      "max_deel": 50000,
+      "url": "https://www.tcslondonmarathon.com/",
+      "wmm": true
+    },
+    {
+      "datum": "26-04-2026",
+      "datum_sort": "2026-04-26",
+      "naam": "Hamburg Marathon",
+      "stad": "Hamburg, DE",
+      "categorie": "marathon (42.2 km)",
+      "max_deel": 30000,
+      "url": "https://www.haspa-marathon-hamburg.de/",
+      "wmm": false
+    },
+    {
+      "datum": "13-09-2026",
+      "datum_sort": "2026-09-13",
+      "naam": "Sydney Marathon",
+      "stad": "Sydney, AU",
+      "categorie": "marathon (42.2 km)",
+      "max_deel": 10000,
+      "url": "https://www.sydneymarathon.com/",
+      "wmm": true
+    },
+    {
+      "datum": "27-09-2026",
+      "datum_sort": "2026-09-27",
+      "naam": "Berlin Marathon",
+      "stad": "Berlijn, DE",
+      "categorie": "marathon (42.2 km)",
+      "max_deel": 50000,
+      "url": "https://www.bmw-berlin-marathon.com/",
+      "wmm": true
+    },
+    {
+      "datum": "11-10-2026",
+      "datum_sort": "2026-10-11",
+      "naam": "Chicago Marathon",
+      "stad": "Chicago, VS",
+      "categorie": "marathon (42.2 km)",
+      "max_deel": 45000,
+      "url": "https://www.chicagomarathon.com/",
+      "wmm": true
+    },
+    {
+      "datum": "25-10-2026",
+      "datum_sort": "2026-10-25",
+      "naam": "Frankfurt Marathon",
+      "stad": "Frankfurt, DE",
+      "categorie": "marathon (42.2 km)",
+      "max_deel": 15000,
+      "url": "https://www.frankfurt-marathon.com/",
+      "wmm": false
+    },
+    {
+      "datum": "01-11-2026",
+      "datum_sort": "2026-11-01",
+      "naam": "New York Marathon",
+      "stad": "New York, VS",
+      "categorie": "marathon (42.2 km)",
+      "max_deel": 53000,
+      "url": "https://www.nyrr.org/tcsnycmarathon",
+      "wmm": true
+    }
+  ],
+  "ultra_races": [
+    {
+      "datum": "19-06-2026",
+      "datum_sort": "2026-06-19",
+      "naam": "Biel-Bienne 100km",
+      "stad": "Biel, CH",
+      "afstanden": "100 km",
+      "url": "https://www.100km.ch/",
+      "nk": false,
+      "wk": false,
+      "note": "Grootste 100km-race van Europa"
+    },
+    {
+      "datum": "29-08-2026",
+      "datum_sort": "2026-08-29",
+      "naam": "UTMB Mont-Blanc (100 Miles)",
+      "stad": "Chamonix, FR",
+      "afstanden": "~170 km",
+      "url": "https://utmb.world/",
+      "nk": false,
+      "wk": false,
+      "note": "Grootste ultratrail ter wereld · diverse afstanden"
+    },
+    {
+      "datum": "12-09-2026",
+      "datum_sort": "2026-09-12",
+      "naam": "RUN Winschoten",
+      "stad": "Winschoten, NL",
+      "afstanden": "50 km + 100 km",
+      "url": "https://www.runwinschoten.nl/",
+      "nk": true,
+      "nk_label": "NK 50 km & 100 km",
+      "wk": false,
+      "note": "50e jubileumeditie"
+    },
+    {
+      "datum": null,
+      "datum_sort": null,
+      "naam": "IAU 100km World Championship 2026",
+      "stad": "TBD",
+      "afstanden": "100 km",
+      "url": "https://iau-ultramarathon.org/",
+      "nk": false,
+      "wk": true,
+      "wk_label": "WK 100 km",
+      "note": "2026-locatie nog niet officieel bekendgemaakt"
+    },
+    {
+      "datum": null,
+      "datum_sort": null,
+      "naam": "IAU 50km World Championship 2026",
+      "stad": "TBD",
+      "afstanden": "50 km",
+      "url": "https://iau-ultramarathon.org/",
+      "nk": false,
+      "wk": true,
+      "wk_label": "WK 50 km",
+      "note": "2026-locatie nog niet officieel bekendgemaakt"
+    }
+  ],
+  "nk_data": [
+    {
+      "type": "weg",
+      "type_label": "Weg",
+      "naam": "NK Marathon",
+      "url": null,
+      "y2026": {
+        "datum_sort": "2026-04-12",
+        "datum_fmt": "12 apr 2026",
+        "locatie": "NN Marathon Rotterdam"
+      },
+      "y2027": "Marathon Rotterdam",
+      "y2028": "Amsterdam Marathon"
+    },
+    {
+      "type": "weg",
+      "type_label": "Weg",
+      "naam": "NK Halve Marathon",
+      "url": "https://www.atletiek.nl/toernooien/nk-halve-marathon/",
+      "y2026": {
+        "datum_sort": "2026-05-31",
+        "datum_fmt": "31 mei 2026",
+        "locatie": "HiPRO Utrecht Marathon"
+      },
+      "y2027": "Marathon Eindhoven",
+      "y2028": "Venloop"
+    },
+    {
+      "type": "baan",
+      "type_label": "Baan",
+      "naam": "NK 10.000m",
+      "url": "https://www.atletiek.nl/toernooien/nk-10-000m/",
+      "y2026": {
+        "datum_sort": "2026-06-13",
+        "datum_fmt": "13 jun 2026",
+        "locatie": "Gouden Spike, Leiden"
+      },
+      "y2027": null,
+      "y2028": null
+    },
+    {
+      "type": "baan",
+      "type_label": "Baan",
+      "naam": "NK Masters Atletiek",
+      "url": "https://www.atletiek.nl/toernooien/nk-masters/",
+      "y2026": {
+        "datum_sort": "2026-06-05",
+        "datum_fmt": "5–7 jun 2026",
+        "locatie": "Prins Hendrik, Vught"
+      },
+      "y2027": null,
+      "y2028": null
+    },
+    {
+      "type": "baan",
+      "type_label": "Baan",
+      "naam": "ASICS NK Atletiek",
+      "url": "https://www.atletiek.nl/toernooien/asics-nk-atletiek/",
+      "y2026": {
+        "datum_sort": "2026-07-25",
+        "datum_fmt": "25–26 jul 2026",
+        "locatie": "FBK Stadion, Hengelo"
+      },
+      "y2027": null,
+      "y2028": null
+    },
+    {
+      "type": "weg",
+      "type_label": "Weg",
+      "naam": "NK 5 km",
+      "url": null,
+      "y2026": {
+        "datum_sort": null,
+        "datum_fmt": null,
+        "locatie": "7H Recordrun, Nijmegen"
+      },
+      "y2027": "7H Recordrun, Nijmegen",
+      "y2028": "Big Series, Utrecht"
+    },
+    {
+      "type": "weg",
+      "type_label": "Weg",
+      "naam": "NK 10 km",
+      "url": "https://www.atletiek.nl/toernooien/nk-10-km/",
+      "y2026": {
+        "datum_sort": "2026-09-05",
+        "datum_fmt": "5 sep 2026",
+        "locatie": "Singelloop Breda"
+      },
+      "y2027": "Stadsloop Appingedam",
+      "y2028": "Groet uit Schoorl Run"
+    },
+    {
+      "type": "ultra",
+      "type_label": "Ultra",
+      "naam": "NK 50 km & 100 km",
+      "url": "https://www.atletiek.nl/toernooien/nk-50-100km/",
+      "y2026": {
+        "datum_sort": "2026-09-12",
+        "datum_fmt": "12 sep 2026",
+        "locatie": "RUN Winschoten (50e editie)"
+      },
+      "y2027": "RUN Winschoten",
+      "y2028": "RUN Winschoten"
+    },
+    {
+      "type": "trail",
+      "type_label": "Trail",
+      "naam": "NK Trailrunning",
+      "url": null,
+      "y2026": {
+        "datum_sort": "2026-11-01",
+        "datum_fmt": "nov 2026",
+        "locatie": "Zevenheuvelentrail"
+      },
+      "y2027": "–",
+      "y2028": "–"
+    },
+    {
+      "type": "cross",
+      "type_label": "Cross",
+      "naam": "NK Cross Country",
+      "url": null,
+      "y2026": {
+        "datum_sort": "2026-11-15",
+        "datum_fmt": "nov 2026",
+        "locatie": "Warandeloop"
+      },
+      "y2027": "Sylvestercross, Soest",
+      "y2028": "Sylvestercross, Soest"
+    }
+  ],
+  "track_meetings": [
+    {
+      "datum_sort": "2026-05-01",
+      "datum": "01-05-2026",
+      "naam": "Utrecht TM 1",
+      "locatie": "Atletiekbaan Maarschalkerweerd, Utrecht",
+      "locatie_note": null,
+      "url": "https://www.trackmeetings.nl",
+      "loop": [
+        "100m",
+        "200m",
+        "800m",
+        "1500m",
+        "3000m"
+      ],
+      "horde": [
+        "100/110m horden"
+      ],
+      "veld": [
+        "Verspringen",
+        "Hinkstapspringen",
+        "Hoogspringen",
+        "Kogelstoten",
+        "Kogelslingeren",
+        "Zittend werpen"
+      ]
+    },
+    {
+      "datum_sort": "2026-05-08",
+      "datum": "08-05-2026",
+      "naam": "Wageningen TM 1",
+      "locatie": "AV Pallas '67 · Wageningen",
+      "locatie_note": "Bornsesteeg 2, 6708 PE Wageningen",
+      "url": "https://www.atletiek.nu/wedstrijd/main/43480/",
+      "loop": [
+        "100m",
+        "200m",
+        "400m",
+        "800m",
+        "1500m",
+        "5000m"
+      ],
+      "horde": [
+        "100mH",
+        "110mH"
+      ],
+      "veld": [
+        "Discuswerpen",
+        "Kogelstoten",
+        "Speerwerpen",
+        "Hoogspringen",
+        "Polshoogspringen",
+        "Verspringen"
+      ]
+    },
+    {
+      "datum_sort": "2026-05-22",
+      "datum": "22-05-2026",
+      "naam": "Utrecht TM 2",
+      "locatie": "Atletiekbaan Maarschalkerweerd, Utrecht",
+      "locatie_note": null,
+      "url": "https://www.trackmeetings.nl",
+      "loop": [
+        "100m",
+        "400m",
+        "800m",
+        "1500m",
+        "5000m"
+      ],
+      "horde": [
+        "400m horden"
+      ],
+      "veld": [
+        "Verspringen",
+        "Hinkstapspringen",
+        "Hoogspringen",
+        "Kogelstoten",
+        "Discuswerpen",
+        "Zittend werpen"
+      ]
+    },
+    {
+      "datum_sort": "2026-06-12",
+      "datum": "12-06-2026",
+      "naam": "Utrecht TM 3",
+      "locatie": "Atletiekbaan Maarschalkerweerd, Utrecht",
+      "locatie_note": null,
+      "url": "https://www.trackmeetings.nl",
+      "loop": [
+        "100m",
+        "200m",
+        "800m",
+        "1500m",
+        "3000m"
+      ],
+      "horde": [
+        "100/110m horden"
+      ],
+      "veld": [
+        "Verspringen",
+        "Hinkstapspringen",
+        "Hoogspringen",
+        "Polsstokhoogspringen",
+        "Kogelstoten",
+        "Speerwerpen",
+        "Zittend werpen"
+      ]
+    },
+    {
+      "datum_sort": "2026-06-19",
+      "datum": "19-06-2026",
+      "naam": "Wageningen TM 2",
+      "locatie": "AV Pallas '67 · Wageningen",
+      "locatie_note": "Bornsesteeg 2, 6708 PE Wageningen",
+      "url": "https://www.atletiek.nu/wedstrijd/main/43481/",
+      "loop": [
+        "100m",
+        "200m",
+        "400m",
+        "800m",
+        "1500m",
+        "5000m"
+      ],
+      "horde": [
+        "100mH",
+        "110mH"
+      ],
+      "veld": [
+        "Discuswerpen",
+        "Kogelstoten",
+        "Speerwerpen",
+        "Hoogspringen",
+        "Polshoogspringen",
+        "Verspringen"
+      ]
+    },
+    {
+      "datum_sort": "2026-08-07",
+      "datum": "07-08-2026",
+      "naam": "Utrecht TM 4",
+      "locatie": "Atletiekbaan Maarschalkerweerd, Utrecht",
+      "locatie_note": "Zeer waarschijnlijk op Atletiekbaan Overvecht i.v.m. onderhoud",
+      "url": "https://www.trackmeetings.nl",
+      "loop": [
+        "150m",
+        "300m",
+        "800m",
+        "1500m",
+        "1 Engelse mijl",
+        "5000m"
+      ],
+      "horde": [
+        "300m horden"
+      ],
+      "veld": [
+        "Verspringen",
+        "Hoogspringen",
+        "Kogelstoten",
+        "Discuswerpen"
+      ]
+    },
+    {
+      "datum_sort": "2026-08-21",
+      "datum": "21-08-2026",
+      "naam": "Wageningen TM 3",
+      "locatie": "AV Pallas '67 · Wageningen",
+      "locatie_note": "Bornsesteeg 2, 6708 PE Wageningen",
+      "url": "https://www.atletiek.nu/wedstrijd/main/43482/",
+      "loop": [
+        "100m",
+        "200m",
+        "400m",
+        "800m",
+        "1500m",
+        "5000m"
+      ],
+      "horde": [
+        "100mH",
+        "110mH"
+      ],
+      "veld": [
+        "Discuswerpen",
+        "Kogelstoten",
+        "Speerwerpen",
+        "Hoogspringen",
+        "Polshoogspringen",
+        "Verspringen"
+      ]
+    },
+    {
+      "datum_sort": "2026-09-04",
+      "datum": "04-09-2026",
+      "naam": "Utrecht TM 5",
+      "locatie": "Atletiekbaan Maarschalkerweerd, Utrecht",
+      "locatie_note": "Mogelijk op Atletiekbaan Overvecht i.v.m. onderhoud",
+      "url": "https://www.trackmeetings.nl",
+      "loop": [
+        "100m",
+        "200m",
+        "400m",
+        "800m",
+        "1500m",
+        "5000m"
+      ],
+      "horde": [
+        "400m horden"
+      ],
+      "veld": [
+        "Verspringen",
+        "Hinkstapspringen",
+        "Hoogspringen",
+        "Kogelstoten",
+        "Kogelslingeren",
+        "Zittend werpen"
+      ]
+    },
+    {
+      "datum_sort": "2026-09-18",
+      "datum": "18-09-2026",
+      "naam": "Wageningen TM 4",
+      "locatie": "AV Pallas '67 · Wageningen",
+      "locatie_note": "Bornsesteeg 2, 6708 PE Wageningen",
+      "url": "https://www.atletiek.nu/wedstrijd/main/43483/",
+      "loop": [
+        "100m",
+        "200m",
+        "400m",
+        "800m",
+        "1500m",
+        "5000m"
+      ],
+      "horde": [
+        "100mH",
+        "110mH"
+      ],
+      "veld": [
+        "Discuswerpen",
+        "Kogelstoten",
+        "Speerwerpen",
+        "Hoogspringen",
+        "Polshoogspringen",
+        "Verspringen"
+      ]
+    }
+  ]
+}
