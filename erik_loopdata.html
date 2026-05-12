@@ -671,7 +671,7 @@
         <th class="td-num" onclick="setSort('afstand')" id="sh-afstand">Afstand <span>↕</span></th>
         <th class="td-num">Tijd</th>
         <th class="td-num" onclick="setSort('tempo_dec')" id="sh-tempo">Tempo <span>↕</span></th>
-        <th class="td-num">Min HR</th>
+        <th class="td-num" style="color:#a78bfa">Rusthartslag</th>
         <th class="td-num" onclick="setSort('gem_hr')" id="sh-hr">Gem HR <span>↕</span></th>
         <th class="td-num">Max HR</th>
         <th class="td-num" style="color:var(--accent)">Core</th>
@@ -1219,7 +1219,8 @@ function renderAlle() {
         <td class="td-datum">${datumFmt(ds)}</td>
         <td class="td-name" style="font-style:italic;">Rustdag</td>
         <td class="td-num">\u2014</td><td class="td-num">\u2014</td><td class="td-num">\u2014</td>
-        <td class="td-num">\u2014</td><td class="td-num">\u2014</td><td class="td-num">\u2014</td>
+        ${(() => { const hr = (SLAAP_MAP[ds]||{}).hr_min; return hr ? `<td class="td-num" style="color:#a78bfa;font-weight:500">${hr}</td>` : '<td class="td-num" style="color:var(--muted2)">\u2014</td>'; })()}
+        <td class="td-num">\u2014</td><td class="td-num">\u2014</td>
         <td class="td-num">\u2014</td>
         <td>\u2014</td>
         <td class="td-plan rustplan-editable" data-key="${rustKey}" title="Klik om trainingsplan in te vullen" style="cursor:pointer;">${rustplanHtml}${notitieHtml}</td>
@@ -1276,7 +1277,7 @@ function renderAlle() {
       <td class="td-num">${r.afstand>0 ? r.afstand.toFixed(1)+' km' : '\u2014'}</td>
       <td class="td-num">${r.tijd||'\u2014'}</td>
       <td class="td-num">${r.tempo||'\u2014'}</td>
-      <td class="td-num" style="color:var(--muted2)">${r.min_hr||'\u2014'}</td>
+      ${(() => { const hr = (SLAAP_MAP[r.datum_sort]||{}).hr_min; return hr ? `<td class="td-num" style="color:#a78bfa;font-weight:500">${hr}</td>` : '<td class="td-num" style="color:var(--muted2)">\u2014</td>'; })()}
       <td class="td-num" style="color:${hrColor(r.gem_hr)};font-weight:500">${r.gem_hr||'\u2014'}</td>
       <td class="td-num" style="color:var(--muted2)">${r.max_hr||'\u2014'}</td>
       <td class="td-num core-editable" data-key="${key.replace(/"/g,'&quot;')}" title="Klik om core-minuten in te vullen" style="cursor:pointer;">${coreBadge}</td>
