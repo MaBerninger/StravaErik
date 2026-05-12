@@ -184,7 +184,8 @@
   .td-name { font-family:'DM Sans',sans-serif; color:var(--text); max-width:150px; overflow:hidden; text-overflow:ellipsis; }
   .td-datum { color:var(--muted2); font-size:0.76rem; }
   .td-num { text-align:right; }
-  .td-plan { color:var(--muted2); font-family:'DM Sans',sans-serif; font-size:0.75rem; max-width:200px; overflow:hidden; text-overflow:ellipsis; }
+  .td-plan { color:var(--muted2); font-family:'DM Sans',sans-serif; font-size:0.75rem; max-width:240px; white-space:normal; word-break:break-word; }
+  .notitie-inline { display:block; margin-top:5px; padding-top:5px; border-top:1px solid rgba(96,165,250,0.2); color:#60a5fa; font-style:italic; font-size:0.72rem; line-height:1.45; }
   .kcal-cell { font-family:'DM Mono',monospace; font-size:0.75rem; text-align:right; white-space:nowrap; }
   .kcal-verbrand { color:var(--muted2); }
   .kcal-extra { color:#f97316; font-weight:600; }
@@ -650,7 +651,7 @@
       <option value="21">21 km+</option>
     </select>
     <label style="font-size:0.78rem;color:var(--muted2);display:flex;align-items:center;gap:6px;cursor:pointer;user-select:none;white-space:nowrap;">
-      <input type="checkbox" id="toon-rustdagen" onchange="renderAlle()" style="accent-color:var(--accent);width:14px;height:14px;"> Rustdagen
+      <input type="checkbox" id="toon-rustdagen" checked onchange="renderAlle()" style="accent-color:var(--accent);width:14px;height:14px;"> Rustdagen
     </label>
     <span style="margin-left:auto;font-size:0.75rem;color:var(--muted2)" id="count-alle"></span>
   </div>
@@ -1201,7 +1202,7 @@ function renderAlle() {
       const rustKey = `${ds}|Rustdag|0`;
       const invoer  = invoerData[rustKey] || {};
       const notitie = invoer.notitie || '';
-      const planHtml = notitie ? `<span style="font-size:0.73rem;color:var(--muted2);font-style:italic;">${notitie.replace(/</g,'&lt;').replace(/\n/g,'<br>')}</span>` : '';
+      const planHtml = notitie ? `<span class="notitie-inline" style="margin-top:0;padding-top:0;border-top:none;">${notitie.replace(/</g,'&lt;').replace(/\n/g,'<br>')}</span>` : '';
       return `<tr class="rustdag-row">
         <td class="td-datum">${datumFmt(ds)}</td>
         <td class="td-name" style="font-style:italic;">Rustdag</td>
@@ -1252,13 +1253,9 @@ function renderAlle() {
 
     const trainingsplanTekst = invoer.opmerking || r.trainingsplan || '';
     const notitie = invoer.notitie || '';
-    const planCell = trainingsplanTekst
-      ? (notitie
-          ? `${trainingsplanTekst}<br><span style="font-size:0.73rem;color:var(--muted2);font-style:italic;">${notitie.replace(/</g,'&lt;').replace(/\n/g,'<br>')}</span>`
-          : trainingsplanTekst)
-      : (notitie
-          ? `<span style="font-size:0.73rem;color:var(--muted2);font-style:italic;">${notitie.replace(/</g,'&lt;').replace(/\n/g,'<br>')}</span>`
-          : '');
+    const planTekstHtml = trainingsplanTekst ? `<span style="color:var(--text);opacity:0.82;">${trainingsplanTekst.replace(/</g,'&lt;').replace(/\n/g,'<br>')}</span>` : '';
+    const notitieHtml   = notitie ? `<span class="notitie-inline">${notitie.replace(/</g,'&lt;').replace(/\n/g,'<br>')}</span>` : '';
+    const planCell = planTekstHtml + notitieHtml;
 
     return `
     <tr>
