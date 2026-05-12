@@ -202,6 +202,10 @@
   .rondes-table td.ronde-tempo { color:var(--text); font-weight:500; }
   .rondes-table td.ronde-hr { text-align:right; min-width:35px; }
 
+  /* RUSTDAG ROWS */
+  .rustdag-row td { opacity:0.5; background:transparent; }
+  .rustdag-row:hover td { opacity:0.72; }
+
   /* HR BADGE */
   .hr-badge {
     display:inline-block; padding:2px 8px; border-radius:20px; font-size:0.74rem; font-weight:500;
@@ -645,6 +649,9 @@
       <option value="15">15 km+</option>
       <option value="21">21 km+</option>
     </select>
+    <label style="font-size:0.78rem;color:var(--muted2);display:flex;align-items:center;gap:6px;cursor:pointer;user-select:none;white-space:nowrap;">
+      <input type="checkbox" id="toon-rustdagen" onchange="renderAlle()" style="accent-color:var(--accent);width:14px;height:14px;"> Rustdagen
+    </label>
     <span style="margin-left:auto;font-size:0.75rem;color:var(--muted2)" id="count-alle"></span>
   </div>
 
@@ -1132,23 +1139,91 @@ function filterAlle() {
   });
 }
 
-function renderAlle() {
-  const data = filterAlle().sort((a,b) => {
-    const av=a[alSort.key], bv=b[alSort.key];
-    if (typeof av==='string') return alSort.asc ? av.localeCompare(bv) : bv.localeCompare(av);
-    return alSort.asc ? av-bv : bv-av;
+function buildAllDays() {
+  const toonRust = document.getElementById('toon-rustdagen')?.checked;
+  const zone = document.getElementById('filter-zone').value;
+  const dist = parseFloat(document.getElementById('filter-dist').value) || 0;
+  const q    = document.getElementById('search-alle').value.toLowerCase();
+  const filteredRuns = filterAlle();
+
+  if (!toonRust || zone || dist || q) {
+    return filteredRuns.sort((a,b) => {
+      const av=a[alSort.key], bv=b[alSort.key];
+      if (typeof av==='string') return alSort.asc ? av.localeCompare(bv) : bv.localeCompare(av);
+      return alSort.asc ? av-bv : bv-av;
+    }).map(r => ({type:'run', run:r}));
+  }
+
+  const runMap = {};
+  RAW.alle.forEach(r => {
+    if (!runMap[r.datum_sort]) runMap[r.datum_sort] = [];
+    runMap[r.datum_sort].push(r);
   });
 
-  document.getElementById('count-alle').textContent = data.length + ' runs';
-  document.getElementById('tbody-alle').innerHTML = data.map((r, idx) => {
+  const startStr  = [...RAW.alle].sort((a,b) => a.datum_sort.localeCompare(b.datum_sort))[0].datum_sort;
+  const today     = new Date().toISOString().slice(0,10);
+  const items     = [];
+  const cur       = new Date(today);
+  const startDate = new Date(startStr);
+
+  while (cur >= startDate) {
+    const ds = cur.toISOString().slice(0,10);
+    if (runMap[ds]) {
+      runMap[ds].forEach(r => items.push({type:'run', run:r}));
+    } else {
+      items.push({type:'rest', datum_sort: ds});
+    }
+    cur.setDate(cur.getDate() - 1);
+  }
+  return items;
+}
+
+function slaapTd(datum_sort) {
+  const sd = SLAAP_MAP[datum_sort];
+  if (!sd || !sd.totaal_min) return '<td class="td-num" style="color:var(--muted2)">\u2014</td>';
+  const h = Math.floor(sd.totaal_min / 60), m = sd.totaal_min % 60;
+  const kleur = h >= 7 ? '#22c55e' : h >= 6 ? '#f97316' : '#ef4444';
+  const tip = `Diep: ${Math.floor((sd.diep_min||0)/60)}u ${String((sd.diep_min||0)%60).padStart(2,'0')}m \u00b7 REM: ${Math.floor((sd.rem_min||0)/60)}u ${String((sd.rem_min||0)%60).padStart(2,'0')}m`;
+  return `<td class="td-num" style="color:${kleur};font-size:0.8rem;" title="${tip}">${h}u ${String(m).padStart(2,'0')}m</td>`;
+}
+
+function renderAlle() {
+  const items = buildAllDays();
+  const invoerData = loadInvoerData();
+  const runs  = items.filter(i => i.type === 'run');
+  const rests = items.filter(i => i.type === 'rest');
+  document.getElementById('count-alle').textContent = runs.length + ' runs' + (rests.length ? ` \u00b7 ${rests.length} rustdagen` : '');
+
+  document.getElementById('tbody-alle').innerHTML = items.map((item, idx) => {
+
+    if (item.type === 'rest') {
+      const ds      = item.datum_sort;
+      const rustKey = `${ds}|Rustdag|0`;
+      const invoer  = invoerData[rustKey] || {};
+      const notitie = invoer.notitie || '';
+      const planHtml = notitie ? `<span style="font-size:0.73rem;color:var(--muted2);font-style:italic;">${notitie.replace(/</g,'&lt;').replace(/\n/g,'<br>')}</span>` : '';
+      return `<tr class="rustdag-row">
+        <td class="td-datum">${datumFmt(ds)}</td>
+        <td class="td-name" style="font-style:italic;">Rustdag</td>
+        <td class="td-num">\u2014</td><td class="td-num">\u2014</td><td class="td-num">\u2014</td>
+        <td class="td-num">\u2014</td><td class="td-num">\u2014</td><td class="td-num">\u2014</td>
+        <td class="td-num">\u2014</td>
+        <td>\u2014</td>
+        <td class="td-plan">${planHtml}</td>
+        <td class="kcal-cell"><span style="font-size:0.76rem;">~2.300</span><br><span style="font-size:0.68rem;opacity:0.6;">basis</span></td>
+        ${slaapTd(ds)}
+      </tr>`;
+    }
+
+    const r = item.run;
     const key = getRunKey(r);
-    const invoer = loadInvoerData()[key] || {};
+    const invoer = invoerData[key] || {};
     const coreVal   = invoer.core || 0;
-    const coreBadge = coreVal ? `<span class="core-badge">${coreVal} min</span>` : '<span style="color:var(--muted2)">—</span>';
+    const coreBadge = coreVal ? `<span class="core-badge">${coreVal} min</span>` : '<span style="color:var(--muted2)">\u2014</span>';
     const rondesId  = `rondes-${idx}`;
     const heeftRondes = r.rondes && r.rondes.length > 0;
     const expandBtn = heeftRondes
-      ? `<span class="expand-btn" data-target="${rondesId}" onclick="toggleRondes(this)">▶</span>`
+      ? `<span class="expand-btn" data-target="${rondesId}" onclick="toggleRondes(this)">\u25b6</span>`
       : '';
 
     const rondesRij = heeftRondes ? (() => {
@@ -1156,9 +1231,9 @@ function renderAlle() {
         const hrKleur = rd.gem_hr ? hrColor(rd.gem_hr) : 'var(--muted2)';
         return `<tr>
           <td>${rd.nr}</td>
-          <td class="ronde-tempo">${rd.tempo || '—'}</td>
-          <td class="ronde-hr" style="color:${hrKleur}">${rd.gem_hr || '—'}</td>
-          <td class="ronde-hr" style="color:var(--muted2)">${rd.max_hr || '—'}</td>
+          <td class="ronde-tempo">${rd.tempo || '\u2014'}</td>
+          <td class="ronde-hr" style="color:${hrKleur}">${rd.gem_hr || '\u2014'}</td>
+          <td class="ronde-hr" style="color:var(--muted2)">${rd.max_hr || '\u2014'}</td>
         </tr>`;
       }).join('');
       return `<tr class="rondes-detail-row" id="${rondesId}">
@@ -1175,32 +1250,33 @@ function renderAlle() {
       </tr>`;
     })() : '';
 
+    const trainingsplanTekst = invoer.opmerking || r.trainingsplan || '';
+    const notitie = invoer.notitie || '';
+    const planCell = trainingsplanTekst
+      ? (notitie
+          ? `${trainingsplanTekst}<br><span style="font-size:0.73rem;color:var(--muted2);font-style:italic;">${notitie.replace(/</g,'&lt;').replace(/\n/g,'<br>')}</span>`
+          : trainingsplanTekst)
+      : (notitie
+          ? `<span style="font-size:0.73rem;color:var(--muted2);font-style:italic;">${notitie.replace(/</g,'&lt;').replace(/\n/g,'<br>')}</span>`
+          : '');
+
     return `
     <tr>
       <td class="td-datum">${expandBtn}${r.strava_url ? `<a href="${r.strava_url}" target="_blank" class="strava-link">${datumFmt(r.datum)}</a>` : datumFmt(r.datum)}</td>
       <td class="td-name">${r.strava_url ? `<a href="${r.strava_url}" target="_blank" class="strava-link">${r.naam}</a>` : r.naam}</td>
-      <td class="td-num">${r.afstand>0 ? r.afstand.toFixed(1)+' km' : '—'}</td>
-      <td class="td-num">${r.tijd||'—'}</td>
-      <td class="td-num">${r.tempo||'—'}</td>
-      <td class="td-num" style="color:var(--muted2)">${r.min_hr||'—'}</td>
-      <td class="td-num" style="color:${hrColor(r.gem_hr)};font-weight:500">${r.gem_hr||'—'}</td>
-      <td class="td-num" style="color:var(--muted2)">${r.max_hr||'—'}</td>
+      <td class="td-num">${r.afstand>0 ? r.afstand.toFixed(1)+' km' : '\u2014'}</td>
+      <td class="td-num">${r.tijd||'\u2014'}</td>
+      <td class="td-num">${r.tempo||'\u2014'}</td>
+      <td class="td-num" style="color:var(--muted2)">${r.min_hr||'\u2014'}</td>
+      <td class="td-num" style="color:${hrColor(r.gem_hr)};font-weight:500">${r.gem_hr||'\u2014'}</td>
+      <td class="td-num" style="color:var(--muted2)">${r.max_hr||'\u2014'}</td>
       <td class="td-num core-editable" data-key="${key.replace(/"/g,'&quot;')}" title="Klik om core-minuten in te vullen" style="cursor:pointer;">${coreBadge}</td>
       <td><span class="hr-badge ${zClass(r.zone)}">${zLabel(r.zone)}</span></td>
-      <td class="td-plan">${invoer.opmerking || r.trainingsplan || ''}</td>
-      ${(() => { const k = berekenKcal(r); return k ? `<td class="kcal-cell"><span class="kcal-verbrand">${k.verbrand} verbrand</span><br><span class="kcal-extra">+${k.extra} extra</span><br><span class="kcal-totaal">${k.totaal.toLocaleString('nl-NL')} totaal</span></td>` : '<td class="kcal-cell" style="color:var(--muted)">—</td>'; })()}
-      ${(() => {
-        const sd = SLAAP_MAP[r.datum_sort];
-        if (!sd || !sd.totaal_min) return '<td class="td-num" style="color:var(--muted2)">—</td>';
-        const h = Math.floor(sd.totaal_min / 60), m = sd.totaal_min % 60;
-        const kleur = h >= 7 ? '#22c55e' : h >= 6 ? '#f97316' : '#ef4444';
-        const tip = `Diep: ${Math.floor((sd.diep_min||0)/60)}u ${String((sd.diep_min||0)%60).padStart(2,'0')}m · REM: ${Math.floor((sd.rem_min||0)/60)}u ${String((sd.rem_min||0)%60).padStart(2,'0')}m`;
-        return `<td class="td-num" style="color:${kleur};font-size:0.8rem;" title="${tip}">${h}u ${String(m).padStart(2,'0')}m</td>`;
-      })()}
+      <td class="td-plan">${planCell}</td>
+      ${(() => { const k = berekenKcal(r); return k ? `<td class="kcal-cell"><span class="kcal-verbrand">${k.verbrand} verbrand</span><br><span class="kcal-extra">+${k.extra} extra</span><br><span class="kcal-totaal">${k.totaal.toLocaleString('nl-NL')} totaal</span></td>` : '<td class="kcal-cell" style="color:var(--muted)">\u2014</td>'; })()}
+      ${slaapTd(r.datum_sort)}
     </tr>${rondesRij}`
   }).join('') || '<tr><td colspan="13" style="text-align:center;padding:2.5rem;color:var(--muted2)">Geen runs gevonden</td></tr>';
-
-
 }
 
 // ===== RONDES UITKLAP =====
@@ -1903,13 +1979,49 @@ function exportInvoer() {
 // ===== TAB 7: NOTITIES =====
 function renderNotities() {
   if (!RAW) return;
-  const q = (document.getElementById('search-notities')?.value || '').toLowerCase();
+  const q    = (document.getElementById('search-notities')?.value || '').toLowerCase();
   const data = loadInvoerData();
-  const runs = RAW.alle.filter(r =>
-    !q || r.naam.toLowerCase().includes(q) || r.datum.toLowerCase().includes(q)
-  );
 
-  document.getElementById('tbody-notities').innerHTML = runs.map(r => {
+  // Runs
+  const runEntries = RAW.alle
+    .filter(r => !q || r.naam.toLowerCase().includes(q) || r.datum.toLowerCase().includes(q))
+    .map(r => ({type:'run', run:r, sort:r.datum_sort}));
+
+  // Rest days: last 90 days not covered by a run
+  const runDateSet = new Set(RAW.alle.map(r => r.datum_sort));
+  const restEntries = [];
+  const now = new Date();
+  for (let i = 0; i <= 90; i++) {
+    const d = new Date(now); d.setDate(d.getDate() - i);
+    const ds = d.toISOString().slice(0,10);
+    if (!runDateSet.has(ds)) {
+      const rustKey = `${ds}|Rustdag|0`;
+      const notitie = (data[rustKey] || {}).notitie || '';
+      if (!q || notitie.toLowerCase().includes(q))
+        restEntries.push({type:'rest', datum_sort:ds, sort:ds});
+    }
+  }
+
+  const all = [...runEntries, ...restEntries].sort((a,b) => b.sort.localeCompare(a.sort));
+
+  document.getElementById('tbody-notities').innerHTML = all.map(item => {
+    if (item.type === 'rest') {
+      const ds      = item.datum_sort;
+      const rustKey = `${ds}|Rustdag|0`;
+      const safeKey = rustKey.replace(/['"\\]/g, '_');
+      const notitie = (data[rustKey] || {}).notitie || '';
+      return `<tr style="opacity:0.65;">
+        <td class="td-datum" style="color:var(--muted2)">${datumFmt(ds)}</td>
+        <td class="td-name" style="color:var(--muted2);font-style:italic;">Rustdag</td>
+        <td class="td-num" style="color:var(--muted2)">—</td>
+        <td class="td-plan" style="color:var(--muted2)">—</td>
+        <td><textarea class="notitie-textarea" id="not-${safeKey}"
+          onkeydown="if(event.ctrlKey&&event.key==='Enter')saveNotitieRust('${safeKey}')"
+        >${notitie.replace(/</g,'&lt;')}</textarea></td>
+        <td><button class="save-btn" id="notbtn-${safeKey}" onclick="saveNotitieRust('${safeKey}')">Opslaan</button></td>
+      </tr>`;
+    }
+    const r = item.run;
     const key = getRunKey(r);
     const safeKey = key.replace(/['"\\]/g, '_');
     const notitie = (data[key] || {}).notitie || '';
@@ -1930,23 +2042,37 @@ function saveNotitie(safeKey) {
   const ta  = document.getElementById('not-' + safeKey);
   const btn = document.getElementById('notbtn-' + safeKey);
   if (!ta) return;
-
-  // Zoek de echte key terug via de run
   const data = loadInvoerData();
   const notitie = ta.value.trim();
-
-  // Zoek de run bij deze safeKey
   const run = RAW.alle.find(r => getRunKey(r).replace(/['"\\]/g, '_') === safeKey);
   if (!run) return;
   const key = getRunKey(run);
-
   if (!data[key]) data[key] = {};
   if (notitie) data[key].notitie = notitie;
   else delete data[key].notitie;
-
   if (!data[key].core && !data[key].opmerking && !data[key].notitie) delete data[key];
   saveInvoerData(data);
+  renderAlle();
+  if (btn) {
+    btn.textContent = '✓ Opgeslagen';
+    btn.classList.add('saved');
+    setTimeout(() => { btn.textContent = 'Opslaan'; btn.classList.remove('saved'); }, 1500);
+  }
+}
 
+function saveNotitieRust(safeKey) {
+  const ta  = document.getElementById('not-' + safeKey);
+  const btn = document.getElementById('notbtn-' + safeKey);
+  if (!ta) return;
+  // safeKey = original key (no quotes/backslashes in rest day keys)
+  const key     = safeKey;
+  const data    = loadInvoerData();
+  const notitie = ta.value.trim();
+  if (!data[key]) data[key] = {};
+  if (notitie) data[key].notitie = notitie;
+  else { delete data[key].notitie; if (!Object.keys(data[key]).length) delete data[key]; }
+  saveInvoerData(data);
+  renderAlle();
   if (btn) {
     btn.textContent = '✓ Opgeslagen';
     btn.classList.add('saved');
