@@ -404,6 +404,15 @@
   }
   .strava-btn:hover { background: rgba(252,76,2,0.2); border-color: #fc4c02; }
   /* INVOER */
+  .notitie-textarea {
+    width: 100%; min-width: 260px; min-height: 52px; max-height: 200px;
+    background: var(--surface); border: 1px solid rgba(255,255,255,0.1);
+    color: var(--text); border-radius: 6px; padding: 6px 9px;
+    font-family: 'DM Sans', sans-serif; font-size: 0.82rem;
+    resize: vertical; outline: none; line-height: 1.5;
+  }
+  .notitie-textarea:focus { border-color: var(--accent); }
+
   .invoer-input {
     background: var(--surface2); border: 1px solid var(--border2);
     color: var(--text); border-radius: 6px; padding: 0.3rem 0.5rem;
@@ -583,6 +592,7 @@
       <button class="tab-btn" onclick="switchTab('wedstrijden',this)">Gelopen wedstrijden</button>
       <button class="tab-btn" onclick="switchTab('schema',this)">Schema</button>
       <button class="tab-btn" onclick="switchTab('kalender',this)">Toekomstige wedstrijden</button>
+      <button class="tab-btn" onclick="switchTab('notities',this)">Notities</button>
     </nav>
     <button class="pub-btn" id="pub-btn" onclick="publishData()" title="Core data opslaan en site bijwerken">↑ Publiceer</button>
   </div>
@@ -655,7 +665,7 @@
         <th class="td-num">Max HR</th>
         <th class="td-num" style="color:var(--accent)">Core</th>
         <th>Zone</th>
-        <th>Opmerking</th>
+        <th>Trainingsplan</th>
         <th class="td-num" style="color:#f97316">Kcal advies</th>
         <th class="td-num" style="color:#60a5fa">Slaap</th>
       </tr></thead>
@@ -889,6 +899,33 @@
     </div>
   </div>
 
+</div>
+
+<!-- ===== TAB 7: NOTITIES ===== -->
+<div id="tab-notities" class="page">
+  <div class="section-title">Notities per run</div>
+  <div style="font-size:0.78rem;color:var(--muted2);margin-bottom:1.2rem;font-family:'DM Sans',sans-serif;">
+    Vrije aantekeningen per run — opgeslagen lokaal, meegenomen bij ↑ Publiceer.
+  </div>
+
+  <div class="filters" style="margin-bottom:1rem;">
+    <input class="filter-input" id="search-notities" placeholder="🔍  Zoeken op naam, datum..." oninput="renderNotities()" style="min-width:220px">
+    <button class="save-btn" onclick="publishData()" style="margin-left:auto;">↑ Publiceer &amp; upload</button>
+  </div>
+
+  <div class="table-wrap">
+    <table id="tbl-notities">
+      <thead><tr>
+        <th style="width:105px">Datum</th>
+        <th>Run</th>
+        <th style="width:120px">Afstand</th>
+        <th>Trainingsplan</th>
+        <th>Notitie</th>
+        <th style="width:90px"></th>
+      </tr></thead>
+      <tbody id="tbody-notities"></tbody>
+    </table>
+  </div>
 </div>
 
 <script>
@@ -1409,6 +1446,7 @@ function switchTab(t, btn) {
   window.scrollTo(0,0);
   if (t === 'schema' && !schemaLoaded) { schemaLoaded = true; laadSchema(); }
   if (t === 'kalender' && !kalenderLoaded) { kalenderLoaded = true; laadKalender(); }
+  if (t === 'notities') renderNotities();
 }
 
 function switchKalSub(sub, btn) {
@@ -1860,6 +1898,60 @@ function exportInvoer() {
   a.href = URL.createObjectURL(blob);
   a.download = 'erik_core_opmerkingen.csv';
   a.click();
+}
+
+// ===== TAB 7: NOTITIES =====
+function renderNotities() {
+  if (!RAW) return;
+  const q = (document.getElementById('search-notities')?.value || '').toLowerCase();
+  const data = loadInvoerData();
+  const runs = RAW.alle.filter(r =>
+    !q || r.naam.toLowerCase().includes(q) || r.datum.toLowerCase().includes(q)
+  );
+
+  document.getElementById('tbody-notities').innerHTML = runs.map(r => {
+    const key = getRunKey(r);
+    const safeKey = key.replace(/['"\\]/g, '_');
+    const notitie = (data[key] || {}).notitie || '';
+    return `<tr>
+      <td class="td-datum">${r.strava_url ? `<a href="${r.strava_url}" target="_blank" class="strava-link">${datumFmt(r.datum)}</a>` : datumFmt(r.datum)}</td>
+      <td class="td-name" style="white-space:normal;">${r.naam}</td>
+      <td class="td-num">${r.afstand > 0 ? r.afstand.toFixed(1)+' km' : '—'}</td>
+      <td class="td-plan" style="max-width:180px;">${r.trainingsplan || ''}</td>
+      <td><textarea class="notitie-textarea" id="not-${safeKey}"
+        onkeydown="if(event.ctrlKey&&event.key==='Enter')saveNotitie('${safeKey}')"
+      >${notitie.replace(/</g,'&lt;')}</textarea></td>
+      <td><button class="save-btn" id="notbtn-${safeKey}" onclick="saveNotitie('${safeKey}')">Opslaan</button></td>
+    </tr>`;
+  }).join('') || '<tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--muted2)">Geen runs gevonden</td></tr>';
+}
+
+function saveNotitie(safeKey) {
+  const ta  = document.getElementById('not-' + safeKey);
+  const btn = document.getElementById('notbtn-' + safeKey);
+  if (!ta) return;
+
+  // Zoek de echte key terug via de run
+  const data = loadInvoerData();
+  const notitie = ta.value.trim();
+
+  // Zoek de run bij deze safeKey
+  const run = RAW.alle.find(r => getRunKey(r).replace(/['"\\]/g, '_') === safeKey);
+  if (!run) return;
+  const key = getRunKey(run);
+
+  if (!data[key]) data[key] = {};
+  if (notitie) data[key].notitie = notitie;
+  else delete data[key].notitie;
+
+  if (!data[key].core && !data[key].opmerking && !data[key].notitie) delete data[key];
+  saveInvoerData(data);
+
+  if (btn) {
+    btn.textContent = '✓ Opgeslagen';
+    btn.classList.add('saved');
+    setTimeout(() => { btn.textContent = 'Opslaan'; btn.classList.remove('saved'); }, 1500);
+  }
 }
 
 // ===== TOEKOMSTIGE WEDSTRIJDEN =====
