@@ -164,6 +164,32 @@ for _, row in df[df["Segment"].str.strip().str.startswith("Ronde", na=False)].it
     except:
         pass
 
+# Bouw volledige rondes lookup voor weergave in website
+rondes_display_map = {}
+for _, row in df[df["Segment"].str.strip().str.startswith("Ronde", na=False)].iterrows():
+    datum = str(row.get("Datum", "")).strip()
+    datum_sort = datum.split(",")[0].strip()
+    naam = str(row.get("Run Naam", "")).strip()
+    key = f"{datum_sort}|{naam}"
+    try:
+        ronde_nr = int(str(row["Segment"]).strip().split()[-1])
+        tempo = clean(str(row["Tempo (min/km)"])) if str(row["Tempo (min/km)"]) not in ("", "nan", "None") else None
+        gem_hr = nan_safe_int(row["Gem HR"])
+        min_hr = nan_safe_int(row["Min HR"])
+        max_hr = nan_safe_int(row["Max HR"])
+        afstand = float(row["Afstand (km)"]) if str(row["Afstand (km)"]) not in ("", "nan", "None") else 1.0
+        if key not in rondes_display_map:
+            rondes_display_map[key] = []
+        rondes_display_map[key].append({"nr": ronde_nr, "afstand": round(afstand, 2), "tempo": tempo, "gem_hr": gem_hr, "min_hr": min_hr, "max_hr": max_hr})
+    except:
+        pass
+for key in rondes_display_map:
+    rondes_display_map[key].sort(key=lambda x: x["nr"])
+
+# Voeg rondes toe aan alle runs
+for r in alle_runs:
+    r["rondes"] = rondes_display_map.get(f"{r['datum_sort']}|{r['naam']}", [])
+
 def heeft_aaneengesloten_hoge_hr(r, hr_drempel=169, min_km=4.9):
     """Check of run 4.9+ km aaneengesloten boven hr_drempel heeft."""
     key = f"{r['datum_sort']}|{r['naam']}"

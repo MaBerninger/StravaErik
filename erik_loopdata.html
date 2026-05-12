@@ -190,6 +190,18 @@
   .kcal-extra { color:#f97316; font-weight:600; }
   .kcal-totaal { color:var(--text); font-weight:700; }
 
+  /* RONDES UITKLAP */
+  .expand-btn { cursor:pointer; font-size:0.7rem; color:var(--muted2); user-select:none; margin-right:5px; display:inline-block; transition:transform 0.15s; }
+  .expand-btn.open { transform:rotate(90deg); color:var(--accent); }
+  .rondes-detail-row { display:none; }
+  .rondes-detail-row td { padding:0 !important; }
+  .rondes-inner { padding:0.4rem 1rem 0.7rem 2.5rem; background:rgba(255,255,255,0.02); border-bottom:1px solid rgba(255,255,255,0.05); }
+  .rondes-table { width:auto; border-collapse:collapse; font-family:'DM Mono',monospace; font-size:0.74rem; }
+  .rondes-table td { padding:2px 10px 2px 0; color:var(--muted2); white-space:nowrap; }
+  .rondes-table td:first-child { color:var(--muted); min-width:30px; }
+  .rondes-table td.ronde-tempo { color:var(--text); font-weight:500; }
+  .rondes-table td.ronde-hr { text-align:right; min-width:35px; }
+
   /* HR BADGE */
   .hr-badge {
     display:inline-block; padding:2px 8px; border-radius:20px; font-size:0.74rem; font-weight:500;
@@ -1091,14 +1103,44 @@ function renderAlle() {
   });
 
   document.getElementById('count-alle').textContent = data.length + ' runs';
-  document.getElementById('tbody-alle').innerHTML = data.map(r => {
+  document.getElementById('tbody-alle').innerHTML = data.map((r, idx) => {
     const key = getRunKey(r);
     const invoer = loadInvoerData()[key] || {};
     const coreVal   = invoer.core || 0;
     const coreBadge = coreVal ? `<span class="core-badge">${coreVal} min</span>` : '<span style="color:var(--muted2)">—</span>';
+    const rondesId  = `rondes-${idx}`;
+    const heeftRondes = r.rondes && r.rondes.length > 0;
+    const expandBtn = heeftRondes
+      ? `<span class="expand-btn" data-target="${rondesId}" onclick="toggleRondes(this)">▶</span>`
+      : '';
+
+    const rondesRij = heeftRondes ? (() => {
+      const rijen = r.rondes.map(rd => {
+        const hrKleur = rd.gem_hr ? hrColor(rd.gem_hr) : 'var(--muted2)';
+        return `<tr>
+          <td>${rd.nr}</td>
+          <td class="ronde-tempo">${rd.tempo || '—'}</td>
+          <td class="ronde-hr" style="color:${hrKleur}">${rd.gem_hr || '—'}</td>
+          <td class="ronde-hr" style="color:var(--muted2)">${rd.max_hr || '—'}</td>
+        </tr>`;
+      }).join('');
+      return `<tr class="rondes-detail-row" id="${rondesId}">
+        <td colspan="13">
+          <div class="rondes-inner">
+            <table class="rondes-table">
+              <tr style="opacity:0.45;font-size:0.68rem;">
+                <td>km</td><td>tempo</td><td>gem HR</td><td>max HR</td>
+              </tr>
+              ${rijen}
+            </table>
+          </div>
+        </td>
+      </tr>`;
+    })() : '';
+
     return `
     <tr>
-      <td class="td-datum">${r.strava_url ? `<a href="${r.strava_url}" target="_blank" class="strava-link">${datumFmt(r.datum)}</a>` : datumFmt(r.datum)}</td>
+      <td class="td-datum">${expandBtn}${r.strava_url ? `<a href="${r.strava_url}" target="_blank" class="strava-link">${datumFmt(r.datum)}</a>` : datumFmt(r.datum)}</td>
       <td class="td-name">${r.strava_url ? `<a href="${r.strava_url}" target="_blank" class="strava-link">${r.naam}</a>` : r.naam}</td>
       <td class="td-num">${r.afstand>0 ? r.afstand.toFixed(1)+' km' : '—'}</td>
       <td class="td-num">${r.tijd||'—'}</td>
@@ -1118,9 +1160,20 @@ function renderAlle() {
         const tip = `Diep: ${Math.floor((sd.diep_min||0)/60)}u ${String((sd.diep_min||0)%60).padStart(2,'0')}m · REM: ${Math.floor((sd.rem_min||0)/60)}u ${String((sd.rem_min||0)%60).padStart(2,'0')}m`;
         return `<td class="td-num" style="color:${kleur};font-size:0.8rem;" title="${tip}">${h}u ${String(m).padStart(2,'0')}m</td>`;
       })()}
-    </tr>`}).join('') || '<tr><td colspan="13" style="text-align:center;padding:2.5rem;color:var(--muted2)">Geen runs gevonden</td></tr>';
+    </tr>${rondesRij}`
+  }).join('') || '<tr><td colspan="13" style="text-align:center;padding:2.5rem;color:var(--muted2)">Geen runs gevonden</td></tr>';
 
 
+}
+
+// ===== RONDES UITKLAP =====
+function toggleRondes(btn) {
+  const targetId = btn.dataset.target;
+  const row = document.getElementById(targetId);
+  if (!row) return;
+  const open = row.style.display === 'table-row';
+  row.style.display = open ? 'none' : 'table-row';
+  btn.classList.toggle('open', !open);
 }
 
 // ===== CORE INLINE EDIT =====
