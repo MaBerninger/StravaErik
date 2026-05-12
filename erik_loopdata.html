@@ -1022,7 +1022,8 @@ async function publishData() {
   btn.disabled = false;
 }
 
-let SLAAP_MAP = {};
+let SLAAP_MAP    = {};
+let PLANNING_MAP = {};
 
 async function laadData() {
   try {
@@ -1208,11 +1209,11 @@ function renderAlle() {
       const ds      = item.datum_sort;
       const rustKey = `${ds}|Rustdag|0`;
       const invoer  = invoerData[rustKey] || {};
-      const rustplan = invoer.trainingsplan || '';
-      const notitie  = invoer.notitie || '';
+      const rustplan  = invoer.trainingsplan || PLANNING_MAP[ds] || '';
+      const notitie   = invoer.notitie || '';
       const rustplanHtml = rustplan
         ? `<span style="color:var(--text);opacity:0.82;">${rustplan.replace(/</g,'&lt;').replace(/\n/g,'<br>')}</span>`
-        : `<span style="color:var(--muted);font-size:0.72rem;">klik om in te vullen</span>`;
+        : `<span style="color:var(--muted);font-size:0.71rem;font-style:italic;">—</span>`;
       const notitieHtml  = notitie ? `<span class="notitie-inline">${notitie.replace(/</g,'&lt;').replace(/\n/g,'<br>')}</span>` : '';
       return `<tr class="rustdag-row">
         <td class="td-datum">${datumFmt(ds)}</td>
@@ -1848,8 +1849,10 @@ async function laadSchemaVoorHome() {
       } catch(e) {}
     });
     renderHomeWeek(planning);
-    // Sla op voor schema tabblad
+    // Sla op voor schema tabblad + rustdag-weergave
     window._planningData = planning;
+    PLANNING_MAP = planning;
+    renderAlle();
   } catch(e) {
     // Schema niet beschikbaar, toon wel de runs
     renderHomeWeek(null);
