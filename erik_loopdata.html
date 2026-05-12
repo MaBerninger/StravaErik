@@ -645,6 +645,7 @@
         <th>Zone</th>
         <th>Opmerking</th>
         <th class="td-num" style="color:#f97316">Kcal advies</th>
+        <th class="td-num" style="color:#60a5fa">Slaap</th>
       </tr></thead>
       <tbody id="tbody-alle"></tbody>
     </table>
@@ -958,6 +959,8 @@ async function publishData() {
   btn.disabled = false;
 }
 
+let SLAAP_MAP = {};
+
 async function laadData() {
   try {
     const [resp] = await Promise.all([
@@ -973,6 +976,10 @@ async function laadData() {
     renderPRs();
     buildChart();
     fixStickyHeaders();
+    // Laad slaapdata (non-blocking, re-render runs als geladen)
+    fetch('garmin_slaap.json').then(r => r.ok ? r.json() : null).then(d => {
+      if (d && d.slaap) { SLAAP_MAP = d.slaap; renderAlle(); }
+    }).catch(() => {});
     // Laad schema voor home week (zonder blokkering)
     laadSchemaVoorHome();
   } catch(e) {
@@ -1103,7 +1110,15 @@ function renderAlle() {
       <td><span class="hr-badge ${zClass(r.zone)}">${zLabel(r.zone)}</span></td>
       <td class="td-plan">${invoer.opmerking || r.trainingsplan || ''}</td>
       ${(() => { const k = berekenKcal(r); return k ? `<td class="kcal-cell"><span class="kcal-verbrand">${k.verbrand} verbrand</span><br><span class="kcal-extra">+${k.extra} extra</span><br><span class="kcal-totaal">${k.totaal.toLocaleString('nl-NL')} totaal</span></td>` : '<td class="kcal-cell" style="color:var(--muted)">—</td>'; })()}
-    </tr>`}).join('') || '<tr><td colspan="12" style="text-align:center;padding:2.5rem;color:var(--muted2)">Geen runs gevonden</td></tr>';
+      ${(() => {
+        const sd = SLAAP_MAP[r.datum_sort];
+        if (!sd || !sd.totaal_min) return '<td class="td-num" style="color:var(--muted2)">—</td>';
+        const h = Math.floor(sd.totaal_min / 60), m = sd.totaal_min % 60;
+        const kleur = h >= 7 ? '#22c55e' : h >= 6 ? '#f97316' : '#ef4444';
+        const tip = `Diep: ${Math.floor((sd.diep_min||0)/60)}u ${String((sd.diep_min||0)%60).padStart(2,'0')}m · REM: ${Math.floor((sd.rem_min||0)/60)}u ${String((sd.rem_min||0)%60).padStart(2,'0')}m`;
+        return `<td class="td-num" style="color:${kleur};font-size:0.8rem;" title="${tip}">${h}u ${String(m).padStart(2,'0')}m</td>`;
+      })()}
+    </tr>`}).join('') || '<tr><td colspan="13" style="text-align:center;padding:2.5rem;color:var(--muted2)">Geen runs gevonden</td></tr>';
 
 
 }
